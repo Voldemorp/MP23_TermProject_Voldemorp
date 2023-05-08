@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:layout_weight="20"
             android:orientation="vertical"
-            android:background="@drawable/corner_radius"
+            android:background="@drawable/login_field_background"
             >
 
             <View
@@ -109,7 +109,7 @@
                 android:id="@+id/empty3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_weight=".6" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -254,7 +254,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1.5"
                 android:orientation="horizontal">
 
                 <View
@@ -268,11 +268,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="8"
-                    android:background="#FFC107"
+                    android:background="@drawable/login_btn_background"
                     android:fontFamily="@font/inter_extrabold"
                     android:text="로그인"
                     android:textColor="#FFFFFF"
-                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+                    tools:ignore="TouchTargetSizeCheck" />
 
                 <View
                     android:id="@+id/view30"
@@ -291,7 +291,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="horizontal"></LinearLayout>
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:text="Button"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:text="Button"
+                    tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
             <View
                 android:id="@+id/empty9"
