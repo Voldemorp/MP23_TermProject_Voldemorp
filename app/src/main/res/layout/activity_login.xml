@@ -228,7 +228,6 @@
                     android:ems="10"
                     android:hint="비밀번호를 입력해주세요."
                     android:inputType="textPassword"
-                    android:lineSpacingExtra="30dp"
                     android:textColor="#B4B4B4"
                     android:textColorHint="#B4B4B4"
                     android:textSize="12sp"
