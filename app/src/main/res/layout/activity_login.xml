@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@drawable/login_background"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity" >
+    tools:context=".LoginActivity" >
 
     <View
         android:id="@+id/header"
@@ -260,7 +260,7 @@
                     android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/loginButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="8"
@@ -299,11 +299,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:background=""
+                    android:background="#00FFFFFF"
                     android:text="구글로 간편로그인"
                     android:textColor="@color/white"
                     android:textSize="12sp"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    tools:ignore="TouchTargetSizeCheck"/>
 
                 <View
                     android:id="@+id/view2"
@@ -312,11 +312,11 @@
                     android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/signUpBtn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:background=""
+                    android:background="#00FFFFFF"
                     android:text="회원가입"
                     android:textColor="@color/white"
                     android:textSize="12sp"
