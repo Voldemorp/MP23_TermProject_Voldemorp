@@ -3,12 +3,16 @@ package com.example.mp23_termproject_voldemorp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
 public class LoginActivity extends AppCompatActivity {
+    private SignUpDialog signUpDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,11 +25,9 @@ public class LoginActivity extends AppCompatActivity {
         // 회원 가입 버튼 클릭 이벤트 -> 화면 전환
         Button sign_up_btn = (Button) findViewById(R.id.signUpBtn);
         sign_up_btn.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-            startActivity(intent);
-
-            // 화면 전환 시 위로 떠오르는 애니메이션 적용
-            overridePendingTransition(R.anim.silde_up_enter, R.anim.none);
+            signUpDialog = new SignUpDialog(this);
+            signUpDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+            signUpDialog.show();
         });
 
         Button login_btn = (Button) findViewById(R.id.loginButton);
