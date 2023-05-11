@@ -17,8 +17,8 @@ public class SignUpDialog extends Dialog {
         setContentView(R.layout.activity_sign_up);
 
         // 변경사항 적용 없이 로그인 창으로 돌아가는 버튼
-        Button back_to_login_btn = (Button) findViewById(R.id.backToLoginBtn);
-        back_to_login_btn.setOnClickListener(new View.OnClickListener() {
+        Button backToLoginBtn = (Button) findViewById(R.id.backToLoginBtn);
+        backToLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
@@ -26,8 +26,8 @@ public class SignUpDialog extends Dialog {
         });
 
         // 변경사항 적용해서 회원가입 완료시켜주는 버튼
-        Button sign_up_confirm_btn = (Button) findViewById(R.id.signUpConfirmBtn);
-        sign_up_confirm_btn.setOnClickListener(new View.OnClickListener() {
+        Button signUpBtn = (Button) findViewById(R.id.signUpBtn);
+        signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
