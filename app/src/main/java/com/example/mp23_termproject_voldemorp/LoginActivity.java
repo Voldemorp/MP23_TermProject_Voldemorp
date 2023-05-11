@@ -23,15 +23,15 @@ public class LoginActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         // 회원 가입 버튼 클릭 이벤트 -> 화면 전환
-        Button sign_up_btn = (Button) findViewById(R.id.signUpBtn);
-        sign_up_btn.setOnClickListener(view -> {
+        Button signUpBtn = (Button) findViewById(R.id.signUpBtn);
+        signUpBtn.setOnClickListener(view -> {
             signUpDialog = new SignUpDialog(this);
             signUpDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
             signUpDialog.show();
         });
 
-        Button login_btn = (Button) findViewById(R.id.loginButton);
-        login_btn.setOnClickListener(new View.OnClickListener() {
+        Button loginBtn = (Button) findViewById(R.id.loginButton);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainPageActivity.class);
