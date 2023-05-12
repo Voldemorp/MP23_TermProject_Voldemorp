@@ -1,5 +1,9 @@
 package com.example.mp23_termproject_voldemorp;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +15,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Patterns;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -32,18 +37,26 @@ public class SignUpDialog extends Dialog {
 
     //사용자의 이메일
     private String email;
-
     //사용자의 닉네임
     private String nickname;
-
     //사용자의 password
     private String password;
-
     //이메일 중복확인 버튼을 눌렀는지 유무
     private boolean emailCheckButtonClicked = false;
-
     //닉네임 중복확인 버튼 눌렀는지 유무
     private boolean nicknameCheckButtonClicked=false;
+
+    //화면 터치시 키보드 내리기
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View view = getCurrentFocus();
+        if (view != null && ev.getAction() == MotionEvent.ACTION_DOWN) {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
 
     public SignUpDialog(@NonNull Context context) {
         super(context);
@@ -318,6 +331,7 @@ public class SignUpDialog extends Dialog {
                 //회원가입 성공
                 else {
                     //[서버] 가입하기 버튼 누를시에 입력한 정보들 데이터에 저장(메일:email, 닉네임:nickname, 비밀번호:password)
+                    Toast.makeText(context.getApplicationContext(), "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
             }
