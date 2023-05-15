@@ -1,5 +1,9 @@
 package com.example.mp23_termproject_voldemorp;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,12 +15,16 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Patterns;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 
 public class SignUpDialog extends Dialog {
@@ -26,14 +34,29 @@ public class SignUpDialog extends Dialog {
         return !TextUtils.isEmpty(email) && email.matches(EMAIL_REGEX);
     }
 
+
     //사용자의 이메일
     private String email;
-
     //사용자의 닉네임
     private String nickname;
-
     //사용자의 password
     private String password;
+    //이메일 중복확인 버튼을 눌렀는지 유무
+    private boolean emailCheckButtonClicked = false;
+    //닉네임 중복확인 버튼 눌렀는지 유무
+    private boolean nicknameCheckButtonClicked=false;
+
+    //화면 터치시 키보드 내리기
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View view = getCurrentFocus();
+        if (view != null && ev.getAction() == MotionEvent.ACTION_DOWN) {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
 
     public SignUpDialog(@NonNull Context context) {
         super(context);
@@ -48,15 +71,7 @@ public class SignUpDialog extends Dialog {
             }
         });
 
-        // 변경사항 적용해서 회원가입 완료시켜주는 버튼
-        //[서버] 가입하기 버튼 누를시에 입력한 정보들 데이터에 저장(메일:email, 닉네임:nickname, 비밀번호:password)
-        Button signUpBtn = (Button) findViewById(R.id.signUpBtn);
-        signUpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+
 
         //-------------이메일-------------
 
@@ -66,6 +81,7 @@ public class SignUpDialog extends Dialog {
         Button emailCheckButton=(Button)findViewById(R.id.signUpCheckDuplicationEmailBtn);
         //이메일 입력하는 공간
         EditText emailEditText = findViewById(R.id.SignUpEmailField);
+
 
         //이메일 형식 실시간으로 검사
         emailEditText.addTextChangedListener(new TextWatcher() {
@@ -104,20 +120,22 @@ public class SignUpDialog extends Dialog {
                 //입력한 이메일을 임시 저장
                 String insEmail = emailEditText.getText().toString().trim();
 
+                //클릭됨
+                emailCheckButtonClicked=true;
 
                 if (!isValidEmail(insEmail)) {
-                    emailCheckedResult.setText("올바른 이메일 형식이 아닙니다.");
+                    emailCheckedResult.setText("올바른 이메일 형식이 아닙니다");
                     //setTextColor 써서 고구마색으로 바꾸기
                     emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                 }
                 //[서버] '입력한 이메일과 같은 메일이 이미 데이터에 존재한다면'을 조건에 추가. 임의로 예시 넣어둠
                 else if (insEmail.equals("voldmorp@gachon.ac.kr")) {
-                    emailCheckedResult.setText("이미 존재하는 이메일입니다.");
+                    emailCheckedResult.setText("이미 존재하는 이메일입니다");
                     //고구마색으로 바꾸기
                     emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                }
                 else {
-                    emailCheckedResult.setText("사용 가능한 이메일입니다.");
+                    emailCheckedResult.setText("사용 가능한 이메일입니다");
                     //노란색으로 바꾸기
                     emailCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
                     //데이터에 넣을 이메일
@@ -174,6 +192,9 @@ public class SignUpDialog extends Dialog {
                 //입력한 닉네임 임시 저장
                 String insNickname=nicknameEditText.getText().toString().trim();
 
+                //클릭됨
+                nicknameCheckButtonClicked=true;
+
                 if(insNickname.length()>10){
                     nicknameCheckedResult.setText("10자 이내의 닉네임을 입력해주세요");
                     //고구마색으로 바꾸기
@@ -216,11 +237,11 @@ public class SignUpDialog extends Dialog {
                 String pw = passwordEditText.getText().toString().trim();
 
                 if (pw.length() < 8 || pw.length() > 12) {
-                    passwordCheckedResult.setText("비밀번호는 8자에서 12자 사이여야 합니다.");
+                    passwordCheckedResult.setText("비밀번호는 8자에서 12자 사이여야 합니다");
                     //고구마색으로 바꾸기
                     passwordCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                 } else {
-                    passwordCheckedResult.setText("사용가능한 비밀번호입니다.");
+                    passwordCheckedResult.setText("사용가능한 비밀번호입니다");
                     //노란색으로 바꾸기
                     passwordCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
                     //데이터에 넣을 password
@@ -270,8 +291,51 @@ public class SignUpDialog extends Dialog {
             }
         });
 
-        //---------
+        //----------동의------------
+        //이용약관
+        CheckBox useCheckBox=(CheckBox) findViewById(R.id.signUpAgreeUseCheckBox);
+        //위치정보ㅁ
+        CheckBox locationCheckBox=(CheckBox) findViewById(R.id.signUpAgreeLocationCheckBox);
 
+        //---------가입하기-----------
+
+        Button signUpBtn = (Button) findViewById(R.id.signUpBtn);
+        signUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 이메일 중복확인 버튼이 클릭되었는지 확인
+                if (!(emailCheckButtonClicked=true&&emailCheckedResult.getText().toString().equals("사용 가능한 이메일입니다"))) {
+                    Toast.makeText(context.getApplicationContext(), "이메일을 확인해주세요", Toast.LENGTH_SHORT).show();
+                }
+                //닉네임 중복확인 버튼이 클릭되었는지 확인
+                else if(!(nicknameCheckButtonClicked=true&&nicknameCheckedResult.getText().toString().equals("사용 가능한 닉네임입니다"))){
+                    Toast.makeText(context.getApplicationContext(), "닉네임을 확인해주세요", Toast.LENGTH_SHORT).show();
+                }
+                //비밀번호 제대로 입력되었는지 확인
+                else if(!(passwordCheckedResult.getText().toString().equals("사용가능한 비밀번호입니다"))){
+                    Toast.makeText(context.getApplicationContext(), "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
+                }
+                //비밀번호 일치하는지 확인
+                else if(!(passwordConfirmCheckedResult.getText().toString().equals("비밀번호가 일치합니다"))){
+                    Toast.makeText(context.getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+                }
+                //이용약관에 동의하는지 확인
+                else if(!(useCheckBox.isChecked())){
+                    Toast.makeText(context.getApplicationContext(), "이용약관에 동의해주세요", Toast.LENGTH_SHORT).show();
+                }
+
+                //위치정보 제공에 동의하는지 확인
+                else if(!(locationCheckBox.isChecked())){
+                    Toast.makeText(context.getApplicationContext(), "위치정보 제공에 동의해주세요", Toast.LENGTH_SHORT).show();
+                }
+                //회원가입 성공
+                else {
+                    //[서버] 가입하기 버튼 누를시에 입력한 정보들 데이터에 저장(메일:email, 닉네임:nickname, 비밀번호:password)
+                    Toast.makeText(context.getApplicationContext(), "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                }
+            }
+        });
 
 
     }
