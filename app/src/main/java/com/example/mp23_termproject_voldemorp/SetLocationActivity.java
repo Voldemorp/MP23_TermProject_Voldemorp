@@ -33,5 +33,14 @@ public class SetLocationActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_left_enter, R.anim.none);
             }
         });
+
+        // 눌렀을 때 바텀시트 올라오게 하는 버튼
+        Button openBottomSheetBtn = (Button) findViewById(R.id.openBottomSheetBtn);
+        openBottomSheetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 }

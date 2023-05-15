@@ -22,6 +22,7 @@ public class SetLocationBottomSheet extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.bottomsheet_set_location, container, false);
 
+        // 설정 버튼 누르면 데이터 저장되고 메인 화면으로 넘어가야 함
         Button setDoneBtn = (Button) view.findViewById(R.id.setLocationBottomSetDoneBtn);
         setDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,7 +34,7 @@ public class SetLocationBottomSheet extends BottomSheetDialogFragment {
         return view;
     }
 
-    //바텀시트 스타일 설정
+    // 바텀시트 스타일 설정
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new BottomSheetDialog(getContext(), R.style.MyTransparentBottomSheetDialogTheme);
