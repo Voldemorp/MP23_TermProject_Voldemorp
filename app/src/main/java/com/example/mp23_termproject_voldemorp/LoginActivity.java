@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Toast;
 import android.widget.Button;
 import android.widget.EditText;
-import android.view.View;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -24,6 +23,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Set;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -76,13 +77,19 @@ public class LoginActivity extends AppCompatActivity {
             signUpDialog.show();
         });
 
+        // 로그인 버튼 클릭 이벤트 -> 화면 전환
+        Button loginBtn = (Button) findViewById(R.id.loginButton);
 
         //                       --- 로그인  ---
-
         loginBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SetLocationActivity.class);
+                startActivity(intent);
+
+                // 화면 전환 시 왼쪽에서 오른쪽으로 밀듯이 나타나는 애니메이션 적용
+                overridePendingTransition(R.anim.slide_right_enter, R.anim.none);
                 String email = loginEmailEditText.getText().toString().trim();
                 String pwd = loginPasswordEditText.getText().toString().trim();
                 firebaseAuth.signInWithEmailAndPassword(email, pwd)
@@ -98,16 +105,16 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
             }
-
         });
     }
 
 
 
     // 로그인 성공 -> 유저정보 넘겨주고 메인 화면 호출하는 함수
+    // 메인화면 말고 일단 지도 설정으로 넘어가게 해놨는데 상황 따라서 변경시켜주시면 될 것 같습니다
     public void moveMainPage(FirebaseUser user) {
         if (user != null) {
-            Intent intent = new Intent(getApplicationContext(), MainPageActivity.class);
+            Intent intent = new Intent(getApplicationContext(), SetLocationActivity.class);
             startActivity(intent);
 
             // 화면 전환 시 왼쪽에서 오른쪽으로 밀듯이 나타나는 애니메이션 적용
