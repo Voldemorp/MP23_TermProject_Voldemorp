@@ -20,6 +20,7 @@ public class SetLocationActivity extends AppCompatActivity {
         SetLocationBottomSheet setLocationBottomSheet = new SetLocationBottomSheet();
         setLocationBottomSheet.show(getSupportFragmentManager(), "setLocationBottomSheet");
 
+
         // 로그인으로 돌아가기 버튼 눌렀을 때 이벤트 -> 로그인 화면으로 화면 전환
         Button backToLoginBtn = (Button) findViewById(R.id.setLocationBackToLoginBtn);
         backToLoginBtn.setOnClickListener(new View.OnClickListener() {

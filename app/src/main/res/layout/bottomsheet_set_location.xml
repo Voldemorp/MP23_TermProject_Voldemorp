@@ -8,6 +8,7 @@
     android:background="@drawable/set_location_bottomsheet_background"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     app:behavior_hideable="false"
+    app:behavior_peekHeight="30dp"
     >
 
     <View
@@ -205,7 +206,7 @@
                     android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/setLocationBottomSetDoneBtn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
