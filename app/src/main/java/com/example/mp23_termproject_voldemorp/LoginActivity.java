@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
@@ -30,11 +29,12 @@ public class LoginActivity extends AppCompatActivity {
             signUpDialog.show();
         });
 
+        // 로그인 버튼 클릭 이벤트 -> 화면 전환
         Button loginBtn = (Button) findViewById(R.id.loginButton);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainPageActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SetLocationActivity.class);
                 startActivity(intent);
 
                 // 화면 전환 시 왼쪽에서 오른쪽으로 밀듯이 나타나는 애니메이션 적용
