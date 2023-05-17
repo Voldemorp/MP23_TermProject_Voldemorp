@@ -1,9 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:gravity="bottom"
+    android:background="#00000000"
+    app:umanoDragView="@id/bottomSheetView"
+    app:umanoScrollableView="@id/restaurantListView"
+    app:umanoOverlay="true"
+    app:umanoPanelHeight="400dp"
+    app:umanoShadowHeight="0dp"
+    >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--   지도 화면 구현할 레이아웃  -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomSheetView"
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@android:color/transparent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_bottom_sheet_background"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="12"
+                    android:text="내 주변 식당 찾기"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/view5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="12"
+                    android:text="사용자의 위치를 바탕으로 주변 식당을 추천해요."
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/view11"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="#A13366" />
+
+            <!--             -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/restaurantListView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="12"
+                android:background="#A13366">
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <View
+                android:id="@+id/view18"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="#A13366" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--   올라올 화면 보여줄 레이아웃    -->
+
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
