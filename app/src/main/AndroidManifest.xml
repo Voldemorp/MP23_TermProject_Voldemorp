@@ -15,7 +15,10 @@
         android:theme="@style/Theme.MP23_TermProject_Voldemorp"
         tools:targetApi="31">
         <activity
-            android:name=".SetLocationNextActivity"
+
+            android:name=".SetLocationNextActivity"/>
+        <activity
+            android:name=".MyPageActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

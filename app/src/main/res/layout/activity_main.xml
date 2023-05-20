@@ -39,7 +39,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/main_bottom_sheet_background"
+            android:background="@drawable/main_bottomsheet_background"
             android:orientation="vertical">
 
             <View
