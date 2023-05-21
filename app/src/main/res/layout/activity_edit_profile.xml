@@ -32,10 +32,10 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="취소" />
 
             <View
-                android:id="@+id/view50"
+                android:id="@+id/view52"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -45,7 +45,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="확인" />
         </LinearLayout>
 
         <LinearLayout
@@ -53,7 +53,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
-
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

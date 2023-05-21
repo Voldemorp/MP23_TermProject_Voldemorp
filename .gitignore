@@ -13,4 +13,8 @@
 .externalNativeBuild
 .cxx
 local.properties
+<<<<<<< HEAD
 build.gradle
+=======
+build.gradle
+>>>>>>> youjin2
