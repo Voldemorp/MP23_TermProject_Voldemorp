@@ -48,11 +48,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // 로그아웃 하지 않을 시 자동 로그인, 회원가입시 바로 로그인 됨
-    @Override
-    public void onStart() {
-        super.onStart();
-        moveMainPage(FirebaseAuth.getInstance().getCurrentUser());
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        moveMainPage(FirebaseAuth.getInstance().getCurrentUser());
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
