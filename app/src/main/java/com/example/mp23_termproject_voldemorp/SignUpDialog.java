@@ -58,7 +58,7 @@ public class SignUpDialog extends Dialog {
     private FirebaseDatabase mDatabase;
 
     public class UserModel{
-        public String userName;
+        public String nickName;
     }
 
     //화면 터치시 키보드 내리기
@@ -354,16 +354,24 @@ public class SignUpDialog extends Dialog {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        UserModel userModel = new UserModel();
-                                        userModel.userName = nickname;
+                                        String userId = firebaseAuth.getCurrentUser().getUid();
 
-                                        mDatabase.getReference().child("users").setValue(userModel);
+                                        UserModel userModel = new UserModel();
+                                        userModel.nickName = nickname;
+
+                                        // 사용자의 닉네임을 "users" 경로에 저장
+                                        mDatabase.getReference().child("users").child(userId).setValue(userModel);
+
+                                        Toast.makeText(context.getApplicationContext(), "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                        dismiss();
+                                    }
+                                    else {
+                                        // 회원가입 실패 시 처리할 내용
+                                        Toast.makeText(context.getApplicationContext(), "회원가입에 실패했습니다", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
 
-                    Toast.makeText(context.getApplicationContext(), "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
-                    dismiss();
                 }
             }
         });

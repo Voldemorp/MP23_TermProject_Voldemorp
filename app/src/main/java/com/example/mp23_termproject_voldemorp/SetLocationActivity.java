@@ -76,6 +76,7 @@ public class SetLocationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 firstSaveButtonClicked=true;
+
                 //[서버] 첫번째 주소 db에 저장
             }
 

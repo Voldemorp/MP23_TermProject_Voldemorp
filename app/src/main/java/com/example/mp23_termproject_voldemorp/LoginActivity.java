@@ -85,8 +85,6 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SetLocationActivity.class);
-                startActivity(intent);
 
                 // 화면 전환 시 왼쪽에서 오른쪽으로 밀듯이 나타나는 애니메이션 적용
                 overridePendingTransition(R.anim.slide_right_enter, R.anim.none);
@@ -98,6 +96,8 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 // 로그인 성공시 메인화면으로 넘어감
                                 if (task.isSuccessful()) {
+                                    Toast.makeText(LoginActivity.this, "로그인성공!", Toast.LENGTH_SHORT).show();
+
                                     moveMainPage(FirebaseAuth.getInstance().getCurrentUser());
                                 } else { // 로그인 실패시 토스트 메시지 출력
                                     Toast.makeText(LoginActivity.this, "이메일 또는 비밀번호를 잘못 입력했습니다.", Toast.LENGTH_SHORT).show();
