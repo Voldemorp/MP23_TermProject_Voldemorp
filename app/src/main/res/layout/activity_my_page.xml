@@ -580,15 +580,10 @@
 
                             <!--(뱃지 수 / 3개)만큼 만들기-->
                             <LinearLayout
+                                android:id="@+id/portView"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical" >
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal"></LinearLayout>
-                            </LinearLayout>
+                                android:orientation="vertical" />
                         </ScrollView>
 
                         <View
