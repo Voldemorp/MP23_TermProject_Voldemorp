@@ -146,17 +146,27 @@ public class SignUpDialog extends Dialog {
                     emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                 }
                 //[서버] '입력한 이메일과 같은 메일이 이미 데이터에 존재한다면'을 조건에 추가. 임의로 예시 넣어둠
-                else if (insEmail.equals("voldmorp@gachon.ac.kr")) {
-                    emailCheckedResult.setText("이미 존재하는 이메일입니다");
-                    //고구마색으로 바꾸기
-                    emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
-               }
-                else {
-                    emailCheckedResult.setText("사용 가능한 이메일입니다");
-                    //노란색으로 바꾸기
-                    emailCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
-                    //데이터에 넣을 이메일
-                    email=insEmail;
+                else{
+                    firebaseAuth.fetchSignInMethodsForEmail(insEmail)
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    boolean emailExists = !task.getResult().getSignInMethods().isEmpty();
+                                    if (emailExists) {
+                                        emailCheckedResult.setText("이미 존재하는 이메일입니다");
+                                        // 고구마색으로 바꾸기
+                                        emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+                                    } else {
+                                        emailCheckedResult.setText("사용 가능한 이메일입니다");
+                                        // 노란색으로 바꾸기
+                                        emailCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
+                                        // 데이터에 넣을 이메일
+                                        email = insEmail;
+                                    }
+                                } else {
+                                    // 오류 발생
+                                    // TODO: 처리할 작업 수행
+                                }
+                            });
                 }
 
             }
