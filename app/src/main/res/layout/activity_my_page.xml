@@ -150,7 +150,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center|start"
                                 android:text="대표뱃지이름"
-                                android:textColor="@color/black"
+                                android:textColor="#980D4D"
                                 android:textSize="11dp"
                                 android:textStyle="bold"
                                 tools:ignore="TextSizeCheck" />
@@ -231,7 +231,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:text="사용자이름"
-                        android:textColor="@color/black"
+                        android:textColor="#980D4D"
                         android:textStyle="bold" />
 
                     <TextView
@@ -682,7 +682,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="사용자이름"
-                            android:textColor="@color/black"
+                            android:textColor="#980D4D"
                             android:textStyle="bold" />
 
                         <TextView
