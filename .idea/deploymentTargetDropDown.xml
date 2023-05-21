@@ -7,11 +7,19 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
+<<<<<<< HEAD
             <value value="$USER_HOME$/.android/avd/Pixel_2_API_33.avd" />
+=======
+            <value value="$USER_HOME$/.android/avd/Resizable_Experimental_API_33.avd" />
+>>>>>>> youjin2
           </Key>
         </deviceKey>
       </Target>
     </targetSelectedWithDropDown>
+<<<<<<< HEAD
     <timeTargetWasSelectedWithDropDown value="2023-05-21T16:36:18.410489Z" />
+=======
+    <timeTargetWasSelectedWithDropDown value="2023-05-21T19:45:08.877637Z" />
+>>>>>>> youjin2
   </component>
 </project>
