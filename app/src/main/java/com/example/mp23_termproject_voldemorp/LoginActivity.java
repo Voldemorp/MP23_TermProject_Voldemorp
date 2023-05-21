@@ -85,11 +85,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SetLocationActivity.class);
-                startActivity(intent);
-
                 // 화면 전환 시 왼쪽에서 오른쪽으로 밀듯이 나타나는 애니메이션 적용
-                overridePendingTransition(R.anim.slide_right_enter, R.anim.none);
+//                overridePendingTransition(R.anim.slide_right_enter, R.anim.none);
                 String email = loginEmailEditText.getText().toString().trim();
                 String pwd = loginPasswordEditText.getText().toString().trim();
                 firebaseAuth.signInWithEmailAndPassword(email, pwd)
@@ -119,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
 
             // 화면 전환 시 왼쪽에서 오른쪽으로 밀듯이 나타나는 애니메이션 적용
             overridePendingTransition(R.anim.slide_right_enter, R.anim.none);
+            Toast.makeText(LoginActivity.this,"로그인 성공!",Toast.LENGTH_SHORT).show();
 
             finish();
         }
