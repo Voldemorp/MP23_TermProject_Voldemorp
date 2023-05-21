@@ -17,5 +17,35 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="30"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#00FFFFFF"
+                android:text="취소" />
+
+            <View
+                android:id="@+id/view52"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#00FFFFFF"
+                android:text="확인" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

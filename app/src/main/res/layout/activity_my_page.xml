@@ -298,7 +298,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="30dp"
                                         android:gravity="center"
-                                        android:text="PortUs에 오신 걸 \n환영해요!"
+                                        android:text="아주쟈근햄쥑이"
                                         android:textAlignment="center"
                                         android:textColor="@color/black"
                                         android:textSize="10sp"
