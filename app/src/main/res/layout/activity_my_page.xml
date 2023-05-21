@@ -67,9 +67,10 @@
                     <ImageView
                         android:id="@+id/imageView2"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="3.5"
+                        android:padding="5dp"
+                        android:src="@drawable/badge_default" />
 
                     <View
                         android:id="@+id/view41"
@@ -83,40 +84,93 @@
                         android:layout_weight="9"
                         android:orientation="vertical">
 
+                        <View
+                            android:id="@+id/view50"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3" />
+
                         <TextView
                             android:id="@+id/textView"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
                             android:gravity="center|start"
                             android:text="사용자이름"
                             android:textColor="@color/black"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
+                            android:textSize="12dp"
+                            android:textStyle="bold"
+                            tools:ignore="TextSizeCheck" />
 
                         <Button
                             android:id="@+id/button3"
                             style="?android:attr/borderlessButtonStyle"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
+                            android:layout_height="35dp"
                             android:backgroundTint="#00FFFFFF"
+                            android:gravity="center_vertical"
                             android:text="프로필 편집"
-                            android:textAlignment="viewStart"
                             android:textColor="#6C6C6C"
-                            android:textSize="8sp"
-                            tools:ignore="TouchTargetSizeCheck" />
+                            android:textSize="9dp"
+                            tools:ignore="RtlCompat,TouchTargetSizeCheck,TextSizeCheck" />
 
-                        <TextView
-                            android:id="@+id/textView5"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="주소"
+                                android:textColor="@color/black"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                tools:ignore="TextSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/textView13"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="의"
+                                android:textColor="@color/black"
+                                android:textSize="11dp"
+                                tools:ignore="TextSizeCheck" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center|start"
+                                android:text="대표뱃지이름"
+                                android:textColor="@color/black"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                tools:ignore="TextSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/textView14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="입니다"
+                                android:textColor="@color/black"
+                                android:textSize="11dp"
+                                tools:ignore="TextSizeCheck" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/view51"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="1.5"
-                            android:gravity="center|start"
-                            android:text="동네이름의\n칭호입니다"
-                            android:textColor="@color/black"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
+                            android:layout_weight="0.3" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -157,7 +211,7 @@
                     android:id="@+id/view43"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="0.5" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -169,7 +223,16 @@
                         android:id="@+id/view66"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1" />
+                        android:layout_weight="0.5" />
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="사용자이름"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textView6"
@@ -177,16 +240,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight="5"
                         android:gravity="center|start"
-                        android:text="사용자 이름님의 뱃지 목록"
+                        android:text="님의 뱃지 목록"
                         android:textColor="@color/black"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <View
                         android:id="@+id/view67"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="0.5" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -199,7 +262,7 @@
                         android:id="@+id/view46"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1" />
+                        android:layout_weight="0.5" />
 
                     <ScrollView
                         android:layout_width="0dp"
@@ -226,14 +289,20 @@
                                     <ImageView
                                         android:id="@+id/badgeForFirstSignUp"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        tools:srcCompat="@tools:sample/avatars" />
+                                        android:layout_height="100dp"
+                                        android:padding="10dp"
+                                        android:src="@drawable/badge_default" />
 
                                     <TextView
                                         android:id="@+id/labelForFirstSignUp"
                                         android:layout_width="match_parent"
-                                        android:layout_height="20dp"
-                                        android:text="PortUs에 오신 걸 환영해요!" />
+                                        android:layout_height="30dp"
+                                        android:gravity="center"
+                                        android:text="PortUs에 오신 걸 \n환영해요!"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/black"
+                                        android:textSize="10sp"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -245,14 +314,20 @@
                                     <ImageView
                                         android:id="@+id/badgeForFirstRecommend"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        tools:srcCompat="@tools:sample/avatars" />
+                                        android:layout_height="100dp"
+                                        android:padding="10dp"
+                                        android:src="@drawable/badge_default" />
 
                                     <TextView
                                         android:id="@+id/labelForFirstRecommend"
                                         android:layout_width="match_parent"
-                                        android:layout_height="20dp"
-                                        android:text="추천 고마워!" />
+                                        android:layout_height="30dp"
+                                        android:gravity="center"
+                                        android:text="추천 고마워!"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/black"
+                                        android:textSize="10sp"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -264,14 +339,20 @@
                                     <ImageView
                                         android:id="@+id/badgeForMaster"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        tools:srcCompat="@tools:sample/avatars" />
+                                        android:layout_height="100dp"
+                                        android:padding="10dp"
+                                        android:src="@drawable/badge_default" />
 
                                     <TextView
                                         android:id="@+id/labelForMaster"
                                         android:layout_width="match_parent"
-                                        android:layout_height="20dp"
-                                        android:text="너 좀 짱인듯" />
+                                        android:layout_height="30dp"
+                                        android:gravity="center"
+                                        android:text="너 좀 짱인듯"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/black"
+                                        android:textSize="10sp"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -290,14 +371,20 @@
                                     <ImageView
                                         android:id="@+id/badgeForMania"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        tools:srcCompat="@tools:sample/avatars" />
+                                        android:layout_height="99dp"
+                                        android:padding="10dp"
+                                        android:src="@drawable/badge_default" />
 
                                     <TextView
                                         android:id="@+id/labelForMania"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="너 완전 박사구나?" />
+                                        android:layout_height="30dp"
+                                        android:gravity="center"
+                                        android:text="너 완전 박사구나?"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/black"
+                                        android:textSize="10sp"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -309,14 +396,20 @@
                                     <ImageView
                                         android:id="@+id/badgeForTenRecommend"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        tools:srcCompat="@tools:sample/avatars" />
+                                        android:layout_height="100dp"
+                                        android:padding="10dp"
+                                        android:src="@drawable/badge_default" />
 
                                     <TextView
                                         android:id="@+id/labelForTenRecommend"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="벌써 10번째 추천이야!" />
+                                        android:layout_height="30dp"
+                                        android:gravity="center"
+                                        android:text="벌써 10번째 추천이야!"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/black"
+                                        android:textSize="10sp"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -328,14 +421,20 @@
                                     <ImageView
                                         android:id="@+id/badgeForHundredRecommend"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        tools:srcCompat="@tools:sample/avatars" />
+                                        android:layout_height="100dp"
+                                        android:padding="10dp"
+                                        android:src="@drawable/badge_default" />
 
                                     <TextView
                                         android:id="@+id/labelForHundredRecommend"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="TextView" />
+                                        android:layout_height="30dp"
+                                        android:gravity="center"
+                                        android:text="TextView"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/black"
+                                        android:textSize="10sp"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -354,14 +453,20 @@
                                     <ImageView
                                         android:id="@+id/badgeForFirstVisit"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        tools:srcCompat="@tools:sample/avatars" />
+                                        android:layout_height="100dp"
+                                        android:padding="10dp"
+                                        android:src="@drawable/badge_default" />
 
                                     <TextView
                                         android:id="@+id/labelForFirstVisit"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="firstVisit" />
+                                        android:layout_height="30dp"
+                                        android:gravity="center"
+                                        android:text="firstVisit"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/black"
+                                        android:textSize="10sp"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -373,14 +478,20 @@
                                     <ImageView
                                         android:id="@+id/badgeForTenVisit"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        tools:srcCompat="@tools:sample/avatars" />
+                                        android:layout_height="100dp"
+                                        android:padding="10dp"
+                                        android:src="@drawable/badge_default" />
 
                                     <TextView
                                         android:id="@+id/labelForTenVisit"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="TenVisit" />
+                                        android:layout_height="30dp"
+                                        android:gravity="center"
+                                        android:text="TenVisit"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/black"
+                                        android:textSize="10sp"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -392,14 +503,20 @@
                                     <ImageView
                                         android:id="@+id/badgeForHundredVisit"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        tools:srcCompat="@tools:sample/avatars" />
+                                        android:layout_height="100dp"
+                                        android:padding="10dp"
+                                        android:src="@drawable/badge_default" />
 
                                     <TextView
                                         android:id="@+id/labelForHundredVisit"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="HundredVisit" />
+                                        android:layout_height="30dp"
+                                        android:gravity="center"
+                                        android:text="HundredVisit"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/black"
+                                        android:textSize="10sp"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -418,14 +535,20 @@
                                     <ImageView
                                         android:id="@+id/badgeForFirstPhoto"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        tools:srcCompat="@tools:sample/avatars" />
+                                        android:layout_height="100dp"
+                                        android:padding="10dp"
+                                        android:src="@drawable/badge_default" />
 
                                     <TextView
                                         android:id="@+id/labelForFirstPhoto"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="FirstPhoto" />
+                                        android:layout_height="30dp"
+                                        android:gravity="center"
+                                        android:text="FirstPhoto"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/black"
+                                        android:textSize="10sp"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -437,14 +560,20 @@
                                     <ImageView
                                         android:id="@+id/badgeForTenPhoto"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        tools:srcCompat="@tools:sample/avatars" />
+                                        android:layout_height="100dp"
+                                        android:padding="10dp"
+                                        android:src="@drawable/badge_default" />
 
                                     <TextView
                                         android:id="@+id/labelForTenPhoto"
                                         android:layout_width="match_parent"
-                                        android:layout_height="50dp"
-                                        android:text="Tenphoto" />
+                                        android:layout_height="30dp"
+                                        android:gravity="center"
+                                        android:text="Tenphoto"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/black"
+                                        android:textSize="10sp"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -456,14 +585,20 @@
                                     <ImageView
                                         android:id="@+id/badgeForHundredPhoto"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        tools:srcCompat="@tools:sample/avatars" />
+                                        android:layout_height="100dp"
+                                        android:padding="10dp"
+                                        android:src="@drawable/badge_default" />
 
                                     <TextView
                                         android:id="@+id/labelForHundredPhoto"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="hundredPhoto" />
+                                        android:layout_height="30dp"
+                                        android:gravity="center"
+                                        android:text="hundredPhoto"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/black"
+                                        android:textSize="10sp"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -475,14 +610,14 @@
                         android:id="@+id/view47"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="0.5" />
                 </LinearLayout>
 
                 <View
                     android:id="@+id/view45"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="0.5" />
             </LinearLayout>
 
             <View
@@ -543,14 +678,22 @@
                             android:layout_weight="1" />
 
                         <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="사용자이름"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
                             android:id="@+id/textView7"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="5"
                             android:gravity="center|start"
-                            android:text="사용자 이름님이 Port!한 식당 리스트"
+                            android:text="님이 Port!한 식당 리스트"
                             android:textColor="@color/black"
-                            android:textSize="12sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
 
                         <View
