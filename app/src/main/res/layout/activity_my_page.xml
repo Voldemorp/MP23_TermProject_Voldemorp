@@ -675,12 +675,13 @@
                             android:id="@+id/view76"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1" />
+                            android:layout_weight="0.5" />
 
                         <TextView
                             android:id="@+id/textView11"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:gravity="start|center_vertical"
                             android:text="사용자이름"
                             android:textColor="#980D4D"
                             android:textStyle="bold" />
@@ -700,7 +701,7 @@
                             android:id="@+id/view77"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                            android:layout_weight="0.5" />
                     </LinearLayout>
 
                     <LinearLayout

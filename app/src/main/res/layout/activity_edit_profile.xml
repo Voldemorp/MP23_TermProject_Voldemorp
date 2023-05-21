@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/my_page_background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     tools:context=".EditProfileActivity">
 
     <View
@@ -94,5 +95,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:text="TextView"
+            android:textColor="@color/black" />
     </LinearLayout>
 </LinearLayout>
