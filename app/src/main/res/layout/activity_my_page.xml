@@ -209,8 +209,266 @@
                         <!--(뱃지 수 / 3개)만큼 만들기-->
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            android:orientation="vertical" />
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/badgeForFirstSignUp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:srcCompat="@tools:sample/avatars" />
+
+                                    <TextView
+                                        android:id="@+id/labelForFirstSignUp"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="20dp"
+                                        android:text="PortUs에 오신 걸 환영해요!" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/badgeForFirstRecommend"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:srcCompat="@tools:sample/avatars" />
+
+                                    <TextView
+                                        android:id="@+id/labelForFirstRecommend"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="20dp"
+                                        android:text="추천 고마워!" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/badgeForMaster"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:srcCompat="@tools:sample/avatars" />
+
+                                    <TextView
+                                        android:id="@+id/labelForMaster"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="20dp"
+                                        android:text="너 좀 짱인듯" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/badgeForMania"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:srcCompat="@tools:sample/avatars" />
+
+                                    <TextView
+                                        android:id="@+id/labelForMania"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="너 완전 박사구나?" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/badgeForTenRecommend"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:srcCompat="@tools:sample/avatars" />
+
+                                    <TextView
+                                        android:id="@+id/labelForTenRecommend"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="벌써 10번째 추천이야!" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/badgeForHundredRecommend"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:srcCompat="@tools:sample/avatars" />
+
+                                    <TextView
+                                        android:id="@+id/labelForHundredRecommend"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="TextView" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/badgeForFirstVisit"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:srcCompat="@tools:sample/avatars" />
+
+                                    <TextView
+                                        android:id="@+id/labelForFirstVisit"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="firstVisit" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/badgeForTenVisit"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:srcCompat="@tools:sample/avatars" />
+
+                                    <TextView
+                                        android:id="@+id/labelForTenVisit"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="TenVisit" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/badgeForHundredVisit"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:srcCompat="@tools:sample/avatars" />
+
+                                    <TextView
+                                        android:id="@+id/labelForHundredVisit"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="HundredVisit" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/badgeForFirstPhoto"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:srcCompat="@tools:sample/avatars" />
+
+                                    <TextView
+                                        android:id="@+id/labelForFirstPhoto"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="FirstPhoto" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/badgeForTenPhoto"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:srcCompat="@tools:sample/avatars" />
+
+                                    <TextView
+                                        android:id="@+id/labelForTenPhoto"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="50dp"
+                                        android:text="Tenphoto" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/badgeForHundredPhoto"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:srcCompat="@tools:sample/avatars" />
+
+                                    <TextView
+                                        android:id="@+id/labelForHundredPhoto"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="hundredPhoto" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
                     </ScrollView>
 
                     <View
@@ -317,13 +575,20 @@
                         <ScrollView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="5">
+                            android:layout_weight="5"
+                            tools:ignore="SpeakableTextPresentCheck">
 
                             <!--(뱃지 수 / 3개)만큼 만들기-->
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="150dp"
-                                android:orientation="vertical" />
+                                android:layout_height="match_parent"
+                                android:orientation="vertical" >
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"></LinearLayout>
+                            </LinearLayout>
                         </ScrollView>
 
                         <View
