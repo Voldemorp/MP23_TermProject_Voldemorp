@@ -21,7 +21,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class SignUpDialog extends Dialog {
@@ -135,17 +139,27 @@ public class SignUpDialog extends Dialog {
                     emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                 }
                 //[서버] '입력한 이메일과 같은 메일이 이미 데이터에 존재한다면'을 조건에 추가. 임의로 예시 넣어둠
-                else if (insEmail.equals("voldmorp@gachon.ac.kr")) {
-                    emailCheckedResult.setText("이미 존재하는 이메일입니다");
-                    //고구마색으로 바꾸기
-                    emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
-               }
-                else {
-                    emailCheckedResult.setText("사용 가능한 이메일입니다");
-                    //노란색으로 바꾸기
-                    emailCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
-                    //데이터에 넣을 이메일
-                    email=insEmail;
+                else{
+                    firebaseAuth.fetchSignInMethodsForEmail(insEmail)
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    boolean emailExists = !task.getResult().getSignInMethods().isEmpty();
+                                    if (emailExists) {
+                                        emailCheckedResult.setText("이미 존재하는 이메일입니다");
+                                        // 고구마색으로 바꾸기
+                                        emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+                                    } else {
+                                        emailCheckedResult.setText("사용 가능한 이메일입니다");
+                                        // 노란색으로 바꾸기
+                                        emailCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
+                                        // 데이터에 넣을 이메일
+                                        email = insEmail;
+                                    }
+                                } else {
+                                    // 오류 발생
+                                    // TODO: 처리할 작업 수행
+                                }
+                            });
                 }
 
             }
@@ -207,17 +221,32 @@ public class SignUpDialog extends Dialog {
                     nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                 }
                 //[서버] '입력한 닉네임과 같은 닉네임이 이미 데이터에 존재한다면'을 조건에 추가. 임의로 예시 넣어둠
-                else if(insNickname.equals("voldmorp")){
-                    nicknameCheckedResult.setText("이미 존재하는 닉네임입니다");
-                    //고구마색으로 바꾸기
-                    nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
-                }
-                else{
-                    nicknameCheckedResult.setText("사용 가능한 닉네임입니다");
-                    //노란색으로 바꾸기
-                    nicknameCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
-                    //데이터에 넣을 닉네임
-                    nickname=insNickname;
+                else {
+                    // Firebase Realtime Database의 "users" 레퍼런스를 가져옵니다.
+                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+
+                    usersRef.orderByChild("nickname").equalTo(insNickname).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                // 닉네임이 이미 존재함
+                                nicknameCheckedResult.setText("이미 존재하는 닉네임입니다");
+                                // 고구마색으로 바꾸기
+                                nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+                            } else {
+                                nicknameCheckedResult.setText("사용 가능한 닉네임입니다");
+                                // 노란색으로 바꾸기
+                                nicknameCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
+                                // 데이터에 넣을 닉네임
+                                nickname = insNickname;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
         });
