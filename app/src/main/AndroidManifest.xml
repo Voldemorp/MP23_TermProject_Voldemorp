@@ -19,7 +19,7 @@
             android:name=".SetLocationNextActivity"/>
         <activity
             android:name=".MyPageActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />
