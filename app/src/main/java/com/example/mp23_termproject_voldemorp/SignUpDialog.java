@@ -349,20 +349,18 @@ public class SignUpDialog extends Dialog {
                 //회원가입 성공
                 else {
                     //[서버] 가입하기 버튼 누를시에 입력한 정보들 데이터에 저장(메일:email, 닉네임:nickname, 비밀번호:password)
-                    firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener
-                            ((Executor) SignUpDialog.this, new OnCompleteListener<AuthResult>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                            if (task.isSuccessful()) {
-                                                UserModel userModel = new UserModel();
+                    firebaseAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        UserModel userModel = new UserModel();
+                                        userModel.userName = nickname;
 
-                                                userModel.userName = nickname;
-
-                                                mDatabase.getReference().child("users")
-                                                        .setValue(userModel);
-                                            }
-                                        }
-                                    });
+                                        mDatabase.getReference().child("users").setValue(userModel);
+                                    }
+                                }
+                            });
 
                     Toast.makeText(context.getApplicationContext(), "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
                     dismiss();
