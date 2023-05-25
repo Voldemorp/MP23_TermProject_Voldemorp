@@ -14,10 +14,14 @@
         android:theme="@style/Theme.MP23_TermProject_Voldemorp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".RestaurantActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="i73mky8007"/>
+            android:value="i73mky8007" />
+
         <activity
             android:name=".EditProfileActivity"
             android:exported="true" />
