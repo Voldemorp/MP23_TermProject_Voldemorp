@@ -20,7 +20,7 @@
             android:value="i73mky8007"/>
         <activity
             android:name=".EditProfileActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity android:name=".SetLocationNextActivity" />
         <activity
             android:name=".MyPageActivity"
