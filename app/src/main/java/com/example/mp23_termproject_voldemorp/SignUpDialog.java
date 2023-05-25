@@ -1,38 +1,31 @@
 package com.example.mp23_termproject_voldemorp;
 
-import static android.content.Context.INPUT_METHOD_SERVICE;
-
-import static androidx.core.content.ContextCompat.getSystemService;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.concurrent.Executor;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class SignUpDialog extends Dialog {
@@ -58,7 +51,7 @@ public class SignUpDialog extends Dialog {
     private FirebaseDatabase mDatabase;
 
     public class UserModel{
-        public String userName;
+        public String nickName;
     }
 
     //화면 터치시 키보드 내리기
@@ -146,17 +139,27 @@ public class SignUpDialog extends Dialog {
                     emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                 }
                 //[서버] '입력한 이메일과 같은 메일이 이미 데이터에 존재한다면'을 조건에 추가. 임의로 예시 넣어둠
-                else if (insEmail.equals("voldmorp@gachon.ac.kr")) {
-                    emailCheckedResult.setText("이미 존재하는 이메일입니다");
-                    //고구마색으로 바꾸기
-                    emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
-               }
-                else {
-                    emailCheckedResult.setText("사용 가능한 이메일입니다");
-                    //노란색으로 바꾸기
-                    emailCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
-                    //데이터에 넣을 이메일
-                    email=insEmail;
+                else{
+                    firebaseAuth.fetchSignInMethodsForEmail(insEmail)
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    boolean emailExists = !task.getResult().getSignInMethods().isEmpty();
+                                    if (emailExists) {
+                                        emailCheckedResult.setText("이미 존재하는 이메일입니다");
+                                        // 고구마색으로 바꾸기
+                                        emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+                                    } else {
+                                        emailCheckedResult.setText("사용 가능한 이메일입니다");
+                                        // 노란색으로 바꾸기
+                                        emailCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
+                                        // 데이터에 넣을 이메일
+                                        email = insEmail;
+                                    }
+                                } else {
+                                    // 오류 발생
+                                    // TODO: 처리할 작업 수행
+                                }
+                            });
                 }
 
             }
@@ -218,17 +221,32 @@ public class SignUpDialog extends Dialog {
                     nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                 }
                 //[서버] '입력한 닉네임과 같은 닉네임이 이미 데이터에 존재한다면'을 조건에 추가. 임의로 예시 넣어둠
-                else if(insNickname.equals("voldmorp")){
-                    nicknameCheckedResult.setText("이미 존재하는 닉네임입니다");
-                    //고구마색으로 바꾸기
-                    nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
-                }
-                else{
-                    nicknameCheckedResult.setText("사용 가능한 닉네임입니다");
-                    //노란색으로 바꾸기
-                    nicknameCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
-                    //데이터에 넣을 닉네임
-                    nickname=insNickname;
+                else {
+                    // Firebase Realtime Database의 "users" 레퍼런스를 가져옵니다.
+                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+
+                    usersRef.orderByChild("nickname").equalTo(insNickname).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                // 닉네임이 이미 존재함
+                                nicknameCheckedResult.setText("이미 존재하는 닉네임입니다");
+                                // 고구마색으로 바꾸기
+                                nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+                            } else {
+                                nicknameCheckedResult.setText("사용 가능한 닉네임입니다");
+                                // 노란색으로 바꾸기
+                                nicknameCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
+                                // 데이터에 넣을 닉네임
+                                nickname = insNickname;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
         });
@@ -349,27 +367,31 @@ public class SignUpDialog extends Dialog {
                 //회원가입 성공
                 else {
                     //[서버] 가입하기 버튼 누를시에 입력한 정보들 데이터에 저장(메일:email, 닉네임:nickname, 비밀번호:password)
-                    firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener
-                            ((Executor) SignUpDialog.this, new OnCompleteListener<AuthResult>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                            if (task.isSuccessful()) {
-                                                UserModel userModel = new UserModel();
+                    firebaseAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        String userId = firebaseAuth.getCurrentUser().getUid();
 
-                                                userModel.userName = nickname;
+                                        UserModel userModel = new UserModel();
+                                        userModel.nickName = nickname;
 
-                                                mDatabase.getReference().child("users")
-                                                        .setValue(userModel);
-                                            }
-                                        }
-                                    });
+                                        // 사용자의 닉네임을 "users" 경로에 저장
+                                        mDatabase.getReference().child("users").child(userId).setValue(userModel);
 
-                    Toast.makeText(context.getApplicationContext(), "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
-                    dismiss();
+                                        Toast.makeText(context.getApplicationContext(), "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                        dismiss();
+                                    }
+                                    else {
+                                        // 회원가입 실패 시 처리할 내용
+                                        Toast.makeText(context.getApplicationContext(), "회원가입에 실패했습니다", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
                 }
             }
         });
     }
-
-
 }
