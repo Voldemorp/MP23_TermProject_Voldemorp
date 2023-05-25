@@ -3,7 +3,6 @@ package com.example.mp23_termproject_voldemorp;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 public class RestaurantActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager;
-    private LinearLayout restaurantContainer;
+    private FrameLayout restaurantContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +46,16 @@ public class RestaurantActivity extends AppCompatActivity {
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            // 각 position에 맞는 Fragment를 생성하여 반환하는 코드를 작성하세요.
-            // 예를 들어, 첫 번째 Fragment는 Fragment1로 설정하려면 다음과 같이 작성할 수 있습니다:
-            return new Fragment1();
+            switch (position) {
+                case 0:
+                    return new RestaurantPhotoFragment();
+                case 1:
+                    return new ResutaurantRecommendFragment();
+                case 2:
+                    return new RestaurantRankFragment();
+                default:
+                    return null;
+            }
         }
     }
 }
