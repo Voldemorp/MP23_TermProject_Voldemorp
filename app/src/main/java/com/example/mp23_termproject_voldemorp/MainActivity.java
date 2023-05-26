@@ -1,11 +1,8 @@
 package com.example.mp23_termproject_voldemorp;
 
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,30 +15,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setContentView(R.layout.activity_toolbar);
-        btnScreen1 = findViewById(R.id.btnScreen1);
-        btnScreen2 = findViewById(R.id.btnScreen2);
-        btnScreen3 = findViewById(R.id.btnScreen3);
-        btnScreen1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showScreen1();
-            }
-        });
-
-        btnScreen2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showScreen2();
-            }
-        });
-
-        btnScreen3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showScreen3();
-            }
-        });
+//        setContentView(R.layout.activity_toolbar);
+//        btnScreen1 = findViewById(R.id.btnScreen1);
+//        btnScreen2 = findViewById(R.id.btnScreen2);
+//        btnScreen3 = findViewById(R.id.btnScreen3);
+//        btnScreen1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showScreen1();
+//            }
+//        });
+//
+//        btnScreen2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showScreen2();
+//            }
+//        });
+//
+//        btnScreen3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showScreen3();
+//            }
+//        });
     }
     private void showScreen1() {
         Intent intent = new Intent(getApplicationContext(), MyPageActivity.class);
