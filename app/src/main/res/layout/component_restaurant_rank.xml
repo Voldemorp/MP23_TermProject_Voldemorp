@@ -8,8 +8,8 @@
     <View
         android:id="@+id/view44"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#989898" />
+        android:layout_height="0.1dp"
+        android:background="#000000" />
 
     <View
         android:id="@+id/view27"
@@ -27,15 +27,29 @@
             android:id="@+id/view40"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="0.3" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="순위" />
+
+        <View
+            android:id="@+id/view112"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" />
 
         <TextView
             android:id="@+id/name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="5"
             android:gravity="center|start"
-            android:text="식당 이름"
+            android:text="닉네임"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -44,8 +58,7 @@
             android:id="@+id/textView8"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3
-"
+            android:layout_weight="2"
             android:gravity="center|start"
             android:text="총 "
             android:textAlignment="textEnd"
@@ -75,7 +88,7 @@
             android:id="@+id/view42"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="0.7" />
     </LinearLayout>
 
     <View
@@ -87,6 +100,6 @@
     <View
         android:id="@+id/view48"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#989898" />
+        android:layout_height="0.1dp"
+        android:background="#000000" />
 </LinearLayout>

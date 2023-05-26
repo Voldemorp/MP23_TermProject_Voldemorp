@@ -6,9 +6,8 @@
     android:paddingLeft="15dp"
     android:paddingTop="5dp"
     android:paddingRight="15dp"
-    tools:context=".RestaurantRankFragment">
+    tools:context=".RestaurantPhotoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="식당이름의 랭킹"
+            android:text="식당이름의 사진"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="18dp"
@@ -37,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="식당이름의 사용자 랭킹이예요."
+            android:text="식당이름을 방문한 사용자들이 올린 사진이예요."
             android:textAlignment="center"
             android:textSize="12dp"
             tools:ignore="TextSizeCheck" />
@@ -58,33 +57,34 @@
                 android:id="@+id/view101"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5" />
+                android:layout_weight="1" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
+                android:background="@drawable/restaurant_recommend_component_background"
                 android:orientation="horizontal">
 
                 <ScrollView
-                    android:id="@+id/rankScrollView"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="0.5"
                     tools:ignore="SpeakableTextPresentCheck">
 
                     <LinearLayout
-                        android:id="@+id/rankLinearView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical" />
                 </ScrollView>
+
             </LinearLayout>
 
             <View
                 android:id="@+id/view102"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5" />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <View
@@ -93,5 +93,4 @@
             android:layout_height="0dp"
             android:layout_weight="0.15" />
     </LinearLayout>
-
 </FrameLayout>

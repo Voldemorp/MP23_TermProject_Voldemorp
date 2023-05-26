@@ -32,7 +32,8 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -79,7 +80,7 @@
                     <TextView
                         android:id="@+id/textView3"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="12"
                         android:gravity="center_vertical"
                         android:text="음식 종류"
@@ -89,21 +90,42 @@
 
             </LinearLayout>
 
-            <Button
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/login_btn_background"
-                android:text="Port!"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/view108"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.3" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_btn_background"
+                    android:text="Port!"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/view89"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.3" />
+
+            </LinearLayout>
 
             <View
                 android:id="@+id/view95"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.1" />
+
         </LinearLayout>
 
         <View

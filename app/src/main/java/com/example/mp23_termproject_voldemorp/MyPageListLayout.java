@@ -23,7 +23,7 @@ public class MyPageListLayout extends LinearLayout {
         inflater.inflate(R.layout.component_mypage_resturant, this, true);
 
         TextView restaurantName = (TextView)findViewById(R.id.restaurantName);
-        TextView numOfPort = (TextView)findViewById(R.id.numOfPort);
+        TextView numOfPort = (TextView)findViewById(R.id.numOfVisit);
 
         restaurantName.setText(myPagePortItem.restaurantName);
         numOfPort.setText(myPagePortItem.numOfPort);
