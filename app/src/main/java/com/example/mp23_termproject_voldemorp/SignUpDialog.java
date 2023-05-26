@@ -228,7 +228,7 @@ public class SignUpDialog extends Dialog {
                     usersRef.orderByChild("nickname").equalTo(insNickname).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
+                            if (dataSnapshot.getChildrenCount() > 0) {
                                 // 닉네임이 이미 존재함
                                 nicknameCheckedResult.setText("이미 존재하는 닉네임입니다");
                                 // 고구마색으로 바꾸기
