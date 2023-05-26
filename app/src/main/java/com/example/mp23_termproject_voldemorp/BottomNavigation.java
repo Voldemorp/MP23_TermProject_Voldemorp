@@ -1,3 +1,4 @@
+/*
 package com.example.mp23_termproject_voldemorp;
 
 import android.content.Intent;
@@ -64,4 +65,4 @@ public abstract class BottomNavigation extends AppCompatActivity implements Bott
 
     abstract int getNavigationMenuItemId();
 
-}
+}*/
