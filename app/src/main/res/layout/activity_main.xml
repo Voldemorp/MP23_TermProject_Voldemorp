@@ -16,13 +16,14 @@
     >
 
     <!--   지도 화면 구현할 레이아웃  -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <com.naver.maps.map.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.naver.maps.map.MapFragment">
+        android:name="com.naver.maps.map.MapFragment"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <LinearLayout
         android:id="@+id/bottomSheetView"
@@ -43,6 +44,11 @@
             android:background="@drawable/main_bottomsheet_background"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/btnMoveToMyLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="내 위치" />
             <View
                 android:id="@+id/view4"
                 android:layout_width="match_parent"
