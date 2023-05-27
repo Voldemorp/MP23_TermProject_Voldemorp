@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--    app:cnb_unselectedColor="#666666"-->
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/navibar_home"
+        android:title="home"/>
+<!--        app:cnb_iconColor="@color/navigation_color_home"-->
+
+    <item
+        android:id="@+id/ranking"
+        android:icon="@drawable/navibar_ranking"
+        android:title="ranking" />
+<!--        app:cnb_iconColor="@color/navigation_color_ranking" />-->
+
+        <item
+        android:id="@+id/mypage"
+        android:icon="@drawable/navibar_mypage"
+        android:title="mypage" />
+<!--        app:cnb_iconColor="@color/navigation_color_mypage" />-->
+</menu>

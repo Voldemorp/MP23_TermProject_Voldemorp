@@ -223,9 +223,11 @@ public class SignUpDialog extends Dialog {
                 //[서버] '입력한 닉네임과 같은 닉네임이 이미 데이터에 존재한다면'을 조건에 추가. 임의로 예시 넣어둠
                 else {
                     // Firebase Realtime Database의 "users" 레퍼런스를 가져옵니다.
-                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+                    DatabaseReference nicknameRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("nickname");
 
-                    usersRef.orderByChild("nickname").equalTo(insNickname).addListenerForSingleValueEvent(new ValueEventListener() {
+                    nicknameRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.getChildrenCount() > 0) {

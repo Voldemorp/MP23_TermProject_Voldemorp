@@ -121,9 +121,19 @@
                 android:layout_weight="0.5"
                 android:background="#A13366" />
         </LinearLayout>
+
+        <!--   하단 네비게이션 바    -->
+        <include
+            android:id="@+id/navigation"
+            layout="@layout/element_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            />
     </LinearLayout>
 
     <!--   올라올 화면 보여줄 레이아웃    -->
+
 
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
