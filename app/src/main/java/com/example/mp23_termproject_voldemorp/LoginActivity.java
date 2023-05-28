@@ -49,12 +49,12 @@ public class LoginActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
-     //  *--자동 로그인--*  || 로그아웃 하지 않을시, 회원가입시 바로 로그인
-    @Override
-    public void onStart() {
-        super.onStart();
-        movePage(FirebaseAuth.getInstance().getCurrentUser());
-    }
+//     //  *--자동 로그인--*  || 로그아웃 하지 않을시, 회원가입시 바로 로그인
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        movePage(FirebaseAuth.getInstance().getCurrentUser());
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,18 +91,24 @@ public class LoginActivity extends AppCompatActivity {
 //                overridePendingTransition(R.anim.slide_right_enter, R.anim.none);
                 String email = loginEmailEditText.getText().toString().trim();
                 String pwd = loginPasswordEditText.getText().toString().trim();
-                firebaseAuth.signInWithEmailAndPassword(email, pwd)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                // 로그인 성공시 화면 전환
-                                if (task.isSuccessful()) {
-                                    movePage(FirebaseAuth.getInstance().getCurrentUser());
-                                } else { // 로그인 실패시 토스트 메시지 출력
-                                    Toast.makeText(LoginActivity.this, "이메일 또는 비밀번호를 잘못 입력했습니다.", Toast.LENGTH_SHORT).show();
+
+                //로그인 정보 다 입력하지 않았을 경우 예외처리
+                if(email.isEmpty()||pwd.isEmpty())
+                    Toast.makeText(getApplicationContext(),"로그인 정보를 확인해주세요",Toast.LENGTH_SHORT).show();
+                else {
+                    firebaseAuth.signInWithEmailAndPassword(email, pwd)
+                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    // 로그인 성공시 화면 전환
+                                    if (task.isSuccessful()) {
+                                        movePage(FirebaseAuth.getInstance().getCurrentUser());
+                                    } else { // 로그인 실패시 토스트 메시지 출력
+                                        Toast.makeText(LoginActivity.this, "이메일 또는 비밀번호를 잘못 입력했습니다.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
             }
         });
     }
@@ -136,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
-                   // 주소 저장이 되어있지 않으면 지역설정 화면으로 이동
+                    // 주소 저장이 되어있지 않으면 지역설정 화면으로 이동
                     Intent intent = new Intent(getApplicationContext(), SetLocationActivity.class);
                     startActivity(intent);
                 }

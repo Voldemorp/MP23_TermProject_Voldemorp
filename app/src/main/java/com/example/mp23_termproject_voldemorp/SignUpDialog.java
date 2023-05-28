@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -225,12 +226,11 @@ public class SignUpDialog extends Dialog {
                     // Firebase Realtime Database의 "users" 레퍼런스를 가져옵니다.
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
-                    DatabaseReference nicknameRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("nickname");
 
-                    nicknameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    usersRef.orderByChild("nickName").equalTo(insNickname).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.getChildrenCount() > 0) {
+                            if (dataSnapshot.exists()) {
                                 // 닉네임이 이미 존재함
                                 nicknameCheckedResult.setText("이미 존재하는 닉네임입니다");
                                 // 고구마색으로 바꾸기
