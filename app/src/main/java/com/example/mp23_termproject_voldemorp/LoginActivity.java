@@ -49,12 +49,12 @@ public class LoginActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
-//     //  *--자동 로그인--*  || 로그아웃 하지 않을시, 회원가입시 바로 로그인
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        movePage(FirebaseAuth.getInstance().getCurrentUser());
-//    }
+     //  *--자동 로그인--*  || 로그아웃 하지 않을시, 회원가입시 바로 로그인
+    @Override
+    public void onStart() {
+        super.onStart();
+        movePage(FirebaseAuth.getInstance().getCurrentUser());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
