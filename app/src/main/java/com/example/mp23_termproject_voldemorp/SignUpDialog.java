@@ -246,7 +246,7 @@ public class SignUpDialog extends Dialog {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            // 에러 처리 코드 추가
                         }
                     });
                 }
