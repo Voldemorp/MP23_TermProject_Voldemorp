@@ -25,7 +25,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-//import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -171,7 +170,7 @@ public class SignUpDialog extends Dialog {
         //입력한 닉네임의 사용가능 여부 결과 text
         TextView nicknameCheckedResult=(TextView) findViewById(R.id.signUpIsAvailableName);
         //닉네임 중복확인 버튼
-        Button nicknameCheckButton=(Button) findViewById(R.id.signUpCheckNameDuplicationBtn);
+         Button nicknameCheckButton=(Button) findViewById(R.id.signUpCheckNameDuplicationBtn);
         //닉네임 입력하는 공간
         EditText nicknameEditText=(EditText)findViewById(R.id.signUpEditTextNameField);
 
