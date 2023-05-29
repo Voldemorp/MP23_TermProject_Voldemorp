@@ -228,9 +228,10 @@ public class SignUpDialog extends Dialog {
                     DatabaseReference nicknameRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("nickname");
 
                     nicknameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.getChildrenCount() > 0) {
+                            if (dataSnapshot.exists()) {
                                 // 닉네임이 이미 존재함
                                 nicknameCheckedResult.setText("이미 존재하는 닉네임입니다");
                                 // 고구마색으로 바꾸기
@@ -246,7 +247,7 @@ public class SignUpDialog extends Dialog {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            // 에러 처리 코드 추가
                         }
                     });
                 }
