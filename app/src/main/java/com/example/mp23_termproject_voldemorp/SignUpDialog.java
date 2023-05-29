@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -42,6 +43,22 @@ public class SignUpDialog extends Dialog {
     private String nickname;
     //사용자의 password
     private String password;
+
+    //사용자의 뱃지 상태
+    private boolean badge1 = true;
+    private boolean badge2 = false;
+    private boolean badge3 = false;
+    private boolean badge4 = false;
+    private boolean badge5 = false;
+    private boolean badge6 =false;
+    private boolean badge7 = false;
+    private boolean badge8 = false;
+    private boolean badge9 = false;
+    private boolean badge10 = false;
+    private boolean badge11 =false;
+    private boolean badge12 = false;
+
+
     //이메일 중복확인 버튼을 눌렀는지 유무
     private boolean emailCheckButtonClicked = false;
     //닉네임 중복확인 버튼 눌렀는지 유무
@@ -52,6 +69,19 @@ public class SignUpDialog extends Dialog {
 
     public class UserModel{
         public String nickName;
+        public boolean badge1 = true;
+        public boolean badge2 = false;
+        public boolean badge3 = false;
+        public boolean badge4 = false;
+        public boolean badge5 = false;
+        public boolean badge6 =false;
+        public boolean badge7 = false;
+        public boolean badge8 = false;
+        public boolean badge9 = false;
+        public boolean badge10 = false;
+        public boolean badge11 =false;
+        public boolean badge12 = false;
+
     }
 
     //화면 터치시 키보드 내리기
@@ -225,7 +255,8 @@ public class SignUpDialog extends Dialog {
                     // Firebase Realtime Database의 "users" 레퍼런스를 가져옵니다.
                     DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
 
-                    usersRef.orderByChild("nickname").equalTo(insNickname).addListenerForSingleValueEvent(new ValueEventListener() {
+                    Query nicknameQuery = usersRef.orderByChild("nickname").equalTo(insNickname);
+                    nicknameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
@@ -244,7 +275,7 @@ public class SignUpDialog extends Dialog {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            // 에러 처리 코드 추가
                         }
                     });
                 }
@@ -374,11 +405,25 @@ public class SignUpDialog extends Dialog {
                                     if (task.isSuccessful()) {
                                         String userId = firebaseAuth.getCurrentUser().getUid();
 
+                                        // user 데이터 베이스 틀 생성
                                         UserModel userModel = new UserModel();
                                         userModel.nickName = nickname;
+                                        userModel.badge1 = badge1;
+                                        userModel.badge1 = badge2;
+                                        userModel.badge1 = badge3;
+                                        userModel.badge1 = badge4;
+                                        userModel.badge1 = badge5;
+                                        userModel.badge1 = badge6;
+                                        userModel.badge1 = badge7;
+                                        userModel.badge1 = badge8;
+                                        userModel.badge1 = badge9;
+                                        userModel.badge1 = badge10;
+                                        userModel.badge1 = badge11;
+                                        userModel.badge1 = badge12;
 
                                         // 사용자의 닉네임을 "users" 경로에 저장
                                         mDatabase.getReference().child("users").child(userId).setValue(userModel);
+
 
                                         Toast.makeText(context.getApplicationContext(), "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
                                         dismiss();
