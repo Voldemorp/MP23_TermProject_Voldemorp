@@ -414,7 +414,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_first_signup" />
 
                             <TextView
                                 android:id="@+id/labelForFirstSignUp"
@@ -439,7 +439,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_recommend1" />
 
                             <TextView
                                 android:id="@+id/labelForFirstRecommend"
@@ -464,7 +464,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_master" />
 
                             <TextView
                                 android:id="@+id/labelForMaster"
@@ -491,12 +491,12 @@
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <ImageView
+                                <ImageView
                                 android:id="@+id/badgeForMania"
                                 android:layout_width="wrap_content"
                                 android:layout_height="99dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_mania" />
 
                             <TextView
                                 android:id="@+id/labelForMania"
@@ -521,7 +521,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_recommend10" />
 
                             <TextView
                                 android:id="@+id/labelForTenRecommend"
@@ -546,7 +546,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_recommend100" />
 
                             <TextView
                                 android:id="@+id/labelForHundredRecommend"
@@ -578,7 +578,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_visit1" />
 
                             <TextView
                                 android:id="@+id/labelForFirstVisit"
@@ -603,7 +603,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_visit10" />
 
                             <TextView
                                 android:id="@+id/labelForTenVisit"
@@ -628,7 +628,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_visit100" />
 
                             <TextView
                                 android:id="@+id/labelForHundredVisit"
@@ -660,7 +660,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_photo1" />
 
                             <TextView
                                 android:id="@+id/labelForFirstPhoto"
@@ -685,7 +685,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_photo10" />
 
                             <TextView
                                 android:id="@+id/labelForTenPhoto"
@@ -710,7 +710,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_photo100" />
 
                             <TextView
                                 android:id="@+id/labelForHundredPhoto"

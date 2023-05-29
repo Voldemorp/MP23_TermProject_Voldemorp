@@ -53,5 +53,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:20.2.1'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    // for bottomNavigationView
+    implementation 'com.google.android.material:material:1.9.0'
 
 }
