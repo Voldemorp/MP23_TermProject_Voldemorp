@@ -142,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
-                   // 주소 저장이 되어있지 않으면 지역설정 화면으로 이동
+                    // 주소 저장이 되어있지 않으면 지역설정 화면으로 이동
                     Intent intent = new Intent(getApplicationContext(), SetLocationActivity.class);
                     startActivity(intent);
                 }

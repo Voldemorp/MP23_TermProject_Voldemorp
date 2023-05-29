@@ -91,7 +91,7 @@
                             android:layout_weight="0.3" />
 
                         <TextView
-                            android:id="@+id/textView"
+                            android:id="@+id/nicknameTextview"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center|start"
@@ -102,13 +102,13 @@
                             tools:ignore="TextSizeCheck" />
 
                         <Button
-                            android:id="@+id/button3"
+                            android:id="@+id/editProfileBtn"
                             style="?android:attr/borderlessButtonStyle"
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
                             android:backgroundTint="#00FFFFFF"
                             android:gravity="center_vertical"
-                            android:text="프로필 편집"
+                            android:text="프로필 편집 >"
                             android:textColor="#6C6C6C"
                             android:textSize="9dp"
                             tools:ignore="RtlCompat,TouchTargetSizeCheck,TextSizeCheck" />
@@ -119,7 +119,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/textView12"
+                                android:id="@+id/addressTextview"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="주소"
@@ -226,7 +226,7 @@
                         android:layout_weight="0.5" />
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/nicknameTextviewBadge"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
@@ -678,7 +678,7 @@
                             android:layout_weight="0.5" />
 
                         <TextView
-                            android:id="@+id/textView11"
+                            android:id="@+id/nicknameTextviewPort"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="start|center_vertical"
