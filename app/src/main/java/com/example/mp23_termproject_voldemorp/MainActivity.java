@@ -7,7 +7,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +27,8 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.LocationOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private NaverMap naverMap;
     private Button btnMoveToMyLocation;
     private MapView mapView;
+    ArrayList<MainRestaurantInfo> restaurantInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +68,43 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 moveMapToCurrentLocation();
             }
         });
+
+        // 마이페이지에 있는 port list에 띄울 정보를 저장하는 배열
+        restaurantInfo = new ArrayList<>();
+
+        //[서버] DB에서 사용자가 port한 식당 이름/몇번 port했는지 가져와서 portList에 append해야 함
+        // 테스트를 위한 더미데이터 (나중에 구현 성공하면 지우시면 됩니당)
+        MainRestaurantInfo dummyInfo1 = new MainRestaurantInfo("화리화리", "한식");
+        MainRestaurantInfo dummyInfo2 = new MainRestaurantInfo("태평돈까스", "경양식");
+        MainRestaurantInfo dummyInfo3 = new MainRestaurantInfo("폼프리츠", "호프/통닭");
+        MainRestaurantInfo dummyInfo4 = new MainRestaurantInfo("호식당", "일식");
+        MainRestaurantInfo dummyInfo5 = new MainRestaurantInfo("쩡이네", "호프/통닭");
+        MainRestaurantInfo dummyInfo6 = new MainRestaurantInfo("라쿵푸마라탕", "중국식");
+        restaurantInfo.add(dummyInfo1);
+        restaurantInfo.add(dummyInfo2);
+        restaurantInfo.add(dummyInfo3);
+        restaurantInfo.add(dummyInfo4);
+        restaurantInfo.add(dummyInfo5);
+        restaurantInfo.add(dummyInfo6);
+
+        // 상태 바 투명하게 하고 사진 보이게 하는 코드
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        // for문 돌면서 추가
+        for (int i = 0; i < restaurantInfo.size(); i++) {
+            // 추가할 레이아웃
+            MainRestaurantListLayout mainRestaurantListLayout = new MainRestaurantListLayout(getApplicationContext(), restaurantInfo.get(i));
+            // 추가할 위치
+            LinearLayout layout = findViewById(R.id.restaurantLinearView);
+            // 추가 코드
+            layout.addView(mainRestaurantListLayout);
+        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // 위치 권한이 허용되었을 때
