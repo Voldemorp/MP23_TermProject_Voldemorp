@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -42,6 +43,22 @@ public class SignUpDialog extends Dialog {
     private String nickname;
     //사용자의 password
     private String password;
+
+    //사용자의 뱃지 상태
+    private boolean badge1 = true;
+    private boolean badge2 = false;
+    private boolean badge3 = false;
+    private boolean badge4 = false;
+    private boolean badge5 = false;
+    private boolean badge6 =false;
+    private boolean badge7 = false;
+    private boolean badge8 = false;
+    private boolean badge9 = false;
+    private boolean badge10 = false;
+    private boolean badge11 =false;
+    private boolean badge12 = false;
+
+
     //이메일 중복확인 버튼을 눌렀는지 유무
     private boolean emailCheckButtonClicked = false;
     //닉네임 중복확인 버튼 눌렀는지 유무
@@ -52,8 +69,28 @@ public class SignUpDialog extends Dialog {
 
     public class UserModel{
         public String nickName;
+
+    }
+        public class UserModel_badge{
+        public String mainBadge = "badge1";
+        public boolean badge1 = true;
+        public boolean badge2 = false;
+        public boolean badge3 = false;
+        public boolean badge4 = false;
+        public boolean badge5 = false;
+        public boolean badge6 =false;
+        public boolean badge7 = false;
+        public boolean badge8 = false;
+        public boolean badge9 = false;
+        public boolean badge10 = false;
+        public boolean badge11 =false;
+        public boolean badge12 = false;
     }
 
+
+    public class UserModel_restaurant{
+        public String restaurantName;
+    }
     //화면 터치시 키보드 내리기
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -170,7 +207,7 @@ public class SignUpDialog extends Dialog {
         //입력한 닉네임의 사용가능 여부 결과 text
         TextView nicknameCheckedResult=(TextView) findViewById(R.id.signUpIsAvailableName);
         //닉네임 중복확인 버튼
-         Button nicknameCheckButton=(Button) findViewById(R.id.signUpCheckNameDuplicationBtn);
+        Button nicknameCheckButton=(Button) findViewById(R.id.signUpCheckNameDuplicationBtn);
         //닉네임 입력하는 공간
         EditText nicknameEditText=(EditText)findViewById(R.id.signUpEditTextNameField);
 
@@ -222,32 +259,33 @@ public class SignUpDialog extends Dialog {
                 }
                 //[서버] '입력한 닉네임과 같은 닉네임이 이미 데이터에 존재한다면'을 조건에 추가. 임의로 예시 넣어둠
                 else {
-                    // Firebase Realtime Database의 "users" 레퍼런스를 가져옵니다.
-                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
-
-                    usersRef.orderByChild("nickName").equalTo(insNickname).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                // 닉네임이 이미 존재함
-                                nicknameCheckedResult.setText("이미 존재하는 닉네임입니다");
-                                // 고구마색으로 바꾸기
-                                nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
-                            } else {
+                    //Firebase Realtime Database의 "users" 레퍼런스를 가져옵니다.
+//                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+//
+//                    usersRef.orderByChild("nickName").equalTo(insNickname).addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            if (dataSnapshot.exists()) {
+//                                // 닉네임이 이미 존재함
+//                                nicknameCheckedResult.setText("이미 존재하는 닉네임입니다");
+//                                // 고구마색으로 바꾸기
+//                                nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+//                            } else {
                                 nicknameCheckedResult.setText("사용 가능한 닉네임입니다");
                                 // 노란색으로 바꾸기
                                 nicknameCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
-                                // 데이터에 넣을 닉네임
-                                nickname = insNickname;
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            // 에러 처리 코드 추가
-                        }
-                    });
+//                                // 데이터에 넣을 닉네임
+//                                nickname = insNickname;
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//                            // 에러 처리 코드 추가
+//                        }
+//                    });
+                    nickname = insNickname;
                 }
             }
         });
@@ -330,7 +368,7 @@ public class SignUpDialog extends Dialog {
         //----------동의------------
         //이용약관
         CheckBox useCheckBox=(CheckBox) findViewById(R.id.signUpAgreeUseCheckBox);
-        //위치정보ㅁ
+        //위치정보
         CheckBox locationCheckBox=(CheckBox) findViewById(R.id.signUpAgreeLocationCheckBox);
 
 
@@ -375,11 +413,33 @@ public class SignUpDialog extends Dialog {
                                     if (task.isSuccessful()) {
                                         String userId = firebaseAuth.getCurrentUser().getUid();
 
+                                        // user 데이터 베이스 틀 생성
                                         UserModel userModel = new UserModel();
+                                        //user badge 데이터 베이스룰 생성
+                                        UserModel_badge userModel_badge = new UserModel_badge();
+                                        //user badge 데이터 베이스를 생성
+                                        UserModel_restaurant userModel_restaurant = new UserModel_restaurant();
+
                                         userModel.nickName = nickname;
+                                        userModel_badge.mainBadge="badge1";
+                                        userModel_badge.badge1 = badge1;
+                                        userModel_badge.badge2 = badge2;
+                                        userModel_badge.badge3 = badge3;
+                                        userModel_badge.badge4 = badge4;
+                                        userModel_badge.badge5 = badge5;
+                                        userModel_badge.badge6 = badge6;
+                                        userModel_badge.badge7 = badge7;
+                                        userModel_badge.badge8 = badge8;
+                                        userModel_badge.badge9 = badge9;
+                                        userModel_badge.badge10 = badge10;
+                                        userModel_badge.badge11 = badge11;
+                                        userModel_badge.badge12 = badge12;
+                                        userModel_restaurant.restaurantName = "";
 
                                         // 사용자의 닉네임을 "users" 경로에 저장
                                         mDatabase.getReference().child("users").child(userId).setValue(userModel);
+                                        mDatabase.getReference().child("users").child(userId).child("badge").setValue(userModel_badge);
+
 
                                         Toast.makeText(context.getApplicationContext(), "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
                                         dismiss();
