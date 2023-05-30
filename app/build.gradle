@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.mp23_termproject_voldemorp"
-        minSdk 24
+        minSdk 31
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -33,10 +33,11 @@ dependencies {
 
     implementation 'com.naver.maps:map-sdk:3.16.0'
 
-// Glide 라이브러리
+    // Glide 라이브러리
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     implementation 'com.naver.maps:map-sdk:3.16.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.firebase:firebase-database:20.0.4'
@@ -50,4 +51,9 @@ dependencies {
     // for SlidingUpPanelLayout
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation 'com.google.firebase:firebase-database:20.2.1'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    // for bottomNavigationView
+    implementation 'com.google.android.material:material:1.9.0'
+
 }

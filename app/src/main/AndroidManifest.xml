@@ -3,10 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,13 +17,20 @@
         android:theme="@style/Theme.MP23_TermProject_Voldemorp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".RankingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".RestaurantActivity"
+            android:exported="true" />
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="i73mky8007"/>
+            android:value="i73mky8007" />
+
         <activity
             android:name=".EditProfileActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity android:name=".SetLocationNextActivity" />
         <activity
             android:name=".MyPageActivity"
@@ -30,7 +40,7 @@
             android:exported="true" />
         <activity
             android:name=".SetLocationActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".SignUpDialog"
             android:exported="false" />
@@ -51,6 +61,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.naver.maps.map.CIENT_ID"
+            android:value="i73mky8007" />
     </application>
 
 </manifest>

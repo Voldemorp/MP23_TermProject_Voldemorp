@@ -1,30 +1,30 @@
 package com.example.mp23_termproject_voldemorp;
 
-import androidx.annotation.NonNull;
-import android.app.Activity;
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-import android.widget.Button;
-import android.widget.EditText;
-
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.MotionEvent;
-import android.view.Window;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-// 파이어베이스 연동 관련 부분
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Set;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -47,11 +47,11 @@ public class LoginActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
-    // 로그아웃 하지 않을 시 자동 로그인, 회원가입시 바로 로그인 됨
+//     //  *--자동 로그인--*  || 로그아웃 하지 않을시, 회원가입시 바로 로그인
 //    @Override
 //    public void onStart() {
 //        super.onStart();
-//        moveMainPage(FirebaseAuth.getInstance().getCurrentUser());
+//        movePage(FirebaseAuth.getInstance().getCurrentUser());
 //    }
 
     @Override
@@ -89,38 +89,68 @@ public class LoginActivity extends AppCompatActivity {
 //                overridePendingTransition(R.anim.slide_right_enter, R.anim.none);
                 String email = loginEmailEditText.getText().toString().trim();
                 String pwd = loginPasswordEditText.getText().toString().trim();
-                firebaseAuth.signInWithEmailAndPassword(email, pwd)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                // 로그인 성공시 메인화면으로 넘어감
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(LoginActivity.this, "로그인성공!", Toast.LENGTH_SHORT).show();
 
-                                    moveMainPage(FirebaseAuth.getInstance().getCurrentUser());
-                                } else { // 로그인 실패시 토스트 메시지 출력
-                                    Toast.makeText(LoginActivity.this, "이메일 또는 비밀번호를 잘못 입력했습니다.", Toast.LENGTH_SHORT).show();
+                //로그인 정보 다 입력하지 않았을 경우 예외처리
+                if(email.isEmpty()||pwd.isEmpty())
+                    Toast.makeText(getApplicationContext(),"로그인 정보를 확인해주세요",Toast.LENGTH_SHORT).show();
+                else {
+                    firebaseAuth.signInWithEmailAndPassword(email, pwd)
+                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    // 로그인 성공시 화면 전환
+                                    if (task.isSuccessful()) {
+                                        movePage(FirebaseAuth.getInstance().getCurrentUser());
+                                    } else { // 로그인 실패시 토스트 메시지 출력
+                                        Toast.makeText(LoginActivity.this, "이메일 또는 비밀번호를 잘못 입력했습니다.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
             }
         });
     }
 
 
 
-    // 로그인 성공 -> 유저정보 넘겨주고 메인 화면 호출하는 함수
-    // 메인화면 말고 일단 지도 설정으로 넘어가게 해놨는데 상황 따라서 변경시켜주시면 될 것 같습니다
-    public void moveMainPage(FirebaseUser user) {
+    // *-- 로그인 성공 -> 유저정보 넘겨주고 화면 이동하는 함수 --*
+    public void movePage(FirebaseUser user) {
         if (user != null) {
-            Intent intent = new Intent(getApplicationContext(), SetLocationActivity.class);
-            startActivity(intent);
+            checkIfAddressExists();
 
-            // 화면 전환 시 왼쪽에서 오른쪽으로 밀듯이 나타나는 애니메이션 적용
+//             화면 전환 시 왼쪽에서 오른쪽으로 밀듯이 나타나는 애니메이션 적용
             overridePendingTransition(R.anim.slide_right_enter, R.anim.none);
-            Toast.makeText(LoginActivity.this,"로그인 성공!",Toast.LENGTH_SHORT).show();
-
-            finish();
+//            finish();
         }
     }
+
+    // *-- 로그인한 사용자의 주소 정보가 저장돼있는지 확인하는 함수 --*
+    private void checkIfAddressExists() {
+        // [서버] 현재 로그인한 사용자의 Userid를 사용하여 DB에서 해당 사용자의 주소 정보 가져옴
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+        DatabaseReference addressRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("address1");
+
+        addressRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // 주소 정보 "address1"(필수 주소)가 존재할 시
+                if (dataSnapshot.exists()) {
+                    // 주소 저장 되어 있으면 메인 화면으로 이동
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    // 주소 저장이 되어있지 않으면 지역설정 화면으로 이동
+                    Intent intent = new Intent(getApplicationContext(), SetLocationActivity.class);
+                    startActivity(intent);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // 에러 처리 로직을 여기에 작성
+            }
+        });
+
+    }
+
 }
