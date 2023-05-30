@@ -163,7 +163,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="32dp"
                                 android:gravity="center"
-                                android:text="100"
+                                android:text="21"
                                 android:textColor="#980D4D"
                                 android:textSize="16dp"
                                 android:textStyle="bold" />
@@ -318,7 +318,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="32dp"
                                 android:gravity="center"
-                                android:text="100"
+                                android:text="0"
                                 android:textColor="#980D4D"
                                 android:textSize="16dp"
                                 android:textStyle="bold" />

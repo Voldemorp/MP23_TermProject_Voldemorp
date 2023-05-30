@@ -12,7 +12,7 @@
         android:id="@+id/view23"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="3" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -95,9 +95,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center|start"
-                            android:text="유짐이"
+                            android:text="유진"
                             android:textColor="@color/black"
-                            android:textSize="12dp"
+                            android:textSize="16sp"
                             android:textStyle="bold"
                             tools:ignore="TextSizeCheck" />
 
@@ -107,10 +107,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:backgroundTint="#00FFFFFF"
-                            android:gravity="center_vertical"
+                            android:gravity="top|left"
                             android:text="프로필 편집 >"
                             android:textColor="#6C6C6C"
-                            android:textSize="9dp"
+                            android:textSize="10sp"
                             tools:ignore="RtlCompat,TouchTargetSizeCheck,TextSizeCheck" />
 
                         <LinearLayout
@@ -128,21 +128,21 @@
                                 android:textStyle="bold"
                                 tools:ignore="TextSizeCheck" />
 
-                            <TextView
-                                android:id="@+id/textView13"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="의"
-                                android:textColor="@color/black"
-                                android:textSize="11dp"
-                                tools:ignore="TextSizeCheck" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView13"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="의 "
+                                android:textColor="@color/black"
+                                android:textSize="11dp"
+                                tools:ignore="TextSizeCheck" />
 
                             <TextView
                                 android:id="@+id/textView5"
@@ -230,7 +230,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="사용자이름"
+                        android:text="유진"
                         android:textColor="#980D4D"
                         android:textStyle="bold" />
 
@@ -430,7 +430,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="30dp"
                                         android:gravity="center"
-                                        android:text="프로먹방햄"
+                                        android:text="프로먹방햄쥑이"
                                         android:textAlignment="center"
                                         android:textColor="@color/black"
                                         android:textSize="10sp"
@@ -682,7 +682,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="start|center_vertical"
-                            android:text="사용자이름"
+                            android:text="유진"
                             android:textColor="#980D4D"
                             android:textStyle="bold" />
 
@@ -756,7 +756,7 @@
             android:id="@+id/view29"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3" />
+            android:layout_weight="1.5" />
     </LinearLayout>
 
 <!--    하단 탭바 포함-->

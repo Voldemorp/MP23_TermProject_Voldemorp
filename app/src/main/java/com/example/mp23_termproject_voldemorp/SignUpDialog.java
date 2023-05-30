@@ -107,8 +107,8 @@ public class SignUpDialog extends Dialog {
                 String insEmail = emailEditText.getText().toString().trim();
                 if (!isValidEmail(insEmail)) {
                     emailCheckedResult.setText("올바른 이메일 형식이 아닙니다.");
-                    //setTextColor 써서 고구마색으로 바꾸기
-                    emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+//                    // 흰색
+//                    emailCheckedResult.setTextColor(Color.parseColor("#FFFFFF"));
                 }
                 else{
                     emailCheckedResult.setText("");
@@ -135,8 +135,8 @@ public class SignUpDialog extends Dialog {
 
                 if (!isValidEmail(insEmail)) {
                     emailCheckedResult.setText("올바른 이메일 형식이 아닙니다");
-                    //setTextColor 써서 고구마색으로 바꾸기
-                    emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+//                    //setTextColor 써서 고구마색으로 바꾸기
+//                    emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                 }
                 //[서버] '입력한 이메일과 같은 메일이 이미 데이터에 존재한다면'을 조건에 추가. 임의로 예시 넣어둠
                 else{
@@ -146,12 +146,12 @@ public class SignUpDialog extends Dialog {
                                     boolean emailExists = !task.getResult().getSignInMethods().isEmpty();
                                     if (emailExists) {
                                         emailCheckedResult.setText("이미 존재하는 이메일입니다");
-                                        // 고구마색으로 바꾸기
-                                        emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+//                                        // 고구마색으로 바꾸기
+//                                        emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                                     } else {
                                         emailCheckedResult.setText("사용 가능한 이메일입니다");
-                                        // 노란색으로 바꾸기
-                                        emailCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
+//                                        // 노란색으로 바꾸기
+//                                        emailCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
                                         // 데이터에 넣을 이메일
                                         email = insEmail;
                                     }
@@ -217,8 +217,8 @@ public class SignUpDialog extends Dialog {
 
                 if(insNickname.length()>10){
                     nicknameCheckedResult.setText("10자 이내의 닉네임을 입력해주세요");
-                    //고구마색으로 바꾸기
-                    nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+//                    //고구마색으로 바꾸기
+//                    nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                 }
                 //[서버] '입력한 닉네임과 같은 닉네임이 이미 데이터에 존재한다면'을 조건에 추가. 임의로 예시 넣어둠
                 else {
@@ -232,12 +232,12 @@ public class SignUpDialog extends Dialog {
                             if (dataSnapshot.exists()) {
                                 // 닉네임이 이미 존재함
                                 nicknameCheckedResult.setText("이미 존재하는 닉네임입니다");
-                                // 고구마색으로 바꾸기
-                                nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+//                                // 고구마색으로 바꾸기
+//                                nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                             } else {
                                 nicknameCheckedResult.setText("사용 가능한 닉네임입니다");
-                                // 노란색으로 바꾸기
-                                nicknameCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
+//                                // 노란색으로 바꾸기
+//                                nicknameCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
                                 // 데이터에 넣을 닉네임
                                 nickname = insNickname;
                             }
@@ -274,12 +274,12 @@ public class SignUpDialog extends Dialog {
 
                 if (pw.length() < 8 || pw.length() > 12) {
                     passwordCheckedResult.setText("비밀번호는 8자에서 12자 사이여야 합니다");
-                    //고구마색으로 바꾸기
-                    passwordCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+//                    //고구마색으로 바꾸기
+//                    passwordCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                 } else {
                     passwordCheckedResult.setText("사용가능한 비밀번호입니다");
-                    //노란색으로 바꾸기
-                    passwordCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
+//                    //노란색으로 바꾸기
+//                    passwordCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
                     //데이터에 넣을 password
                     password=pw;
                 }
@@ -313,12 +313,12 @@ public class SignUpDialog extends Dialog {
                 String pwConfirm = passwordConfirmEditText.getText().toString().trim();
                 if (!pwConfirm.equals(password)) {
                     passwordConfirmCheckedResult.setText("비밀번호가 일치하지 않습니다");
-                    //고구마색으로 바꾸기
-                    passwordConfirmCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+//                    //고구마색으로 바꾸기
+//                    passwordConfirmCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                 } else {
                     passwordConfirmCheckedResult.setText("비밀번호가 일치합니다");
-                    //노란색으로 바꾸기
-                    passwordConfirmCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
+//                    //노란색으로 바꾸기
+//                    passwordConfirmCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
                 }
             }
             @Override
