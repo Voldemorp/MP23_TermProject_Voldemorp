@@ -21,12 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 
 public class SignUpDialog extends Dialog {
@@ -254,6 +249,7 @@ public class SignUpDialog extends Dialog {
 
                 if(insNickname.length()>10){
                     nicknameCheckedResult.setText("10자 이내의 닉네임을 입력해주세요");
+//                     디자인 때문에 색 다 주석처리 해둠
 //                    //고구마색으로 바꾸기
 //                    nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                 }
