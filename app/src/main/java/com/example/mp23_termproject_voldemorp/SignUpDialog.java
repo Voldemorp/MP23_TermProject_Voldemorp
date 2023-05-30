@@ -71,7 +71,7 @@ public class SignUpDialog extends Dialog {
         public String nickName;
 
     }
-    public class UserModel_badge{
+        public class UserModel_badge{
         public String mainBadge = "badge1";
         public boolean badge1 = true;
         public boolean badge2 = false;
@@ -207,7 +207,7 @@ public class SignUpDialog extends Dialog {
         //입력한 닉네임의 사용가능 여부 결과 text
         TextView nicknameCheckedResult=(TextView) findViewById(R.id.signUpIsAvailableName);
         //닉네임 중복확인 버튼
-         Button nicknameCheckButton=(Button) findViewById(R.id.signUpCheckNameDuplicationBtn);
+        Button nicknameCheckButton=(Button) findViewById(R.id.signUpCheckNameDuplicationBtn);
         //닉네임 입력하는 공간
         EditText nicknameEditText=(EditText)findViewById(R.id.signUpEditTextNameField);
 
@@ -259,34 +259,33 @@ public class SignUpDialog extends Dialog {
                 }
                 //[서버] '입력한 닉네임과 같은 닉네임이 이미 데이터에 존재한다면'을 조건에 추가. 임의로 예시 넣어둠
                 else {
-                    // Firebase Realtime Database의 "users" 레퍼런스를 가져옵니다.
-                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
-
-                    Query nicknameQuery = usersRef.orderByChild("nickname").equalTo(insNickname);
-                    nicknameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                // 닉네임이 이미 존재함
-                                nicknameCheckedResult.setText("이미 존재하는 닉네임입니다");
-                                // 고구마색으로 바꾸기
-                                nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
-                            } else {
+                    //Firebase Realtime Database의 "users" 레퍼런스를 가져옵니다.
+//                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+//
+//                    usersRef.orderByChild("nickName").equalTo(insNickname).addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            if (dataSnapshot.exists()) {
+//                                // 닉네임이 이미 존재함
+//                                nicknameCheckedResult.setText("이미 존재하는 닉네임입니다");
+//                                // 고구마색으로 바꾸기
+//                                nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+//                            } else {
                                 nicknameCheckedResult.setText("사용 가능한 닉네임입니다");
                                 // 노란색으로 바꾸기
                                 nicknameCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
-                                // 데이터에 넣을 닉네임
-                                nickname = insNickname;
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            // 에러 처리 코드 추가
-                        }
-                    });
+//                                // 데이터에 넣을 닉네임
+//                                nickname = insNickname;
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//                            // 에러 처리 코드 추가
+//                        }
+//                    });
+                    nickname = insNickname;
                 }
             }
         });
@@ -369,7 +368,7 @@ public class SignUpDialog extends Dialog {
         //----------동의------------
         //이용약관
         CheckBox useCheckBox=(CheckBox) findViewById(R.id.signUpAgreeUseCheckBox);
-        //위치정보ㅁ
+        //위치정보
         CheckBox locationCheckBox=(CheckBox) findViewById(R.id.signUpAgreeLocationCheckBox);
 
 
@@ -416,7 +415,7 @@ public class SignUpDialog extends Dialog {
 
                                         // user 데이터 베이스 틀 생성
                                         UserModel userModel = new UserModel();
-                                        // user badge 데이터 베이스룰 생성
+                                        //user badge 데이터 베이스룰 생성
                                         UserModel_badge userModel_badge = new UserModel_badge();
                                         //user badge 데이터 베이스를 생성
                                         UserModel_restaurant userModel_restaurant = new UserModel_restaurant();
