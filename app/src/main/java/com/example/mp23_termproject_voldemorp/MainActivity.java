@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraUpdate;
@@ -47,7 +48,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FirebaseFirestore firestore;
     private double latitude; // 내 위치의 위도
     private double longitude; // 내 위치의 경도
+    private String restaurantId;// 가게의 Firestore 문서 ID
+    private String restaurantName;
     private List<RestaurantInfo> restaurantInfoList = new ArrayList<>();
+
 
 
     @Override
@@ -83,37 +87,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 moveMapToCurrentLocation();
             }
         });
-
-//        // 마이페이지에 있는 port list에 띄울 정보를 저장하는 배열
-//        restaurantInfo = new ArrayList<>();
-//
-//        //[서버] DB에서 사용자가 port한 식당 이름/몇번 port했는지 가져와서 portList에 append해야 함
-//        // 테스트를 위한 더미데이터 (나중에 구현 성공하면 지우시면 됩니당)
-//        MainRestaurantInfo dummyInfo1 = new MainRestaurantInfo("화리화리", "한식");
-//        MainRestaurantInfo dummyInfo2 = new MainRestaurantInfo("태평돈까스", "경양식");
-//        MainRestaurantInfo dummyInfo3 = new MainRestaurantInfo("폼프리츠", "호프/통닭");
-//        MainRestaurantInfo dummyInfo4 = new MainRestaurantInfo("호식당", "일식");
-//        MainRestaurantInfo dummyInfo5 = new MainRestaurantInfo("쩡이네", "호프/통닭");
-//        MainRestaurantInfo dummyInfo6 = new MainRestaurantInfo("라쿵푸마라탕", "중국식");
-//        restaurantInfo.add(dummyInfo1);
-//        restaurantInfo.add(dummyInfo2);
-//        restaurantInfo.add(dummyInfo3);
-//        restaurantInfo.add(dummyInfo4);
-//        restaurantInfo.add(dummyInfo5);
-//        restaurantInfo.add(dummyInfo6);
-//
-//        // 상태 바 투명하게 하고 사진 보이게 하는 코드
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-//
-//        // for문 돌면서 추가
-//        for (int i = 0; i < restaurantInfo.size(); i++) {
-//            // 추가할 레이아웃
-//            MainRestaurantListLayout mainRestaurantListLayout = new MainRestaurantListLayout(getApplicationContext(), restaurantInfo.get(i));
-//            // 추가할 위치
-//            LinearLayout layout = findViewById(R.id.restaurantLinearView);
-//            // 추가 코드
-//            layout.addView(mainRestaurantListLayout);
-//        }
   }
 
     @Override
@@ -160,6 +133,32 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // 2km 반경의 원 표시
         showCircleOverlay();
 
+        // Firestore에서 가게 정보 가져와서 사진 정보와 방문한 유저 리스트 추가
+        firestore.collection("taepyeong_restaurant")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot querySnapshot) {
+                        for (DocumentSnapshot documentSnapshot : querySnapshot) {
+                            if (documentSnapshot.exists()) {
+                                restaurantId = documentSnapshot.getId(); // 가게의 Firestore 문서 ID
+                                restaurantName = documentSnapshot.getString("사업장명");
+
+                                // 사진 정보와 방문한 유저 리스트 업데이트
+                                updateRestaurantInfo(restaurantId, restaurantName);
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this, "식당 정보 로드 실패", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
         // Firestore에서 좌표 정보 가져오기
         firestore.collection("taepyeong_restaurant")
                 .get()
@@ -192,6 +191,46 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 });
     }
 
+    // 가게 정보 업데이트 메서드
+    private void updateRestaurantInfo(String restaurantId, final String restaurantName) {
+        // 가게의 "사진 정보" 필드 업데이트
+        firestore.collection("taepyeong_restaurant")
+                .document(restaurantId)
+                .update("사진 정보", "가게 사진 URL")
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MainActivity.this, restaurantName + "의 사진 정보 업데이트 완료", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this, restaurantName + "의 사진 정보 업데이트 실패", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // 가게의 "방문한 유저 리스트" 필드 업데이트
+      List<User> userList = new ArrayList<>();
+//        userList.add(new User("유저1", 3)); // 유저가 방문했을 때 조건으로 유저 추가해야함
+
+        firestore.collection("taepyeong_restaurant")
+                .document(restaurantId)
+                .update("방문한 유저 리스트", userList)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MainActivity.this, restaurantName + "의 방문한 유저 리스트 업데이트 완료", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this, restaurantName + "의 방문한 유저 리스트 업데이트 실패", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     // 거리 계산
     private double calculateDistance(double x1, double y1, double x2, double y2) {
         double R = 6371; // 지구의 반지름 (단위: km)
@@ -213,8 +252,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         return R * c;
     }
 
-    // 2km 이내에 있는 식당들을 마커로 표시
     private void addMarkersWithin2km() {
+        LinearLayout layout = findViewById(R.id.restaurantLinearView); // 식당 레이아웃이 추가될 LinearLayout
+
+        int count = 0; // 출력된 식당 개수를 세기 위한 변수
+
         for (RestaurantInfo restaurantInfo : restaurantInfoList) {
             double distance = calculateDistance(restaurantInfo.x, restaurantInfo.y, latitude, longitude);
             boolean isWithin2Km = distance <= 2.0; // 거리가 2km 이내인지 확인
@@ -223,21 +265,26 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Toast.makeText(MainActivity.this, "x =" + restaurantInfo.x + "\n y = " + restaurantInfo.y + "\n 사업장명 : " +
                         restaurantInfo.name + "\n 위생업태명 : " + restaurantInfo.foodType, Toast.LENGTH_SHORT).show();
 
-//                for (int i = 0; i < restaurantInfo.size(); i++) {
-//                    // 추가할 레이아웃
-//                    RestaurantListLayout RestaurantListLayout = new RestaurantListLayout(getApplicationContext(), restaurantInfo.get(i));
-//                    // 추가할 위치
-//                    LinearLayout layout = findViewById(R.id.restaurantLinearView);
-//                    // 추가 코드
-//                    layout.addView(RestaurantListLayout);
-//                }
+
+                MainRestaurantInfo info = new MainRestaurantInfo(restaurantInfo.name, restaurantInfo.foodType);
+                // 추가할 레이아웃
+                MainRestaurantListLayout mainRestaurantListLayout = new MainRestaurantListLayout(getApplicationContext(), info);
+                // 레이아웃 추가 코드
+                layout.addView(mainRestaurantListLayout);
 
                 // 2km 이내에 있는 식당들에 대해 마커 추가
                 Marker marker = new Marker();
                 marker.setPosition(new LatLng(restaurantInfo.x, restaurantInfo.y));
                 marker.setMap(naverMap);
+
+                count++; // 출력된 식당 개수 증가
+
+                if (count >= 10) { // 10개 이상 출력되었을 경우 반복문 종료
+                    break;
+                }
             }
-        }}
+        }
+    }
 
     // 내 위치에서 2km 반경의 원 표시
     private void showCircleOverlay () {
