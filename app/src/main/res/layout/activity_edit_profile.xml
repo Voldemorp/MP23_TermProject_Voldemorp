@@ -74,7 +74,9 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:src="@drawable/badge_default" />
+                android:src="@drawable/badge_default"
+                android:clickable="true"
+                android:onClick="onImageClick" />/>
 
             <View
                 android:id="@+id/view58"
