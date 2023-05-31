@@ -416,14 +416,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_first_signup" />
 
                             <TextView
                                 android:id="@+id/labelForFirstSignUp"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:gravity="center"
-                                android:text="아주쟈근햄쥑이"
+                                android:text="뉴비 햄쥑이"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="10sp"
@@ -437,18 +437,18 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:id="@+id/badgeForFirstRecommend"
+                                android:id="@+id/badgeForMania"
                                 android:layout_width="wrap_content"
-                                android:layout_height="100dp"
+                                android:layout_height="99dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_mania" />
 
                             <TextView
-                                android:id="@+id/labelForFirstRecommend"
+                                android:id="@+id/labelForMania"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:gravity="center"
-                                android:text="추천 고마워!"
+                                android:text="이 구역 박사"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="10sp"
@@ -466,14 +466,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_master" />
 
                             <TextView
                                 android:id="@+id/labelForMaster"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:gravity="center"
-                                android:text="너 좀 짱인듯"
+                                android:text="햄쥑이의 왕"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="10sp"
@@ -494,18 +494,18 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:id="@+id/badgeForMania"
+                                android:id="@+id/badgeForFirstRecommend"
                                 android:layout_width="wrap_content"
-                                android:layout_height="99dp"
+                                android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_recommend1" />
 
                             <TextView
-                                android:id="@+id/labelForMania"
+                                android:id="@+id/labelForFirstRecommend"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:gravity="center"
-                                android:text="너 완전 박사구나?"
+                                android:text="소심한 햄쥑이"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="10sp"
@@ -523,14 +523,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_recommend10" />
 
                             <TextView
                                 android:id="@+id/labelForTenRecommend"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:gravity="center"
-                                android:text="벌써 10번째 추천이야!"
+                                android:text="꾸준한 햄쥑이"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="10sp"
@@ -548,14 +548,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_recommend100" />
 
                             <TextView
                                 android:id="@+id/labelForHundredRecommend"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:gravity="center"
-                                android:text="TextView"
+                                android:text="프로먹방햄"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="10sp"
@@ -580,14 +580,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_visit1" />
 
                             <TextView
                                 android:id="@+id/labelForFirstVisit"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:gravity="center"
-                                android:text="firstVisit"
+                                android:text="아주 작은 발걸음"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="10sp"
@@ -605,14 +605,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_visit10" />
 
                             <TextView
                                 android:id="@+id/labelForTenVisit"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:gravity="center"
-                                android:text="TenVisit"
+                                android:text="당당한 햄쥑이"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="10sp"
@@ -630,14 +630,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_visit100" />
 
                             <TextView
                                 android:id="@+id/labelForHundredVisit"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:gravity="center"
-                                android:text="HundredVisit"
+                                android:text="이 구역 마당발"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="10sp"
@@ -662,14 +662,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_photo1" />
 
                             <TextView
                                 android:id="@+id/labelForFirstPhoto"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:gravity="center"
-                                android:text="FirstPhoto"
+                                android:text="첫 사진"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="10sp"
@@ -687,14 +687,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_photo10" />
 
                             <TextView
                                 android:id="@+id/labelForTenPhoto"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:gravity="center"
-                                android:text="Tenphoto"
+                                android:text="뿌듯한 햄쥑이"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="10sp"
@@ -712,14 +712,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:padding="10dp"
-                                android:src="@drawable/badge_default" />
+                                android:src="@drawable/badge_photo100" />
 
                             <TextView
                                 android:id="@+id/labelForHundredPhoto"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:gravity="center"
-                                android:text="hundredPhoto"
+                                android:text="아주 뿌듯한 햄쥑이"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="10sp"

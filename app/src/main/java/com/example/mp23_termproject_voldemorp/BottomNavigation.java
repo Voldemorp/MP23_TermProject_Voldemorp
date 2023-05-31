@@ -1,12 +1,13 @@
-/*
 package com.example.mp23_termproject_voldemorp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public abstract class BottomNavigation extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -27,7 +28,6 @@ public abstract class BottomNavigation extends AppCompatActivity implements Bott
         updateNavigationBarState();
     }
 
-    // Remove inter-activity transition to avoid screen tossing on tapping bottom navigation items
     @Override
     public void onPause() {
         super.onPause();
@@ -65,4 +65,4 @@ public abstract class BottomNavigation extends AppCompatActivity implements Bott
 
     abstract int getNavigationMenuItemId();
 
-}*/
+}

@@ -9,7 +9,7 @@
     android:gravity="bottom"
     android:background="#00000000"
     app:umanoDragView="@id/bottomSheetView"
-    app:umanoScrollableView="@id/restaurantListView"
+    app:umanoScrollableView="@id/restaurantScrollView"
     app:umanoOverlay="true"
     app:umanoPanelHeight="400dp"
     app:umanoShadowHeight="0dp"
@@ -143,13 +143,20 @@
                 android:background="#A13366" />
 
             <!--             -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/restaurantListView"
+            <ScrollView
+                android:id="@+id/restaurantScrollView"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="12"
                 android:background="#A13366">
-            </androidx.recyclerview.widget.RecyclerView>
+
+                <LinearLayout
+                    android:id="@+id/restaurantLinearView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#A13366"
+                    android:orientation="vertical" />
+            </ScrollView>
 
             <View
                 android:id="@+id/view18"
