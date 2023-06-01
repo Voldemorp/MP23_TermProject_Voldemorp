@@ -163,25 +163,10 @@
                     marker.setCaptionHaloColor(getResources().getColor(R.color.white));
                     marker.setMap(naverMap);
 
-                    // 식당 정보를 보여주는 레이아웃을 동적으로 생성하여 추가
-                    LinearLayout restaurantLayout = new LinearLayout(this);
-                    restaurantLayout.setOrientation(LinearLayout.VERTICAL);
-                    restaurantLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                    ));
+                    // Create an instance of MainRestaurantListLayout to display restaurant information
+                    MainRestaurantListLayout restaurantLayout = new MainRestaurantListLayout(this, restaurant);
 
-                    // 식당 정보를 나타내는 텍스트뷰 생성 및 설정
-                    TextView nameTextView = new TextView(this);
-                    nameTextView.setText("식당명: " + restaurant.name);
-                    TextView foodTypeTextView = new TextView(this);
-                    foodTypeTextView.setText("음식 종류: " + restaurant.foodType);
-
-                    // 레이아웃에 텍스트뷰 추가
-                    restaurantLayout.addView(nameTextView);
-                    restaurantLayout.addView(foodTypeTextView);
-
-                    // restaurantLinearView 레이아웃에 추가
+                    // Add the restaurantLayout to the linear layout
                     layout.addView(restaurantLayout);
                 }
             }
@@ -235,8 +220,8 @@
 //                Toast.makeText(getApplicationContext(),"Current Location: " + center.latitude + ", " + center.longitude,Toast.LENGTH_SHORT).show();
 
                 // 값을 받는 액티비티로 데이터 전달
-                RestaurantActivity.latitude = latitude;
-                RestaurantActivity.longitude = longitude;
+//                RestaurantActivity.latitude = latitude;
+//                RestaurantActivity.longitude = longitude;
 
             }
 
