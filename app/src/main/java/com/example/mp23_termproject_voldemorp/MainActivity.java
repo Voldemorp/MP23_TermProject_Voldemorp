@@ -48,22 +48,7 @@
             private FirebaseFirestore firestore;
             private static double latitude;
             private static double longitude;
-            private List<RestaurantInfo> restaurantInfoList = new ArrayList<>();
-
-            // RestaurantInfo class to hold restaurant information
-            private static class RestaurantInfo {
-                double x;
-                double y;
-                String name;
-                String foodType;
-
-                public RestaurantInfo(double x, double y, String name, String foodType) {
-                    this.x = x;
-                    this.y = y;
-                    this.name = name;
-                    this.foodType = foodType;
-                }
-            }
+            private List<MainRestaurantInfo> restaurantInfoList = new ArrayList<>();
 
             @Override
             protected void onCreate(Bundle savedInstanceState) {
@@ -145,7 +130,7 @@
                                             double y = document.getDouble("좌표정보(y)");
                                             String name = document.getString("사업장명");
                                             String foodType = document.getString("위생업태명");
-                                            RestaurantInfo restaurantInfo = new RestaurantInfo(x, y, name, foodType);
+                                            MainRestaurantInfo restaurantInfo = new MainRestaurantInfo(x, y, name, foodType);
                                             restaurantInfoList.add(restaurantInfo);
                                         } else {
                                             // Handle the case when the value is not a number
@@ -169,7 +154,7 @@
             private void addMarkers() {
                 LinearLayout layout = findViewById(R.id.restaurantLinearView);
 
-                for (RestaurantInfo restaurant : restaurantInfoList) {
+                for (MainRestaurantInfo restaurant : restaurantInfoList) {
                     LatLng latLng = new LatLng(restaurant.x, restaurant.y);
                     Marker marker = new Marker();
                     marker.setPosition(latLng);
@@ -231,8 +216,8 @@
             }
 
             private void findRestaurantsWithinRadius(LatLng center) {
-                List<RestaurantInfo> nearbyRestaurants = new ArrayList<>();
-                for (RestaurantInfo restaurant : restaurantInfoList) {
+                List<MainRestaurantInfo> nearbyRestaurants = new ArrayList<>();
+                for (MainRestaurantInfo restaurant : restaurantInfoList) {
                     LatLng restaurantLocation = new LatLng(restaurant.x, restaurant.y);
                     double distance = center.distanceTo(restaurantLocation);
                     if (distance <= 2000) { // 2km 이내의 식당만 추출
@@ -241,7 +226,7 @@
                 }
 
                 // Print nearby restaurants to console
-                for (RestaurantInfo restaurant : nearbyRestaurants) {
+                for (MainRestaurantInfo restaurant : nearbyRestaurants) {
                     System.out.println("Name: " + restaurant.name);
                     System.out.println("Food Type: " + restaurant.foodType);
                     System.out.println();
