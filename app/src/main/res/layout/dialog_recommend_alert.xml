@@ -66,7 +66,6 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="축하드려요!"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -78,29 +77,45 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/nameOfNewBadge"
+                    android:id="@+id/numOfVisit"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="20"
+                    android:layout_weight="14"
+                    android:fontFamily="sans-serif-black"
                     android:gravity="center|right"
-                    android:text="뱃지이름"
+                    android:text="2"
                     android:textColor="#980D4D"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <View
-                    android:id="@+id/view135"
+                <TextView
+                    android:id="@+id/textView32"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="25"
+                    android:fontFamily="sans-serif-black"
+                    android:gravity="center|left"
+                    android:text="번째 방문이예요!"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView30"
+                    android:id="@+id/descriptionField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="25"
                     android:gravity="center|left"
-                    android:text="뱃지를 확득했어요."
+                    android:text="추천 ... 하시겠어요?"
+                    android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
@@ -122,7 +137,7 @@
                     android:id="@+id/badgeImage"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     app:srcCompat="@drawable/badge_default" />
 
                 <View
@@ -132,16 +147,46 @@
                     android:layout_weight="1" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView29"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="다음 뱃지도 얻으러 떠나볼까요?"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:layout_weight="1.6"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/view140"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/notRecommendBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@drawable/my_page_badge_background"
+                    android:text="추천안함" />
+
+                <View
+                    android:id="@+id/view141"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/recommendBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@drawable/my_page_badge_background"
+                    android:text="추천함" />
+
+                <View
+                    android:id="@+id/view142"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
             <View
                 android:id="@+id/view130"
