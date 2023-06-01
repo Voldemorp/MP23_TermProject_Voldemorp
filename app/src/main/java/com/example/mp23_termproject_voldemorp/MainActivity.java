@@ -48,8 +48,9 @@
             private FirebaseFirestore firestore;
             private static double latitude;
             private static double longitude;
+            private boolean isCircleOverlayAdded = false;
             private List<MainRestaurantInfo> restaurantInfoList = new ArrayList<>();
-
+            private List<MainRestaurantInfo> nearbyRestaurants = new ArrayList<>();
             @Override
             protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
@@ -111,6 +112,7 @@
                         MainActivity.this.naverMap = naverMap;
                         naverMap.setLocationSource(locationSource);
                         naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
+
                         loadRestaurantData();
                     }
                 });
@@ -124,6 +126,7 @@
                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                 if (!queryDocumentSnapshots.isEmpty()) {
                                     for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                                        // Retrieve restaurant data
                                         Object xObject = document.get("좌표정보(x)");
                                         if (xObject instanceof Number) {
                                             double x = ((Number) xObject).doubleValue();
@@ -138,6 +141,7 @@
                                         }
                                     }
                                     addMarkers();
+                                    moveMapToCurrentLocation(); // Move map after loading restaurant data
                                 } else {
                                     Toast.makeText(MainActivity.this, "No restaurant data available.", Toast.LENGTH_SHORT).show();
                                 }
@@ -150,11 +154,10 @@
                             }
                         });
             }
-
             private void addMarkers() {
-                LinearLayout layout = findViewById(R.id.restaurantLinearView);
+//                LinearLayout layout = findViewById(R.id.restaurantLinearView);
 
-                for (MainRestaurantInfo restaurant : restaurantInfoList) {
+                for (MainRestaurantInfo restaurant : nearbyRestaurants) {
                     LatLng latLng = new LatLng(restaurant.x, restaurant.y);
                     Marker marker = new Marker();
                     marker.setPosition(latLng);
@@ -166,8 +169,6 @@
                     // Create an instance of MainRestaurantListLayout to display restaurant information
                     MainRestaurantListLayout restaurantLayout = new MainRestaurantListLayout(this, restaurant);
 
-                    // Add the restaurantLayout to the linear layout
-                    layout.addView(restaurantLayout);
                 }
             }
 
@@ -184,13 +185,17 @@
                                 .finishCallback(new CameraUpdate.FinishCallback() {
                                     @Override
                                     public void onCameraUpdateFinish() {
-                                        // Add circle overlay
-                                        CircleOverlay circleOverlay = new CircleOverlay();
-                                        circleOverlay.setCenter(latLng);
-                                        circleOverlay.setRadius(1500); // 반경 2km
-                                        circleOverlay.setColor(Color.argb(70, 0, 0, 255)); // 파란색 반투명
-                                        circleOverlay.setMap(naverMap);
+                                        if (!isCircleOverlayAdded) {
+                                            // Add circle overlay only if it hasn't been added yet
+                                            CircleOverlay circleOverlay = new CircleOverlay();
+                                            circleOverlay.setCenter(latLng);
+                                            circleOverlay.setRadius(1000); // 반경 1km
+                                            circleOverlay.setColor(Color.argb(70, 0, 0, 255)); // 파란색 반투명
+                                            circleOverlay.setMap(naverMap);
+                                            isCircleOverlayAdded = true;
+                                        }
                                         findRestaurantsWithinRadius(latLng);
+                                        addMarkers();
                                     }
                                 });
                         naverMap.moveCamera(cameraUpdate);
@@ -201,11 +206,11 @@
             }
 
             private void findRestaurantsWithinRadius(LatLng center) {
-                List<MainRestaurantInfo> nearbyRestaurants = new ArrayList<>();
+                LinearLayout layout = findViewById(R.id.restaurantLinearView);
                 for (MainRestaurantInfo restaurant : restaurantInfoList) {
                     LatLng restaurantLocation = new LatLng(restaurant.x, restaurant.y);
                     double distance = center.distanceTo(restaurantLocation);
-                    if (distance <= 2000) { // 2km 이내의 식당만 추출
+                    if (distance <= 1000) { // 1km 이내의 식당만 추출
                         nearbyRestaurants.add(restaurant);
                     }
                 }
@@ -215,6 +220,13 @@
                     System.out.println("Name: " + restaurant.name);
                     System.out.println("Food Type: " + restaurant.foodType);
                     System.out.println();
+
+                    // Create an instance of MainRestaurantListLayout to display restaurant information
+                    MainRestaurantListLayout restaurantLayout = new MainRestaurantListLayout(this, restaurant);
+
+                    // Add the restaurantLayout to the linear layout
+                    layout.addView(restaurantLayout);
+//                    addMarkers();
                 }
 
 //                Toast.makeText(getApplicationContext(),"Current Location: " + center.latitude + ", " + center.longitude,Toast.LENGTH_SHORT).show();
