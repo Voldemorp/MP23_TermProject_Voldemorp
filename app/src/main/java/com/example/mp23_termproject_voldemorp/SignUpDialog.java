@@ -53,6 +53,10 @@ public class SignUpDialog extends Dialog {
     private boolean badge11 =false;
     private boolean badge12 = false;
 
+    private int max_portNum = 0;
+
+    private int userTotalLike = 0;
+
 
     //이메일 중복확인 버튼을 눌렀는지 유무
     private boolean emailCheckButtonClicked = false;
@@ -64,6 +68,9 @@ public class SignUpDialog extends Dialog {
 
     public class UserModel{
         public String nickName;
+        public int max_portNum;
+
+        public int userTotalLike;
 
     }
         public class UserModel_badge{
@@ -417,6 +424,8 @@ public class SignUpDialog extends Dialog {
                                         UserModel_restaurant userModel_restaurant = new UserModel_restaurant();
 
                                         userModel.nickName = nickname;
+                                        userModel.max_portNum = max_portNum;
+                                        userModel.userTotalLike = userTotalLike;
                                         userModel_badge.mainBadge="badge1";
                                         userModel_badge.badge1 = badge1;
                                         userModel_badge.badge2 = badge2;

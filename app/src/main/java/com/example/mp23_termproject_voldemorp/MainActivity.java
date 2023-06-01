@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 longitude = lastLocation.getLongitude();
                 LatLng latLng = new LatLng(latitude, longitude);
                 CameraUpdate cameraUpdate = CameraUpdate.scrollTo(latLng)
-                        .animate(CameraAnimation.Easing, 3000)
+                        .animate(CameraAnimation.Easing, 100)
                         .finishCallback(new CameraUpdate.FinishCallback() {
                             @Override
                             public void onCameraUpdateFinish() {

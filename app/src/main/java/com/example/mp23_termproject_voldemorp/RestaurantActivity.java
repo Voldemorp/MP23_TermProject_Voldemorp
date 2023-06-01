@@ -10,10 +10,17 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class RestaurantActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager;
     private FrameLayout restaurantContainer;
+
+    private FirebaseAuth firebaseAuth;
+
+    private FirebaseDatabase mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,4 +65,7 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         }
     }
+
+    // 포트 버튼 눌렀을 때 유저 데베 업데이트
+
 }
