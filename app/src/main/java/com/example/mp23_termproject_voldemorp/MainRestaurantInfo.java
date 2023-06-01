@@ -1,27 +1,32 @@
 package com.example.mp23_termproject_voldemorp;
-
 public class MainRestaurantInfo {
-    String placeName;
-    String type;
+
+    double x;
+    double y;
+    String name;
+    String foodType;
     Boolean isHeartFilled;
 
-    MainRestaurantInfo(String placeName, String type) {
-        this.placeName = placeName;
-        this.type = type;
-        this.isHeartFilled = false;
+    public MainRestaurantInfo(double x, double y, String name, String foodType) {
+        this.x = x;
+        this.y = y;
+        this.name = name;
+        this.foodType = foodType;
     }
 
-    MainRestaurantInfo(String placeName, String type, Boolean isHeartFilled) {
-        this.placeName = placeName;
-        this.type = type;
+    public MainRestaurantInfo(double x, double y, String name, String foodType, Boolean isHeartFilled) {
+        this.x = x;
+        this.y = y;
+        this.name = name;
+        this.foodType = foodType;
         this.isHeartFilled = isHeartFilled;
     }
 
     public String getPlaceName() {
-        return placeName;
+        return name;
     }
     public String getType() {
-        return type;
+        return foodType;
     }
     public boolean getIsHeartFilled() {
         return isHeartFilled;

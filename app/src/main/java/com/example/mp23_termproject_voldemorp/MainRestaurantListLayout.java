@@ -26,8 +26,8 @@ public class MainRestaurantListLayout extends LinearLayout {
         TextView restaurantType = (TextView)findViewById(R.id.restaurantType);
         ImageButton heartButton = (ImageButton)findViewById(R.id.heartButton);
 
-        placeName.setText(mainRestaurantInfo.placeName);
-        restaurantType.setText(mainRestaurantInfo.type);
+        placeName.setText(mainRestaurantInfo.name);
+        restaurantType.setText(mainRestaurantInfo.foodType);
 
         // 유저가 이 곳을 추천했는지 여부에 따라 하트 채워지도록 조정
         // userVisited.setText(mainRestaurantInfo.isHeartFilled);
