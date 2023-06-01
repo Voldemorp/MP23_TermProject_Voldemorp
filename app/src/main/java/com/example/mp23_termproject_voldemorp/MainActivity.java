@@ -39,6 +39,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+<<<<<<< HEAD
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
@@ -58,6 +59,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+=======
+            private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
+            private FusedLocationSource locationSource;
+            private NaverMap naverMap;
+            private Button btnMoveToMyLocation;
+            private MapView mapView;
+            private FirebaseFirestore firestore;
+            private static double latitude;
+            private static double longitude;
+            private List<MainRestaurantInfo> restaurantInfoList = new ArrayList<>();
+>>>>>>> 25dab66 (Update Activity related to Main)
 
         // Initialize Firestore
         firestore = FirebaseFirestore.getInstance();
@@ -120,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
+<<<<<<< HEAD
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if (!queryDocumentSnapshots.isEmpty()) {
                             for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
@@ -131,6 +144,39 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                     String foodType = document.getString("위생업태명");
                                     MainRestaurantInfo restaurantInfo = new MainRestaurantInfo(x, y, name, foodType);
                                     restaurantInfoList.add(restaurantInfo);
+=======
+                    public void onMapReady(@NonNull NaverMap naverMap) {
+                        MainActivity.this.naverMap = naverMap;
+                        naverMap.setLocationSource(locationSource);
+                        naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
+                        loadRestaurantData();
+                    }
+                });
+            }
+
+            private void loadRestaurantData() {
+                firestore.collection("taepyeong_restaurant")
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if (!queryDocumentSnapshots.isEmpty()) {
+                                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                                        Object xObject = document.get("좌표정보(x)");
+                                        if (xObject instanceof Number) {
+                                            double x = ((Number) xObject).doubleValue();
+                                            double y = document.getDouble("좌표정보(y)");
+                                            String name = document.getString("사업장명");
+                                            String foodType = document.getString("위생업태명");
+                                            MainRestaurantInfo restaurantInfo = new MainRestaurantInfo(x, y, name, foodType);
+                                            restaurantInfoList.add(restaurantInfo);
+                                        } else {
+                                            // Handle the case when the value is not a number
+                                            Log.e("RestaurantData", "'좌표정보(x)' field is not a number");
+                                        }
+                                    }
+                                    addMarkers();
+>>>>>>> 25dab66 (Update Activity related to Main)
                                 } else {
                                     // Handle the case when the value is not a number
                                     Log.e("RestaurantData", "'좌표정보(x)' field is not a number");
@@ -199,6 +245,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+<<<<<<< HEAD
     private void findRestaurantsWithinRadius(LatLng center) {
         List<MainRestaurantInfo> nearbyRestaurants = new ArrayList<>();
         for (MainRestaurantInfo restaurant : restaurantInfoList) {
@@ -206,15 +253,98 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             double distance = center.distanceTo(restaurantLocation);
             if (distance <= 2000) { // 2km 이내의 식당만 추출
                 nearbyRestaurants.add(restaurant);
+=======
+            private void addMarkers() {
+                LinearLayout layout = findViewById(R.id.restaurantLinearView);
+
+                for (MainRestaurantInfo restaurant : restaurantInfoList) {
+                    LatLng latLng = new LatLng(restaurant.x, restaurant.y);
+                    Marker marker = new Marker();
+                    marker.setPosition(latLng);
+                    marker.setCaptionText(restaurant.name);
+                    marker.setCaptionColor(getResources().getColor(R.color.black));
+                    marker.setCaptionHaloColor(getResources().getColor(R.color.white));
+                    marker.setMap(naverMap);
+
+                    // 식당 정보를 보여주는 레이아웃을 동적으로 생성하여 추가
+                    LinearLayout restaurantLayout = new LinearLayout(this);
+                    restaurantLayout.setOrientation(LinearLayout.VERTICAL);
+                    restaurantLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    ));
+
+                    // 식당 정보를 나타내는 텍스트뷰 생성 및 설정
+                    TextView nameTextView = new TextView(this);
+                    nameTextView.setText("식당명: " + restaurant.name);
+                    TextView foodTypeTextView = new TextView(this);
+                    foodTypeTextView.setText("음식 종류: " + restaurant.foodType);
+
+                    // 레이아웃에 텍스트뷰 추가
+                    restaurantLayout.addView(nameTextView);
+                    restaurantLayout.addView(foodTypeTextView);
+
+                    // restaurantLinearView 레이아웃에 추가
+                    layout.addView(restaurantLayout);
+                }
+>>>>>>> 25dab66 (Update Activity related to Main)
             }
         }
 
+<<<<<<< HEAD
         // Print nearby restaurants to console
         for (MainRestaurantInfo restaurant : nearbyRestaurants) {
             System.out.println("Name: " + restaurant.name);
             System.out.println("Food Type: " + restaurant.foodType);
             System.out.println();
         }
+=======
+            private void moveMapToCurrentLocation() {
+                if (naverMap != null && locationSource != null) {
+                    LocationOverlay locationOverlay = naverMap.getLocationOverlay();
+                    Location lastLocation = locationSource.getLastLocation();
+                    if (lastLocation != null) {
+                        latitude = lastLocation.getLatitude();
+                        longitude = lastLocation.getLongitude();
+                        LatLng latLng = new LatLng(latitude, longitude);
+                        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(latLng)
+                                .animate(CameraAnimation.Easing, 3000)
+                                .finishCallback(new CameraUpdate.FinishCallback() {
+                                    @Override
+                                    public void onCameraUpdateFinish() {
+                                        // Add circle overlay
+                                        CircleOverlay circleOverlay = new CircleOverlay();
+                                        circleOverlay.setCenter(latLng);
+                                        circleOverlay.setRadius(1500); // 반경 2km
+                                        circleOverlay.setColor(Color.argb(70, 0, 0, 255)); // 파란색 반투명
+                                        circleOverlay.setMap(naverMap);
+                                        findRestaurantsWithinRadius(latLng);
+                                    }
+                                });
+                        naverMap.moveCamera(cameraUpdate);
+                    } else {
+                        Toast.makeText(this, "Failed to get current location.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            private void findRestaurantsWithinRadius(LatLng center) {
+                List<MainRestaurantInfo> nearbyRestaurants = new ArrayList<>();
+                for (MainRestaurantInfo restaurant : restaurantInfoList) {
+                    LatLng restaurantLocation = new LatLng(restaurant.x, restaurant.y);
+                    double distance = center.distanceTo(restaurantLocation);
+                    if (distance <= 2000) { // 2km 이내의 식당만 추출
+                        nearbyRestaurants.add(restaurant);
+                    }
+                }
+
+                // Print nearby restaurants to console
+                for (MainRestaurantInfo restaurant : nearbyRestaurants) {
+                    System.out.println("Name: " + restaurant.name);
+                    System.out.println("Food Type: " + restaurant.foodType);
+                    System.out.println();
+                }
+>>>>>>> 25dab66 (Update Activity related to Main)
 
 //                Toast.makeText(getApplicationContext(),"Current Location: " + center.latitude + ", " + center.longitude,Toast.LENGTH_SHORT).show();
 
