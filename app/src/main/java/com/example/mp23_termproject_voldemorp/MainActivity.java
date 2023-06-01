@@ -9,6 +9,8 @@
         import android.util.Log;
         import android.view.View;
         import android.widget.Button;
+        import android.widget.LinearLayout;
+        import android.widget.TextView;
         import android.widget.Toast;
 
         import androidx.annotation.NonNull;
@@ -165,6 +167,8 @@
             }
 
             private void addMarkers() {
+                LinearLayout layout = findViewById(R.id.restaurantLinearView);
+
                 for (RestaurantInfo restaurant : restaurantInfoList) {
                     LatLng latLng = new LatLng(restaurant.x, restaurant.y);
                     Marker marker = new Marker();
@@ -173,8 +177,27 @@
                     marker.setCaptionColor(getResources().getColor(R.color.black));
                     marker.setCaptionHaloColor(getResources().getColor(R.color.white));
                     marker.setMap(naverMap);
-                    Toast.makeText(MainActivity.this, "x =" + restaurant.x + "\n y = " + restaurant.y + "\n 사업장명 : " +
-                            restaurant.name + "\n 위생업태명 : " + restaurant.foodType, Toast.LENGTH_SHORT).show();
+
+                    // 식당 정보를 보여주는 레이아웃을 동적으로 생성하여 추가
+                    LinearLayout restaurantLayout = new LinearLayout(this);
+                    restaurantLayout.setOrientation(LinearLayout.VERTICAL);
+                    restaurantLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    ));
+
+                    // 식당 정보를 나타내는 텍스트뷰 생성 및 설정
+                    TextView nameTextView = new TextView(this);
+                    nameTextView.setText("식당명: " + restaurant.name);
+                    TextView foodTypeTextView = new TextView(this);
+                    foodTypeTextView.setText("음식 종류: " + restaurant.foodType);
+
+                    // 레이아웃에 텍스트뷰 추가
+                    restaurantLayout.addView(nameTextView);
+                    restaurantLayout.addView(foodTypeTextView);
+
+                    // restaurantLinearView 레이아웃에 추가
+                    layout.addView(restaurantLayout);
                 }
             }
 
@@ -223,7 +246,8 @@
                     System.out.println("Food Type: " + restaurant.foodType);
                     System.out.println();
                 }
-                Toast.makeText(getApplicationContext(),"Current Location: " + center.latitude + ", " + center.longitude,Toast.LENGTH_SHORT).show();
+
+//                Toast.makeText(getApplicationContext(),"Current Location: " + center.latitude + ", " + center.longitude,Toast.LENGTH_SHORT).show();
 
                 // 값을 받는 액티비티로 데이터 전달
                 RestaurantActivity.latitude = latitude;
