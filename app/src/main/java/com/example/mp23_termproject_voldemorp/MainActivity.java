@@ -1,14 +1,17 @@
 package com.example.mp23_termproject_voldemorp;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,8 +49,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FirebaseFirestore firestore;
     private static double latitude;
     private static double longitude;
+    private boolean isCircleOverlayAdded = false;
     private List<MainRestaurantInfo> restaurantInfoList = new ArrayList<>();
-
+    private List<MainRestaurantInfo> nearbyRestaurants = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 MainActivity.this.naverMap = naverMap;
                 naverMap.setLocationSource(locationSource);
                 naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
+
                 loadRestaurantData();
             }
         });
@@ -122,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if (!queryDocumentSnapshots.isEmpty()) {
                             for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                                // Retrieve restaurant data
                                 Object xObject = document.get("좌표정보(x)");
                                 if (xObject instanceof Number) {
                                     double x = ((Number) xObject).doubleValue();
@@ -136,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 }
                             }
                             addMarkers();
+                            moveMapToCurrentLocation(); // Move map after loading restaurant data
                         } else {
                             Toast.makeText(MainActivity.this, "No restaurant data available.", Toast.LENGTH_SHORT).show();
                         }
@@ -148,11 +155,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
     }
-
     private void addMarkers() {
-        LinearLayout layout = findViewById(R.id.restaurantLinearView);
+//                LinearLayout layout = findViewById(R.id.restaurantLinearView);
 
-        for (MainRestaurantInfo restaurant : restaurantInfoList) {
+        for (MainRestaurantInfo restaurant : nearbyRestaurants) {
             LatLng latLng = new LatLng(restaurant.x, restaurant.y);
             Marker marker = new Marker();
             marker.setPosition(latLng);
@@ -164,8 +170,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             // Create an instance of MainRestaurantListLayout to display restaurant information
             MainRestaurantListLayout restaurantLayout = new MainRestaurantListLayout(this, restaurant);
 
-            // Add the restaurantLayout to the linear layout
-            layout.addView(restaurantLayout);
         }
     }
 
@@ -182,16 +186,30 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         .finishCallback(new CameraUpdate.FinishCallback() {
                             @Override
                             public void onCameraUpdateFinish() {
-                                // Add circle overlay
-                                CircleOverlay circleOverlay = new CircleOverlay();
-                                circleOverlay.setCenter(latLng);
-                                circleOverlay.setRadius(1500); // 반경 2km
-                                circleOverlay.setColor(Color.argb(70, 0, 0, 255)); // 파란색 반투명
-                                circleOverlay.setMap(naverMap);
+                                if (!isCircleOverlayAdded) {
+                                    // Add circle overlay only if it hasn't been added yet
+                                    CircleOverlay circleOverlay = new CircleOverlay();
+                                    circleOverlay.setCenter(latLng);
+                                    circleOverlay.setRadius(1000); // 반경 1km
+                                    circleOverlay.setColor(Color.argb(70, 0, 0, 255)); // 파란색 반투명
+                                    circleOverlay.setMap(naverMap);
+                                    isCircleOverlayAdded = true;
+                                }
                                 findRestaurantsWithinRadius(latLng);
+                                addMarkers();
                             }
                         });
                 naverMap.moveCamera(cameraUpdate);
+
+                // Delay the execution of adding the markers and showing the restaurant list
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Add markers and show restaurant list after a delay
+                        findRestaurantsWithinRadius(latLng);
+                        addMarkers();
+                    }
+                }, 3000); // Adjust the delay time as needed
             } else {
                 Toast.makeText(this, "Failed to get current location.", Toast.LENGTH_SHORT).show();
             }
@@ -199,11 +217,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void findRestaurantsWithinRadius(LatLng center) {
-        List<MainRestaurantInfo> nearbyRestaurants = new ArrayList<>();
+        LinearLayout layout = findViewById(R.id.restaurantLinearView);
         for (MainRestaurantInfo restaurant : restaurantInfoList) {
             LatLng restaurantLocation = new LatLng(restaurant.x, restaurant.y);
             double distance = center.distanceTo(restaurantLocation);
-            if (distance <= 2000) { // 2km 이내의 식당만 추출
+            if (distance <= 1000) { // 1km 이내의 식당만 추출
                 nearbyRestaurants.add(restaurant);
             }
         }
@@ -213,6 +231,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             System.out.println("Name: " + restaurant.name);
             System.out.println("Food Type: " + restaurant.foodType);
             System.out.println();
+
+            // Create an instance of MainRestaurantListLayout to display restaurant information
+            MainRestaurantListLayout restaurantLayout = new MainRestaurantListLayout(this, restaurant);
+
+            // Add the restaurantLayout to the linear layout
+            layout.addView(restaurantLayout);
+//                    addMarkers();
         }
 
 //                Toast.makeText(getApplicationContext(),"Current Location: " + center.latitude + ", " + center.longitude,Toast.LENGTH_SHORT).show();
