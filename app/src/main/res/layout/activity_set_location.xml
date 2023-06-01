@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_background"
     android:orientation="vertical"
-    android:background="@drawable/sign_up_background"
     tools:context=".SetLocationActivity">
 
     <View
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,14 +30,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="20"
-            android:background="@drawable/set_location_background"
+            android:background="@drawable/set_location_field_background"
             android:orientation="vertical">
 
             <View
                 android:id="@+id/view22"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,7 +60,8 @@
                     <View
                         android:id="@+id/view25"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp" />
+                        android:layout_height="0dp"
+                        android:layout_weight="0.6" />
 
                     <TextView
                         android:id="@+id/setLocationText1"
@@ -68,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:text="PortUS!를 사용할 장소를 설정해주세요."
                         android:textAlignment="center"
-                        android:textColor="#FFC93C"
+                        android:textColor="@color/white"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
@@ -78,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:text="장소는 두 곳까지 설정할 수 있어요."
                         android:textAlignment="center"
-                        android:textColor="@color/white"
+                        android:textColor="#FFE296"
                         android:textSize="10sp" />
 
                     <TextView
@@ -87,22 +88,23 @@
                         android:layout_height="wrap_content"
                         android:text="주소는 한 번 바꾸면 세 달 후 변경할 수 있어요! 신중히 선택하세요."
                         android:textAlignment="center"
-                        android:textColor="@color/white"
+                        android:textColor="#FFE296"
                         android:textSize="10sp" />
 
                     <View
                         android:id="@+id/view6"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp" />
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5" />
 
                     <TextView
                         android:id="@+id/setLocationText4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
                         android:text="첫번째 주소"
                         android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textSize="12sp" />
 
                     <View
                         android:id="@+id/view7"
@@ -113,15 +115,15 @@
                         android:id="@+id/editTextTextPersonName2"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:background="@drawable/set_location_textfield_backgorund"
+                        android:background="@drawable/login_btn_background"
+
                         android:ems="10"
                         android:hint="첫번째 주소를 설정해주세요"
                         android:inputType="textPersonName"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="12sp"
                         tools:ignore="TouchTargetSizeCheck" />
 
                     <View
@@ -163,10 +165,10 @@
                         android:id="@+id/setLocationText5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
                         android:text="두번째 주소 (선택)"
                         android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textSize="12sp" />
 
                     <View
                         android:id="@+id/view9"
@@ -177,15 +179,14 @@
                         android:id="@+id/editTextTextPersonName3"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:background="@drawable/set_location_textfield_backgorund"
+                        android:background="@drawable/login_btn_background"
                         android:ems="10"
                         android:hint="두번째 주소를 설정해주세요"
                         android:inputType="textPersonName"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="12sp"
                         tools:ignore="TouchTargetSizeCheck" />
 
                     <View
@@ -239,9 +240,9 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="4"
-                            android:background="@drawable/login_btn_background"
+                            android:background="@drawable/sign_up_field_background"
                             android:text="선택완료"
-                            android:textColor="@color/white"
+                            android:textColor="#980D4D"
                             android:textStyle="bold"
                             tools:ignore="TouchTargetSizeCheck" />
 
@@ -251,6 +252,12 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1" />
                     </LinearLayout>
+
+                    <View
+                        android:id="@+id/view21"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.6" />
 
                 </LinearLayout>
 
@@ -265,7 +272,7 @@
                 android:id="@+id/view24"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
         </LinearLayout>
 
