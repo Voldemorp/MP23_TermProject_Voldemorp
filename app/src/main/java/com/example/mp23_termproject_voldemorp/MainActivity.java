@@ -1,379 +1,282 @@
-package com.example.mp23_termproject_voldemorp;
+        package com.example.mp23_termproject_voldemorp;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+        import android.Manifest;
+        import android.content.Intent;
+        import android.content.pm.PackageManager;
+        import android.graphics.Color;
+        import android.location.Location;
+        import android.os.Bundle;
+        import android.util.Log;
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+        import androidx.annotation.NonNull;
+        import androidx.appcompat.app.AppCompatActivity;
+        import androidx.core.app.ActivityCompat;
+        import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.auth.User;
-import com.naver.maps.geometry.LatLng;
-import com.naver.maps.map.CameraAnimation;
-import com.naver.maps.map.CameraUpdate;
-import com.naver.maps.map.LocationTrackingMode;
-import com.naver.maps.map.MapView;
-import com.naver.maps.map.NaverMap;
-import com.naver.maps.map.OnMapReadyCallback;
-import com.naver.maps.map.overlay.CircleOverlay;
-import com.naver.maps.map.overlay.LocationOverlay;
-import com.naver.maps.map.overlay.Marker;
-import com.naver.maps.map.util.FusedLocationSource;
+        import com.google.android.gms.tasks.OnFailureListener;
+        import com.google.android.gms.tasks.OnSuccessListener;
+        import com.google.firebase.firestore.DocumentSnapshot;
+        import com.google.firebase.firestore.FirebaseFirestore;
+        import com.google.firebase.firestore.QuerySnapshot;
+        import com.naver.maps.geometry.LatLng;
+        import com.naver.maps.map.CameraAnimation;
+        import com.naver.maps.map.CameraUpdate;
+        import com.naver.maps.map.LocationTrackingMode;
+        import com.naver.maps.map.MapView;
+        import com.naver.maps.map.NaverMap;
+        import com.naver.maps.map.OnMapReadyCallback;
+        import com.naver.maps.map.overlay.CircleOverlay;
+        import com.naver.maps.map.overlay.LocationOverlay;
+        import com.naver.maps.map.overlay.Marker;
+        import com.naver.maps.map.util.FusedLocationSource;
 
-import java.util.ArrayList;
-import java.util.List;
+        import java.util.ArrayList;
+        import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+        public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
-    private FusedLocationSource locationSource;
-    private NaverMap naverMap;
-    private Button btnMoveToMyLocation;
-    private MapView mapView;
-    private FirebaseFirestore firestore;
-    private double latitude; // 내 위치의 위도
-    private double longitude; // 내 위치의 경도
-    private String restaurantId;// 가게의 Firestore 문서 ID
-    private String restaurantName;
-    private List<RestaurantInfo> restaurantInfoList = new ArrayList<>();
+            private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
+            private FusedLocationSource locationSource;
+            private NaverMap naverMap;
+            private Button btnMoveToMyLocation;
+            private MapView mapView;
+            private FirebaseFirestore firestore;
+            private static double latitude;
+            private static double longitude;
+            private List<RestaurantInfo> restaurantInfoList = new ArrayList<>();
 
+            // RestaurantInfo class to hold restaurant information
+            private static class RestaurantInfo {
+                double x;
+                double y;
+                String name;
+                String foodType;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        // MapView 초기화
-        mapView = findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
-
-        // onCreate 메서드에서 firestore 초기화
-        firestore = FirebaseFirestore.getInstance();
-
-        // 위치 권한 요청
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            // 권한이 이미 허용되어 있음
-            initMap();
-        } else {
-            // 권한을 요청
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    LOCATION_PERMISSION_REQUEST_CODE);
-        }
-
-        // 내 위치로 이동하는 버튼 설정
-        btnMoveToMyLocation = findViewById(R.id.btnMoveToMyLocation);
-        btnMoveToMyLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                moveMapToCurrentLocation();
-            }
-        });
-  }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // 위치 권한이 허용되었을 때
-                initMap();
-            } else {
-                // 위치 권한이 거부되었을 때
-                Toast.makeText(this, "위치 권한이 거부되었습니다.", Toast.LENGTH_SHORT).show();
-                // 위치 추적 모드를 설정하지 않음
-            }
-        }
-    }
-
-    // 식당 정보를 담을 클래스
-    private static class RestaurantInfo {
-        double x;
-        double y;
-        String name;
-        String foodType;
-
-        public RestaurantInfo(double x, double y, String name, String foodType) {
-            this.x = x;
-            this.y = y;
-            this.name = name;
-            this.foodType = foodType;
-        }
-    }
-
-    @Override
-    public void onMapReady(@NonNull NaverMap naverMap) {
-        this.naverMap = naverMap;
-        naverMap.setLocationSource(locationSource);
-        naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
-
-        // Display the direction arrow for the current location
-        LocationOverlay locationOverlay = naverMap.getLocationOverlay();
-        locationOverlay.setVisible(true);
-
-        // 2km 반경의 원 표시
-        showCircleOverlay();
-
-        // Firestore에서 가게 정보 가져와서 사진 정보와 방문한 유저 리스트 추가
-        firestore.collection("taepyeong_restaurant")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot querySnapshot) {
-                        for (DocumentSnapshot documentSnapshot : querySnapshot) {
-                            if (documentSnapshot.exists()) {
-                                restaurantId = documentSnapshot.getId(); // 가게의 Firestore 문서 ID
-                                restaurantName = documentSnapshot.getString("사업장명");
-
-                                // 사진 정보와 방문한 유저 리스트 업데이트
-                                updateRestaurantInfo(restaurantId, restaurantName);
-                            }
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this, "식당 정보 로드 실패", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-
-        // Firestore에서 좌표 정보 가져오기
-        firestore.collection("taepyeong_restaurant")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot querySnapshot) {
-                        for (DocumentSnapshot documentSnapshot : querySnapshot) {
-                            if (documentSnapshot.exists()) {
-                                String xString = documentSnapshot.getString("좌표정보(x)");
-                                String yString = documentSnapshot.getString("좌표정보(y)");
-                                String restaurantName = documentSnapshot.getString("사업장명");
-                                String foodType = documentSnapshot.getString("위생업태명");
-                                double restaurantX = Double.parseDouble(xString); // 식당 x좌표
-                                double restaurantY = Double.parseDouble(yString); // 식당 y좌표
-
-                                RestaurantInfo restaurantInfo = new RestaurantInfo(restaurantX, restaurantY, restaurantName, foodType);
-                                restaurantInfoList.add(restaurantInfo);
-
-                            }
-                        }
-                        addMarkersWithin2km();
-                        Toast.makeText(MainActivity.this, "식당 정보 로드 완료", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this,  "식당 정보 로드 실패", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    // 가게 정보 업데이트 메서드
-    private void updateRestaurantInfo(String restaurantId, final String restaurantName) {
-        // 가게의 "사진 정보" 필드 업데이트
-        firestore.collection("taepyeong_restaurant")
-                .document(restaurantId)
-                .update("사진 정보", "가게 사진 URL")
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(MainActivity.this, restaurantName + "의 사진 정보 업데이트 완료", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this, restaurantName + "의 사진 정보 업데이트 실패", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        // 가게의 "방문한 유저 리스트" 필드 업데이트
-      List<User> userList = new ArrayList<>();
-//        userList.add(new User("유저1", 3)); // 유저가 방문했을 때 조건으로 유저 추가해야함
-
-        firestore.collection("taepyeong_restaurant")
-                .document(restaurantId)
-                .update("방문한 유저 리스트", userList)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(MainActivity.this, restaurantName + "의 방문한 유저 리스트 업데이트 완료", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this, restaurantName + "의 방문한 유저 리스트 업데이트 실패", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    // 거리 계산
-    private double calculateDistance(double x1, double y1, double x2, double y2) {
-        double R = 6371; // 지구의 반지름 (단위: km)
-
-        double lat1Rad = Math.toRadians(x1);
-        double lon1Rad = Math.toRadians(y1);
-        double lat2Rad = Math.toRadians(x2);
-        double lon2Rad = Math.toRadians(y2);
-
-        double dLat = lat2Rad - lat1Rad;
-        double dLon = lon2Rad - lon1Rad;
-
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                + Math.cos(lat1Rad) * Math.cos(lat2Rad)
-                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-        return R * c;
-    }
-
-    private void addMarkersWithin2km() {
-        LinearLayout layout = findViewById(R.id.restaurantLinearView); // 식당 레이아웃이 추가될 LinearLayout
-
-        int count = 0; // 출력된 식당 개수를 세기 위한 변수
-
-        for (RestaurantInfo restaurantInfo : restaurantInfoList) {
-            double distance = calculateDistance(restaurantInfo.x, restaurantInfo.y, latitude, longitude);
-            boolean isWithin2Km = distance <= 2.0; // 거리가 2km 이내인지 확인
-
-            if (isWithin2Km) {
-                Toast.makeText(MainActivity.this, "x =" + restaurantInfo.x + "\n y = " + restaurantInfo.y + "\n 사업장명 : " +
-                        restaurantInfo.name + "\n 위생업태명 : " + restaurantInfo.foodType, Toast.LENGTH_SHORT).show();
-
-
-                MainRestaurantInfo info = new MainRestaurantInfo(restaurantInfo.name, restaurantInfo.foodType);
-                // 추가할 레이아웃
-                MainRestaurantListLayout mainRestaurantListLayout = new MainRestaurantListLayout(getApplicationContext(), info);
-                // 레이아웃 추가 코드
-                layout.addView(mainRestaurantListLayout);
-
-                // 2km 이내에 있는 식당들에 대해 마커 추가
-                Marker marker = new Marker();
-                marker.setPosition(new LatLng(restaurantInfo.x, restaurantInfo.y));
-                marker.setMap(naverMap);
-
-                count++; // 출력된 식당 개수 증가
-
-                if (count >= 10) { // 10개 이상 출력되었을 경우 반복문 종료
-                    break;
+                public RestaurantInfo(double x, double y, String name, String foodType) {
+                    this.x = x;
+                    this.y = y;
+                    this.name = name;
+                    this.foodType = foodType;
                 }
             }
-        }
-    }
 
-    // 내 위치에서 2km 반경의 원 표시
-    private void showCircleOverlay () {
-        CircleOverlay circleOverlay = new CircleOverlay();
-        circleOverlay.setCenter(new LatLng(latitude, longitude));
-        circleOverlay.setRadius(2000);// 반지름은 2km에 해당하는 값입니다. (단위: 미터)
-        circleOverlay.setColor(0x304169E1);// 채우기 색상
-        circleOverlay.setOutlineColor(0xFF4169E1);// 외곽선 색상
-        circleOverlay.setOutlineWidth(2);// 외곽선 두께
-        circleOverlay.setMap(naverMap);
-    }
-
-    private void initMap() {
-        // 위치 권한이 허용되어 있는 경우에만 지도 초기화
-        locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
-    }
-
-    private void moveCameraToLocation(double latitude, double longitude) {
-        LatLng target = new LatLng(latitude, longitude);
-        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(target)
-                .animate(CameraAnimation.Easing);
-        naverMap.moveCamera(cameraUpdate);
-    }
-
-    private void moveMapToCurrentLocation() {
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        LocationListener locationListener = new LocationListener() {
             @Override
-            public void onLocationChanged(@NonNull Location location) {
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                moveCameraToLocation(latitude, longitude);
-                locationManager.removeUpdates(this);
+            protected void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.activity_main);
 
-                // Update the location overlay with the new location
-                LocationOverlay locationOverlay = naverMap.getLocationOverlay();
-                locationOverlay.setPosition(new LatLng(latitude, longitude));
+                // Initialize MapView
+                mapView = findViewById(R.id.mapView);
+                mapView.onCreate(savedInstanceState);
+                mapView.getMapAsync(this);
+
+                // Initialize Firestore
+                firestore = FirebaseFirestore.getInstance();
+
+                // Request location permission
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    // Permission already granted
+                    initMap();
+                } else {
+                    // Request permission
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            LOCATION_PERMISSION_REQUEST_CODE);
+                }
+
+                // Button to move to current location
+                btnMoveToMyLocation = findViewById(R.id.btnMoveToMyLocation);
+                btnMoveToMyLocation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        moveMapToCurrentLocation();
+                    }
+                });
             }
 
             @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            public void onRequestPermissionsResult(int requestCode,
+                                                   @NonNull String[] permissions, @NonNull int[] grantResults) {
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+                    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        // Permission granted
+                        initMap();
+                    } else {
+                        // Permission denied
+                        Toast.makeText(this, "Location permission denied.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            private void initMap() {
+                // Initialize FusedLocationSource
+                locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
+
+                // Set location source for MapView
+                mapView.getMapAsync(new OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(@NonNull NaverMap naverMap) {
+                        MainActivity.this.naverMap = naverMap;
+                        naverMap.setLocationSource(locationSource);
+                        naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
+                        loadRestaurantData();
+                    }
+                });
+            }
+
+            private void loadRestaurantData() {
+                firestore.collection("taepyeong_restaurant")
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if (!queryDocumentSnapshots.isEmpty()) {
+                                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                                        Object xObject = document.get("좌표정보(x)");
+                                        if (xObject instanceof Number) {
+                                            double x = ((Number) xObject).doubleValue();
+                                            double y = document.getDouble("좌표정보(y)");
+                                            String name = document.getString("사업장명");
+                                            String foodType = document.getString("위생업태명");
+                                            RestaurantInfo restaurantInfo = new RestaurantInfo(x, y, name, foodType);
+                                            restaurantInfoList.add(restaurantInfo);
+                                        } else {
+                                            // Handle the case when the value is not a number
+                                            Log.e("RestaurantData", "'좌표정보(x)' field is not a number");
+                                        }
+                                    }
+                                    addMarkers();
+                                } else {
+                                    Toast.makeText(MainActivity.this, "No restaurant data available.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(MainActivity.this, "Failed to load restaurant data.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+
+            private void addMarkers() {
+                for (RestaurantInfo restaurant : restaurantInfoList) {
+                    LatLng latLng = new LatLng(restaurant.x, restaurant.y);
+                    Marker marker = new Marker();
+                    marker.setPosition(latLng);
+                    marker.setCaptionText(restaurant.name);
+                    marker.setCaptionColor(getResources().getColor(R.color.black));
+                    marker.setCaptionHaloColor(getResources().getColor(R.color.white));
+                    marker.setMap(naverMap);
+                    Toast.makeText(MainActivity.this, "x =" + restaurant.x + "\n y = " + restaurant.y + "\n 사업장명 : " +
+                            restaurant.name + "\n 위생업태명 : " + restaurant.foodType, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            private void moveMapToCurrentLocation() {
+                if (naverMap != null && locationSource != null) {
+                    LocationOverlay locationOverlay = naverMap.getLocationOverlay();
+                    Location lastLocation = locationSource.getLastLocation();
+                    if (lastLocation != null) {
+                        latitude = lastLocation.getLatitude();
+                        longitude = lastLocation.getLongitude();
+                        LatLng latLng = new LatLng(latitude, longitude);
+                        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(latLng)
+                                .animate(CameraAnimation.Easing, 3000)
+                                .finishCallback(new CameraUpdate.FinishCallback() {
+                                    @Override
+                                    public void onCameraUpdateFinish() {
+                                        // Add circle overlay
+                                        CircleOverlay circleOverlay = new CircleOverlay();
+                                        circleOverlay.setCenter(latLng);
+                                        circleOverlay.setRadius(1500); // 반경 2km
+                                        circleOverlay.setColor(Color.argb(70, 0, 0, 255)); // 파란색 반투명
+                                        circleOverlay.setMap(naverMap);
+                                        findRestaurantsWithinRadius(latLng);
+                                    }
+                                });
+                        naverMap.moveCamera(cameraUpdate);
+                    } else {
+                        Toast.makeText(this, "Failed to get current location.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            private void findRestaurantsWithinRadius(LatLng center) {
+                List<RestaurantInfo> nearbyRestaurants = new ArrayList<>();
+                for (RestaurantInfo restaurant : restaurantInfoList) {
+                    LatLng restaurantLocation = new LatLng(restaurant.x, restaurant.y);
+                    double distance = center.distanceTo(restaurantLocation);
+                    if (distance <= 2000) { // 2km 이내의 식당만 추출
+                        nearbyRestaurants.add(restaurant);
+                    }
+                }
+
+                // Print nearby restaurants to console
+                for (RestaurantInfo restaurant : nearbyRestaurants) {
+                    System.out.println("Name: " + restaurant.name);
+                    System.out.println("Food Type: " + restaurant.foodType);
+                    System.out.println();
+                }
+                Toast.makeText(getApplicationContext(),"Current Location: " + center.latitude + ", " + center.longitude,Toast.LENGTH_SHORT).show();
+
+                // 값을 받는 액티비티로 데이터 전달
+                RestaurantActivity.latitude = latitude;
+                RestaurantActivity.longitude = longitude;
+
+            }
+
 
             @Override
-            public void onProviderEnabled(String provider) {}
+            public void onMapReady(@NonNull NaverMap naverMap) {
+                // Do nothing
+                MainActivity.this.naverMap = naverMap;
+            }
 
             @Override
-            public void onProviderDisabled(String provider) {}
-        };
+            public void onStart() {
+                super.onStart();
+                mapView.onStart();
+            }
 
-        // 위치 권한이 허용되어 있는지 확인
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, locationListener, null);
+            @Override
+            public void onResume() {
+                super.onResume();
+                mapView.onResume();
+            }
 
-            // 위치 추적 모드를 설정
-            naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
+            @Override
+            public void onPause() {
+                super.onPause();
+                mapView.onPause();
+            }
 
-            // LocationOverlay의 가시성을 활성화
-            LocationOverlay locationOverlay = naverMap.getLocationOverlay();
-            locationOverlay.setVisible(true);
-        } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    LOCATION_PERMISSION_REQUEST_CODE);
+            @Override
+            public void onStop() {
+                super.onStop();
+                mapView.onStop();
+            }
+
+            @Override
+            public void onSaveInstanceState(Bundle outState) {
+                super.onSaveInstanceState(outState);
+                mapView.onSaveInstanceState(outState);
+            }
+
+            @Override
+            public void onDestroy() {
+                super.onDestroy();
+                mapView.onDestroy();
+            }
+
+            @Override
+            public void onLowMemory() {
+                super.onLowMemory();
+                mapView.onLowMemory();
+            }
         }
-    }
-
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
-    @Override
-    public void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
-    }
-}
