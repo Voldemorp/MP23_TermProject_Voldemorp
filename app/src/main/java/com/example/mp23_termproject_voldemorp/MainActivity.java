@@ -226,8 +226,8 @@
                 Toast.makeText(getApplicationContext(),"Current Location: " + center.latitude + ", " + center.longitude,Toast.LENGTH_SHORT).show();
 
                 // 값을 받는 액티비티로 데이터 전달
-                RestaurantActivity.latitude = latitude;
-                RestaurantActivity.longitude = longitude;
+//                RestaurantActivity.latitude = latitude;
+//                RestaurantActivity.longitude = longitude;
 
             }
 

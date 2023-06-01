@@ -58,4 +58,7 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         }
     }
+
+    // 포트 버튼 눌렀을 때 유저 데베 업데이트
+
 }
