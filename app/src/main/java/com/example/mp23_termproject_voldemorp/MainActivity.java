@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,12 +35,14 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.CircleOverlay;
 import com.naver.maps.map.overlay.LocationOverlay;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.Overlay;
 import com.naver.maps.map.util.FusedLocationSource;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private FusedLocationSource locationSource;
@@ -56,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 상태 바 투명하게 하고 사진 보이게 하는 코드
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         // Initialize MapView
         mapView = findViewById(R.id.mapView);
@@ -167,9 +173,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             marker.setCaptionHaloColor(getResources().getColor(R.color.white));
             marker.setMap(naverMap);
 
-            // Create an instance of MainRestaurantListLayout to display restaurant information
-            MainRestaurantListLayout restaurantLayout = new MainRestaurantListLayout(this, restaurant);
-
+            // Add OnClickListener to each marker
+            marker.setOnClickListener(new Overlay.OnClickListener() {
+                @Override
+                public boolean onClick(@NonNull Overlay overlay) {
+                    // Launch RestaurantActivity with selected restaurant's name and type
+                    Intent intent = new Intent(MainActivity.this, RestaurantActivity.class);
+                    intent.putExtra("name", restaurant.name);
+                    intent.putExtra("type", restaurant.foodType);
+                    intent.putExtra("res_lat",restaurant.x);
+                    intent.putExtra("res_long",restaurant.y);
+                    startActivity(intent);
+                    return true;
+                }
+            });
         }
     }
 
@@ -211,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 }, 3000); // Adjust the delay time as needed
             } else {
-                Toast.makeText(this, "Failed to get current location.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Failed to get current location.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -237,14 +254,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             // Add the restaurantLayout to the linear layout
             layout.addView(restaurantLayout);
-//                    addMarkers();
         }
 
 //                Toast.makeText(getApplicationContext(),"Current Location: " + center.latitude + ", " + center.longitude,Toast.LENGTH_SHORT).show();
 
         // 값을 받는 액티비티로 데이터 전달
-//                RestaurantActivity.latitude = latitude;
-//                RestaurantActivity.longitude = longitude;
+                RestaurantActivity.latitude = latitude;
+                RestaurantActivity.longitude = longitude;
 
     }
 

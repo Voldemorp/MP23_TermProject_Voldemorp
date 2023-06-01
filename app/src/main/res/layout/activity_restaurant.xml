@@ -10,7 +10,6 @@
         android:id="@+id/resturantMap"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:background="@drawable/temp_photo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
