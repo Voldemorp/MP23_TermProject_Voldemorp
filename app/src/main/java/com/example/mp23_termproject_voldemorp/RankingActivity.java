@@ -2,6 +2,7 @@ package com.example.mp23_termproject_voldemorp;
 
 import android.os.Bundle;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,9 @@ public class RankingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
+
+        // 상태 바 투명하게 하고 사진 보이게 하는 코드
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         rankingContainer = findViewById(R.id.rankingContainer);
         viewPager = new ViewPager2(this);
