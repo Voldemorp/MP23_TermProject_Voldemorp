@@ -116,6 +116,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:background="@drawable/login_btn_background"
+
                         android:ems="10"
                         android:hint="첫번째 주소를 설정해주세요"
                         android:inputType="textPersonName"
