@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sign_up_popup_background"
+    android:background="@drawable/signup_field_background"
     android:orientation="vertical"
     android:paddingTop="1dp"
     android:paddingBottom="1dp"
@@ -64,7 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="20"
-            android:background="@drawable/signup_field_background"
+            android:background="@drawable/sign_up_popup_background"
             android:orientation="vertical">
 
             <View
