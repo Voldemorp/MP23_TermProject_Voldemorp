@@ -40,7 +40,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 3;
+            return 2;
         }
 
         @NonNull
@@ -48,10 +48,8 @@ public class RestaurantActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return new RestaurantPhotoFragment();
-                case 1:
                     return new ResutaurantRecommendFragment();
-                case 2:
+                case 1:
                     return new RestaurantRankFragment();
                 default:
                     return null;
