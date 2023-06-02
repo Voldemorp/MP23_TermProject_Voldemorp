@@ -47,6 +47,7 @@ public class MasterRankingFragment extends Fragment {
         ScrollView scrollView = rootView.findViewById(R.id.rankScrollView);
         LinearLayout linearLayout = rootView.findViewById(R.id.rankLinearView);
 
+
         // 식당 랭킹에 있는 사용자 수(배열 요소 수)만큼 컴포넌트를 스크롤 뷰에 추가
         for (int i = 0; i < usersInfo.size(); i++) {
             // 추가할 레이아웃

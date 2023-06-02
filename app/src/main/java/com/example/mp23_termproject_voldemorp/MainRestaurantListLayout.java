@@ -3,7 +3,6 @@ package com.example.mp23_termproject_voldemorp;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,7 +23,6 @@ public class MainRestaurantListLayout extends LinearLayout {
 
         TextView placeName = (TextView)findViewById(R.id.restaurantName);
         TextView restaurantType = (TextView)findViewById(R.id.restaurantType);
-        ImageButton heartButton = (ImageButton)findViewById(R.id.heartButton);
 
         placeName.setText(mainRestaurantInfo.name);
         restaurantType.setText(mainRestaurantInfo.foodType);
