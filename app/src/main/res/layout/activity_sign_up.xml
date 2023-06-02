@@ -95,8 +95,7 @@
                     android:text="SIGN UP"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textSize="24sp" />
 
                 <View
                     android:id="@+id/signUpRightOfLabel"

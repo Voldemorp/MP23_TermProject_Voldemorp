@@ -11,7 +11,12 @@
           </Key>
         </deviceKey>
       </Target>
+<<<<<<< HEAD
     </runningDeviceTargetSelectedWithDropDown>
     <timeTargetWasSelectedWithDropDown value="2023-06-01T19:49:27.521251400Z" />
+=======
+    </targetSelectedWithDropDown>
+    <timeTargetWasSelectedWithDropDown value="2023-06-02T15:15:45.540405Z" />
+>>>>>>> 8424202 (FEAt: main page design update)
   </component>
 </project>
