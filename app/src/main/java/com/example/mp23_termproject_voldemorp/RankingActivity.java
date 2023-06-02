@@ -1,8 +1,11 @@
 package com.example.mp23_termproject_voldemorp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -30,6 +33,16 @@ public class RankingActivity extends AppCompatActivity {
 
         rankingContainer.addView(viewPager);
         setupViewPager();
+
+        // 메인으로 가는 버튼 이벤트
+        Button backToMainBtn = (Button) findViewById(R.id.backToMainBtn);
+        backToMainBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RankingActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupViewPager() {

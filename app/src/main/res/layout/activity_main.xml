@@ -8,41 +8,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/mypageBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="20dp"
-        android:clickable="true"
-        android:tint="#000000"
-        app:backgroundTint="#ffffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/navibar_mypage"
-        tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/rankingBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="230dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/login_background"
-        android:clickable="true"
-        app:backgroundTint="#B5B5B5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/navibar_ranking"
-        tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
-
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#00000000"
         android:gravity="bottom"
+        app:umanoClipPanel="false"
         app:umanoDragView="@id/bottomSheetView"
         app:umanoOverlay="true"
         app:umanoPanelHeight="400dp"
@@ -210,4 +181,35 @@
 
 
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/mypageBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:layout_marginEnd="20dp"
+        android:clickable="true"
+        android:tint="#000000"
+        app:backgroundTint="#ffffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/navibar_mypage"
+        tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/rankingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="230dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/login_background"
+        android:clickable="true"
+        app:backgroundTint="#B5B5B5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/navibar_ranking"
+        tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/set_location_textfield_backgorund"
+        android:background="@drawable/fragment_restaurant_recommend_background"
         android:orientation="vertical">
 
         <View
@@ -28,8 +28,8 @@
             android:gravity="center"
             android:text="식당이름의 랭킹"
             android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="18dp"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -39,6 +39,7 @@
             android:gravity="center"
             android:text="식당이름의 사용자 랭킹이예요."
             android:textAlignment="center"
+            android:textColor="#FFFFFF"
             android:textSize="12dp"
             tools:ignore="TextSizeCheck" />
 
