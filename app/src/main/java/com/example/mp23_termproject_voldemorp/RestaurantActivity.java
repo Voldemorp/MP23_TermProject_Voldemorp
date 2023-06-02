@@ -17,8 +17,14 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 
 public class RestaurantActivity extends AppCompatActivity {
 
@@ -37,6 +43,19 @@ public class RestaurantActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     private FirebaseDatabase mDatabase;
+
+    private int portNum = 0;
+
+    private boolean likeCheck = false;
+
+    private String postPortNum;
+
+    public class restaurantModel{
+
+        public int portNum = 0;
+
+        public boolean likeCheck = false;
+    }
 
 
     @Override
@@ -67,7 +86,9 @@ public class RestaurantActivity extends AppCompatActivity {
 //        latitude = intent.getDoubleExtra("latitude", 0.0);
 //        longitude = intent.getDoubleExtra("longitude", 0.0);
 
-
+        //파이어베이스 설정
+        firebaseAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
         portButton=findViewById(R.id.portButton);
 
         portButton.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +97,102 @@ public class RestaurantActivity extends AppCompatActivity {
                 //팝업창 띄우는걸로 바꾸기
                 Toast.makeText(getApplicationContext(),"port success",Toast.LENGTH_SHORT).show();
 
+                //유저 DB 업데이트
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                String userId = firebaseAuth.getCurrentUser().getUid();
+                DatabaseReference reference = database.getReference("users").child(userId).child("restaurant").child(restaurantName);
+
+                // 데이터 존재 여부 확인
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // 식당이 이미 유저DB에 있는 경우
+                        if (dataSnapshot.exists()) {
+                            updateRestaurant();
+                        }
+                        // 식당이 유저DB에 없는 경우
+                        else {
+                            addRestautant();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // 에러 처리
+                        Toast.makeText(getApplicationContext(), "데이터베이스 읽기 취소됨: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+                //여기에 식당 DB 업데이트
+            }
+
+            public void updateRestaurant(){
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                String userId = firebaseAuth.getCurrentUser().getUid();
+                DatabaseReference reference = database.getReference("users").child(userId).child("restaurant").child(restaurantName).child("portNum");
+
+                reference.runTransaction(new Transaction.Handler() {
+                    @Override
+                    public Transaction.Result doTransaction(MutableData mutableData) {
+                        // 데이터가 존재하는지 확인
+                        if (mutableData.getValue() == null) {
+                            // 데이터가 없는 경우, 초기값 설정
+                            mutableData.setValue(0);
+                        } else {
+                            // 데이터가 있는 경우, 값 증가
+                            int currentValue = mutableData.getValue(Integer.class);
+                            mutableData.setValue(currentValue + 1);
+                        }
+                        return Transaction.success(mutableData);
+                    }
+
+                    @Override
+                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
+                        if (databaseError != null) {
+                            // 에러 처리
+                            System.out.println("트랜잭션 실행 실패: " + databaseError.getMessage());
+                        } else {
+                            // 업데이트 성공
+                            if (committed) {
+                                // 업데이트가 커밋된 경우
+                                int updatedValue = dataSnapshot.getValue(Integer.class);
+                                System.out.println("새로운 값: " + updatedValue);
+                            } else {
+                                // 업데이트가 롤백된 경우
+                                System.out.println("트랜잭션 실행 롤백");
+                            }
+                        }
+                    }
+                });
 
             }
+            public void addRestautant() {
+
+                String userId = firebaseAuth.getCurrentUser().getUid();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName).child("portNum");
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        postPortNum = dataSnapshot.getValue(String.class);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                restaurantModel restaurantModel = new restaurantModel();
+
+                //초기 portNum ;
+                restaurantModel.portNum = 1;
+
+                // user/userId/restaurant/restaurantName에 restaurantModel 저장
+                mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
+
+            }
+
         });
 
         // 현재 사용자 위치와 식당 위치 간의 거리 계산
@@ -144,7 +259,5 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         }
     }
-
-    // 포트 버튼 눌렀을 때 유저 데베 업데이트
 
 }
