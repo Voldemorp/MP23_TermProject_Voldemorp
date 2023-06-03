@@ -16,7 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/set_location_textfield_backgorund"
+            android:background="@drawable/fragment_restaurant_recommend_background"
             android:orientation="vertical">
 
             <View
@@ -32,8 +32,8 @@
                 android:gravity="center"
                 android:text="식당이름의 추천"
                 android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="18dp"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -43,6 +43,7 @@
                 android:gravity="center"
                 android:text="식당이름을 방문한 사용자들의 현황이예요."
                 android:textAlignment="center"
+                android:textColor="#FFFFFF"
                 android:textSize="12dp"
                 tools:ignore="TextSizeCheck" />
 
@@ -154,9 +155,9 @@
 
                             <View
                                 android:id="@+id/view1061"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1.6" />
+                                android:layout_weight="1" />
 
                             <TextView
                                 android:id="@+id/textView241"
@@ -309,9 +310,9 @@
 
                             <View
                                 android:id="@+id/view106"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1.6" />
+                                android:layout_weight="1" />
 
                             <TextView
                                 android:id="@+id/textView24"
