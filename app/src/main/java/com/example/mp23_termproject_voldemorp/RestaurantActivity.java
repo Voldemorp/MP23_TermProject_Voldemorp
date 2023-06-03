@@ -152,6 +152,7 @@ import com.naver.maps.map.overlay.Marker;
 
                     // 추천 팝업창 띄우기
                       showPopup();
+                    showBadgePopup();
 //                    Toast.makeText(getApplicationContext(), "port success", Toast.LENGTH_SHORT).show();
                 }
 
