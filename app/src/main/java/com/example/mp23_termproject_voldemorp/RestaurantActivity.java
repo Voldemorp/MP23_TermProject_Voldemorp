@@ -69,7 +69,7 @@ import com.naver.maps.map.overlay.Marker;
 
         public class restaurantModel{
 
-            public int portNum = 0;
+            public int portNum;
 
             public boolean likeCheck = false;
         }
@@ -259,22 +259,6 @@ import com.naver.maps.map.overlay.Marker;
         Intent intent = getIntent();
         String restaurantName = intent.getStringExtra("name");
 
-        //사용자의 userId 받아와서 데베에서 portNum 받아오기
-        String userId = firebaseAuth.getCurrentUser().getUid();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName).child("portNum");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                portNum = dataSnapshot.getValue(Integer.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View popupView = getLayoutInflater().inflate(R.layout.dialog_recommend_alert, null);
 
@@ -293,56 +277,70 @@ import com.naver.maps.map.overlay.Marker;
 
         // [서버] 유저의 방문수 불러와서 visitNum에 저장, 임의로 넣은 int visitnum은 빼주세용
         // "몇" 번째 방문의 '방문수' 표시
-        int popPortNum = portNum + 1;
-        String strvisitNum = String.valueOf(popPortNum);
-        visitTextView.setText(strvisitNum);
 
-        // 첫 방문시 추천여부 버튼이 보이지 않음
-        if (portNum == 1) {
-            recommendBtn.setVisibility(View.GONE); // 버튼을 숨김 처리
-            notRecommendBtn.setVisibility(View.GONE); // 버튼을 숨김 처리
-            doyourecommend.setVisibility(View.GONE); // 텍스트뷰를 숨김 처리
-        }
+        //사용자의 userId 받아와서 데베에서 portNum 받아오기
+        // 사용자의 userId 받아와서 데베에서 portNum 받아오기
+        String userId = firebaseAuth.getCurrentUser().getUid();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName).child("portNum");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    portNum = dataSnapshot.getValue(Integer.class);
+                    String strportnum = String.valueOf(portNum);
+                    visitTextView.setText(strportnum);
 
-        // 두번째 방문부터
-        if (portNum >= 2) {
-            recommendBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                    if (portNum == 1) {
+                        recommendBtn.setVisibility(View.GONE); // 버튼을 숨김 처리
+                        notRecommendBtn.setVisibility(View.GONE); // 버튼을 숨김 처리
+                        doyourecommend.setVisibility(View.GONE); // 텍스트뷰를 숨김 처리
+                    } else {
+                        recommendBtn.setVisibility(View.VISIBLE); // 버튼을 보이게 처리
+                        notRecommendBtn.setVisibility(View.VISIBLE); // 버튼을 보이게 처리
+                        doyourecommend.setVisibility(View.VISIBLE); // 텍스트뷰를 보이게 처리
 
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName).child("likeCheck");
+                        recommendBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // 추천 버튼 클릭 처리
+                                restaurantModel restaurantModel = new restaurantModel();
+                                restaurantModel.likeCheck = true;
+                                restaurantModel.portNum = portNum;
 
-                    restaurantModel restaurantModel = new restaurantModel();
+                                // user/userId/restaurant/restaurantName에 restaurantModel 저장
+                                mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
 
-                    //추천 여부를 true로 저장 ;
-                    restaurantModel.likeCheck = true;
-                    restaurantModel.portNum = portNum;
+                                dialog.dismiss();
+                            }
+                        });
 
-                    // user/userId/restaurant/restaurantName에 restaurantModel 저장
-                    mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
+                        notRecommendBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // 비추천 버튼 클릭 처리
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName).child("likeCheck");
 
+                                restaurantModel restaurantModel = new restaurantModel();
+                                restaurantModel.likeCheck = false;
+                                restaurantModel.portNum = portNum;
 
-                    dialog.dismiss();
+                                // user/userId/restaurant/restaurantName에 restaurantModel 저장
+                                mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
+
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                } else {
+                    // 식당이 유저DB에 없는 경우 처리
                 }
-            });
-            notRecommendBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName).child("likeCheck");
+            }
 
-                    restaurantModel restaurantModel = new restaurantModel();
-
-                    //추천 여부를 false로 저장 ;
-                    restaurantModel.likeCheck = false;
-                    restaurantModel.portNum = portNum;
-
-                    // user/userId/restaurant/restaurantName에 restaurantModel 저장
-                    mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
-
-                    dialog.dismiss();
-                }
-            });
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                visitTextView.setText("0");
+            }
+        });
 
         // 닫힘 버튼 'X'
         closeBtn.setOnClickListener(new View.OnClickListener() {
@@ -352,6 +350,7 @@ import com.naver.maps.map.overlay.Marker;
             }
         });
     }
+
 
 @Override
 public void onMapReady(@NonNull NaverMap naverMap) {
