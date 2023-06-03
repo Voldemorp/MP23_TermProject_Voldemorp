@@ -48,7 +48,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
     private boolean likeCheck = false;
 
-    private String postPortNum;
+    private int postPortNum;
 
     public class restaurantModel{
 
@@ -113,7 +113,7 @@ public class RestaurantActivity extends AppCompatActivity {
                         }
                         // 식당이 유저DB에 없는 경우
                         else {
-                            addRestautant();
+                            addRestaurant();
                         }
                     }
                     @Override
@@ -127,54 +127,25 @@ public class RestaurantActivity extends AppCompatActivity {
                 //여기에 식당 DB 업데이트
             }
 
-            public void updateRestaurant(){
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
+            public void addRestaurant(){
                 String userId = firebaseAuth.getCurrentUser().getUid();
-                DatabaseReference reference = database.getReference("users").child(userId).child("restaurant").child(restaurantName).child("portNum");
 
-                reference.runTransaction(new Transaction.Handler() {
-                    @Override
-                    public Transaction.Result doTransaction(MutableData mutableData) {
-                        // 데이터가 존재하는지 확인
-                        if (mutableData.getValue() == null) {
-                            // 데이터가 없는 경우, 초기값 설정
-                            mutableData.setValue(0);
-                        } else {
-                            // 데이터가 있는 경우, 값 증가
-                            int currentValue = mutableData.getValue(Integer.class);
-                            mutableData.setValue(currentValue + 1);
-                        }
-                        return Transaction.success(mutableData);
-                    }
+                restaurantModel restaurantModel = new restaurantModel();
 
-                    @Override
-                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
-                        if (databaseError != null) {
-                            // 에러 처리
-                            System.out.println("트랜잭션 실행 실패: " + databaseError.getMessage());
-                        } else {
-                            // 업데이트 성공
-                            if (committed) {
-                                // 업데이트가 커밋된 경우
-                                int updatedValue = dataSnapshot.getValue(Integer.class);
-                                System.out.println("새로운 값: " + updatedValue);
-                            } else {
-                                // 업데이트가 롤백된 경우
-                                System.out.println("트랜잭션 실행 롤백");
-                            }
-                        }
-                    }
-                });
+                restaurantModel.portNum = 1;
+                restaurantModel.likeCheck = false;
+
+                mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
 
             }
-            public void addRestautant() {
+            public void updateRestaurant() {
 
                 String userId = firebaseAuth.getCurrentUser().getUid();
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName).child("portNum");
                 ref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        postPortNum = dataSnapshot.getValue(String.class);
+                        postPortNum = dataSnapshot.getValue(Integer.class);
                     }
 
                     @Override
@@ -186,7 +157,7 @@ public class RestaurantActivity extends AppCompatActivity {
                 restaurantModel restaurantModel = new restaurantModel();
 
                 //초기 portNum ;
-                restaurantModel.portNum = 1;
+                restaurantModel.portNum = postPortNum + 1;
 
                 // user/userId/restaurant/restaurantName에 restaurantModel 저장
                 mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
