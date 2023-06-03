@@ -5,7 +5,7 @@ public class MainRestaurantInfo {
     double y;
     String name;
     String foodType;
-    Boolean isHeartFilled;
+//    Boolean isHeartFilled;
 
     public MainRestaurantInfo(double x, double y, String name, String foodType) {
         this.x = x;
@@ -14,13 +14,13 @@ public class MainRestaurantInfo {
         this.foodType = foodType;
     }
 
-    public MainRestaurantInfo(double x, double y, String name, String foodType, Boolean isHeartFilled) {
-        this.x = x;
-        this.y = y;
-        this.name = name;
-        this.foodType = foodType;
-        this.isHeartFilled = isHeartFilled;
-    }
+//    public MainRestaurantInfo(double x, double y, String name, String foodType, Boolean isHeartFilled) {
+//        this.x = x;
+//        this.y = y;
+//        this.name = name;
+//        this.foodType = foodType;
+//        this.isHeartFilled = isHeartFilled;
+//    }
 
     public String getPlaceName() {
         return name;
@@ -28,7 +28,7 @@ public class MainRestaurantInfo {
     public String getType() {
         return foodType;
     }
-    public boolean getIsHeartFilled() {
-        return isHeartFilled;
-    }
+//    public boolean getIsHeartFilled() {
+//        return isHeartFilled;
+//    }
 }

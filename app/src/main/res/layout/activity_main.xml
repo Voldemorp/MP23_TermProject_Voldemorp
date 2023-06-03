@@ -1,183 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.sothree.slidinguppanel.SlidingUpPanelLayout
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:gravity="bottom"
-    android:background="#00000000"
-    app:umanoDragView="@id/bottomSheetView"
-    app:umanoScrollableView="@id/restaurantScrollView"
-    app:umanoOverlay="true"
-    app:umanoPanelHeight="400dp"
-    app:umanoShadowHeight="0dp"
-    >
+    android:layout_height="match_parent">
 
-    <!--   지도 화면 구현할 레이아웃  -->
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-
-    <com.naver.maps.map.MapView
-        android:id="@+id/mapView"
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.naver.maps.map.MapFragment">
+        android:background="#00000000"
+        android:gravity="bottom"
+        app:umanoClipPanel="false"
+        app:umanoDragView="@id/bottomSheetView"
+        app:umanoOverlay="true"
+        app:umanoPanelHeight="400dp"
+        app:umanoScrollableView="@id/restaurantScrollView"
+        app:umanoShadowHeight="0dp"
+        tools:context=".MainActivity"
+        tools:layout_editor_absoluteX="68dp"
+        tools:layout_editor_absoluteY="0dp">
 
-    </com.naver.maps.map.MapView>
+        <!--   지도 화면 구현할 레이아웃  -->
+        <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
 
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-    <LinearLayout
-        android:id="@+id/bottomSheetView"
-        android:background="@android:color/transparent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <View
-            android:id="@+id/view3"
+        <com.naver.maps.map.MapView
+            android:id="@+id/mapView"
+            android:name="com.naver.maps.map.MapFragment"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@android:color/transparent" />
+            android:layout_height="match_parent">
+
+        </com.naver.maps.map.MapView>
+
+        <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
         <LinearLayout
+            android:id="@+id/bottomSheetView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/main_bottomsheet_background"
+            android:background="@android:color/transparent"
             android:orientation="vertical">
 
             <View
-                android:id="@+id/view4"
+                android:id="@+id/view3"
                 android:layout_width="match_parent"
-                android:layout_height="30dp" />
-
+                android:layout_height="30dp"
+                android:background="@android:color/transparent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:background="@drawable/main_bottomsheet_background"
+                android:orientation="vertical">
 
                 <View
-                    android:id="@+id/view2"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5" />
+                    android:id="@+id/view4"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="6"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="내 주변 식당 찾기"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="사용자의 위치를 바탕으로 주변 식당을 추천해요."
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
 
                     <View
-                        android:id="@+id/view136"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
+                        android:id="@+id/view2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5" />
 
-                    <Button
-                        android:id="@+id/btnMoveToMyLocation"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="5"
-                        android:background="@drawable/login_btn_background"
-                        android:text="내 위치 보기"
-                        android:textColor="@color/white"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="6"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="내 주변 식당 찾기"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="사용자의 위치를 바탕으로 주변 식당을 추천해요."
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <View
+                            android:id="@+id/view136"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <Button
+                            android:id="@+id/btnMoveToMyLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="5"
+                            android:background="@drawable/main_location_button_background"
+                            android:text="주변 식당 보기"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:id="@+id/view137"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+                    </LinearLayout>
 
                     <View
-                        android:id="@+id/view137"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-                </LinearLayout>
+                        android:id="@+id/view5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5" />
 
-                <View
-                    android:id="@+id/view5"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5" />
+                </LinearLayout>
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/view11"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:background="#A13366" />
+
+                <!--             -->
+                <ScrollView
+                    android:id="@+id/restaurantScrollView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="12"
+                    android:background="#A13366">
+
+                    <LinearLayout
+                        android:id="@+id/restaurantLinearView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#A13366"
+                        android:orientation="vertical" />
+                </ScrollView>
+
+                <View
+                    android:id="@+id/view18"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:background="#A13366" />
+            </LinearLayout>
+
+            <!--   하단 네비게이션 바    -->
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:orientation="horizontal">
-
-            <View
-                android:id="@+id/view11"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:background="#A13366" />
-
-            <!--             -->
-            <ScrollView
-                android:id="@+id/restaurantScrollView"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="12"
-                android:background="#A13366">
-
-                <LinearLayout
-                    android:id="@+id/restaurantLinearView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#A13366"
-                    android:orientation="vertical" />
-            </ScrollView>
-
-            <View
-                android:id="@+id/view18"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:background="#A13366" />
-        </LinearLayout>
-
-        <!--   하단 네비게이션 바    -->
-        <include
-            android:id="@+id/navigation"
-            layout="@layout/element_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            />
-    </LinearLayout>
-
-    <!--   올라올 화면 보여줄 레이아웃    -->
+        <!--   올라올 화면 보여줄 레이아웃    -->
 
 
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
-</com.sothree.slidinguppanel.SlidingUpPanelLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/mypageBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:layout_marginEnd="20dp"
+        android:clickable="true"
+        android:tint="#000000"
+        app:backgroundTint="#ffffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/navibar_mypage"
+        tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/rankingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="230dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/login_background"
+        android:clickable="true"
+        app:backgroundTint="#B5B5B5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/navibar_ranking"
+        tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

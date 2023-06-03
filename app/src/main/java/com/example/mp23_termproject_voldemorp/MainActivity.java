@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +21,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -88,7 +88,25 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnMoveToMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moveMapToCurrentLocation();
+                    moveMapToCurrentLocation();
+            }
+        });
+
+        FloatingActionButton mypageBtn = findViewById(R.id.mypageBtn);
+        mypageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MyPageActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        FloatingActionButton rankingBtn = findViewById(R.id.rankingBtn);
+        rankingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RankingActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -126,6 +144,40 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void loadRestaurantData() {
+        firestore.collection("bokjeong_restaurant")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                                // Retrieve restaurant data
+                                Object xObject = document.get("좌표정보(x)");
+                                if (xObject instanceof Number) {
+                                    double x = ((Number) xObject).doubleValue();
+                                    double y = document.getDouble("좌표정보(y)");
+                                    String name = document.getString("사업장명");
+                                    String foodType = document.getString("위생업태명");
+                                    MainRestaurantInfo restaurantInfo = new MainRestaurantInfo(x, y, name, foodType);
+                                    restaurantInfoList.add(restaurantInfo);
+                                } else {
+                                    // Handle the case when the value is not a number
+                                    Log.e("RestaurantData", "'좌표정보(x)' field is not a number");
+                                }
+                            }
+//                            addMarkers();
+//                            moveMapToCurrentLocation(); // Move map after loading restaurant data
+                        } else {
+                            Toast.makeText(MainActivity.this, "No restaurant data available.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this, "Failed to load restaurant data.", Toast.LENGTH_SHORT).show();
+                    }
+                });
         firestore.collection("taepyeong_restaurant")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -183,6 +235,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     intent.putExtra("type", restaurant.foodType);
                     intent.putExtra("res_lat",restaurant.x);
                     intent.putExtra("res_long",restaurant.y);
+                    intent.putExtra("latitude",latitude);
+                    intent.putExtra("longitude",longitude);
                     startActivity(intent);
                     return true;
                 }

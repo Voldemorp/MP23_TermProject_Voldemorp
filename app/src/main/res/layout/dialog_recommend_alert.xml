@@ -44,7 +44,7 @@
                     android:layout_weight="6" />
 
                 <Button
-                    android:id="@+id/closeButton"
+                    android:id="@+id/closeBtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -89,7 +89,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView32"
+                    android:id="@+id/visitMessage"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="25"
@@ -109,7 +109,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/descriptionField"
+                    android:id="@+id/doyourecommend"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="25"

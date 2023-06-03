@@ -6,18 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".RestaurantActivity">
 
-    <View
-        android:id="@+id/resturantMap"
+<!--    <View-->
+<!--        android:id="@+id/resturantMap"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="400dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <com.naver.maps.map.MapView
+        android:id="@+id/restaurantMap"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:name="com.naver.maps.map.MapFragment">
+
+    </com.naver.maps.map.MapView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="550dp"
+        android:layout_height="600dp"
+        android:layout_marginBottom="-20dp"
         android:background="@drawable/restaurant_bottomsheet_background"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,25 +36,26 @@
             android:id="@+id/view93"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="0.6" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1.5"
+            android:layout_weight="1.8"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:background="@drawable/main_bottomsheet_background"
                 android:orientation="vertical">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="33dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.4"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <View
@@ -60,15 +69,17 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="12"
+                        android:fontFamily="sans-serif-black"
+                        android:gravity="center_vertical"
                         android:text="호식당"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textSize="22sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <View
@@ -80,12 +91,12 @@
                     <TextView
                         android:id="@+id/textView3"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="12"
                         android:gravity="center_vertical"
                         android:text="일식"
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -107,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@drawable/login_btn_background"
+                    android:background="@drawable/main_location_button_background"
                     android:text="Port!"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
@@ -148,6 +159,6 @@
             android:id="@+id/view97"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2" />
+            android:layout_weight="1.5" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
