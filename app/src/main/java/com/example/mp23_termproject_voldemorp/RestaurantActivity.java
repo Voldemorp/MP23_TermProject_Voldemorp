@@ -1,5 +1,6 @@
 package com.example.mp23_termproject_voldemorp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -19,8 +20,15 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraAnimation;
+import com.naver.maps.map.CameraUpdate;
+import com.naver.maps.map.MapView;
+import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.overlay.Marker;
 
-public class RestaurantActivity extends AppCompatActivity {
+public class RestaurantActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     //현재 사용자 위치
     static double latitude;
@@ -31,6 +39,8 @@ public class RestaurantActivity extends AppCompatActivity {
     private double res_long;
     private ViewPager2 viewPager;
     private FrameLayout restaurantContainer;
+    private NaverMap naverMap;
+    private MapView mapView;
 
     private Button portButton;
 
@@ -39,6 +49,7 @@ public class RestaurantActivity extends AppCompatActivity {
     private FirebaseDatabase mDatabase;
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +58,17 @@ public class RestaurantActivity extends AppCompatActivity {
         // 상태 바 투명하게 하고 사진 보이게 하는 코드
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        // Initialize MapView
+        mapView = findViewById(R.id.restaurantMap);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync((OnMapReadyCallback) this);
+
         // MainActivity에서 전달된 인텐트 가져오기
         Intent intent = getIntent();
         String restaurantName = intent.getStringExtra("name");
         String restaurantType = intent.getStringExtra("type");
-        double res_lat = intent.getDoubleExtra("res_lat",0.0);
-        double res_long = intent.getDoubleExtra("res_long",0.0);
+        res_lat = intent.getDoubleExtra("res_lat",0.0);
+        res_long = intent.getDoubleExtra("res_long",0.0);
 
 
         //식당 이름
@@ -114,11 +130,6 @@ public class RestaurantActivity extends AppCompatActivity {
         setupViewPager();
     }
 
-    private void setupViewPager() {
-        MyPagerAdapter adapter = new MyPagerAdapter(this);
-        viewPager.setAdapter(adapter);
-    }
-
     private class MyPagerAdapter extends FragmentStateAdapter {
         public MyPagerAdapter(AppCompatActivity activity) {
             super(activity);
@@ -142,7 +153,77 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         }
     }
+    @Override
+    public void onMapReady(@NonNull NaverMap naverMap) {
+        this.naverMap = naverMap;
+
+        // Add a marker for the restaurant location
+        LatLng restaurantLatLng = new LatLng(res_lat, res_long);
+        Marker marker = new Marker();
+        marker.setPosition(restaurantLatLng);
+        marker.setMap(naverMap);
+
+        // Move the camera to the restaurant location with an offset
+        double offset = -0.008; // Adjust this value to change the marker offset
+        LatLng cameraLatLng = new LatLng(res_lat + offset, res_long);
+        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(cameraLatLng)
+                .animate(CameraAnimation.Easing);
+        naverMap.moveCamera(cameraUpdate);
+    }
+
+
+
+
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mapView.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mapView.onStop();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    private void setupViewPager() {
+        MyPagerAdapter adapter = new MyPagerAdapter(this);
+        viewPager.setAdapter(adapter);
+    }
+
 
     // 포트 버튼 눌렀을 때 유저 데베 업데이트
-
 }
