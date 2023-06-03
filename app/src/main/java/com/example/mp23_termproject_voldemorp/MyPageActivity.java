@@ -103,15 +103,15 @@ public class MyPageActivity extends AppCompatActivity {
         // 상태 바 투명하게 하고 사진 보이게 하는 코드
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        // for문 돌면서 추가
-        for (int i = 0; i < portList.size(); i++) {
-            // 추가할 레이아웃
-            MyPageListLayout myPageListLayout = new MyPageListLayout(getApplicationContext(), portList.get(i));
-            // 추가할 위치
-            LinearLayout layout = findViewById(R.id.portView);
-            // 추가 코드
-            layout.addView(myPageListLayout);
-        }
+//        // for문 돌면서 추가
+//        for (int i = 0; i < portList.size(); i++) {
+//            // 추가할 레이아웃
+//            MyPageListLayout myPageListLayout = new MyPageListLayout(getApplicationContext(), portList.get(i));
+//            // 추가할 위치
+//            LinearLayout layout = findViewById(R.id.portView);
+//            // 추가 코드
+//            layout.addView(myPageListLayout);
+//        }
 
 
 

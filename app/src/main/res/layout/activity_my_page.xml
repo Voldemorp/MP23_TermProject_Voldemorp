@@ -729,12 +729,16 @@
                             android:background="@drawable/my_page_main_button_background"
                             tools:ignore="SpeakableTextPresentCheck">
 
-                            <!--(뱃지 수 / 3개)만큼 만들기-->
+                            <!-- 리스트를 포함할 컨테이너 추가 -->
                             <LinearLayout
-                                android:id="@+id/portView"
+                                android:id="@+id/portListContainer"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical" />
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <!-- 식당들의 리스트 아이템을 동적으로 추가할 예정 -->
+                            </LinearLayout>
+
                         </ScrollView>
 
                         <View

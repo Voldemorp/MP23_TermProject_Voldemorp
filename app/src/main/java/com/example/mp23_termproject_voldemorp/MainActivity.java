@@ -237,6 +237,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     intent.putExtra("res_long",restaurant.y);
                     intent.putExtra("latitude",latitude);
                     intent.putExtra("longitude",longitude);
+                    ResutaurantRecommendFragment.restaurantName=restaurant.name;
                     startActivity(intent);
                     return true;
                 }
