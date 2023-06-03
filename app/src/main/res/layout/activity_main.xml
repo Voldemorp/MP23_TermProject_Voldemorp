@@ -116,7 +116,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="5"
                             android:background="@drawable/main_location_button_background"
-                            android:text="내 위치 보기"
+                            android:text="주변 식당 보기"
                             android:textColor="@color/white"
                             android:textSize="10sp"
                             android:textStyle="bold" />

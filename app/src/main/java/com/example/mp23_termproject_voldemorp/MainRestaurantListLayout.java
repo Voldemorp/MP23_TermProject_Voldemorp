@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 public class MainRestaurantListLayout extends LinearLayout {
 
-    public MainRestaurantListLayout(Context context, AttributeSet attrs, MainRestaurantInfo mainRestaurantInfo) {
-        super(context, attrs);
-        init(context, mainRestaurantInfo);
-    }
+//    public MainRestaurantListLayout(Context context, AttributeSet attrs, MainRestaurantInfo mainRestaurantInfo) {
+//        super(context, attrs);
+//        init(context, mainRestaurantInfo);
+//    }
 
     public MainRestaurantListLayout(Context context, MainRestaurantInfo mainRestaurantInfo) {
         super(context);
