@@ -44,7 +44,11 @@
                     android:layout_weight="6" />
 
                 <Button
+<<<<<<< HEAD
+                    android:id="@+id/closeBtn"
+=======
                     android:id="@+id/closeButton"
+>>>>>>> 352ff9ecd3140d9d725e749c51ef2ceff520064b
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -89,7 +93,11 @@
                     android:textStyle="bold" />
 
                 <TextView
+<<<<<<< HEAD
+                    android:id="@+id/visitMessage"
+=======
                     android:id="@+id/textView32"
+>>>>>>> 352ff9ecd3140d9d725e749c51ef2ceff520064b
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="25"
@@ -109,7 +117,11 @@
                 android:orientation="horizontal">
 
                 <TextView
+<<<<<<< HEAD
+                    android:id="@+id/doyourecommend"
+=======
                     android:id="@+id/descriptionField"
+>>>>>>> 352ff9ecd3140d9d725e749c51ef2ceff520064b
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="25"
