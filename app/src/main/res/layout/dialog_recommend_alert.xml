@@ -150,7 +150,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.6"
+                android:layout_weight="1.3"
                 android:orientation="horizontal">
 
                 <View
@@ -164,8 +164,10 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:background="@drawable/my_page_badge_background"
-                    android:text="추천안함" />
+                    android:background="@drawable/notrecommend_alert_button_background"
+                    android:fontFamily="sans-serif-black"
+                    android:text="     "
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 <View
                     android:id="@+id/view141"
@@ -178,8 +180,9 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:background="@drawable/my_page_badge_background"
-                    android:text="추천함" />
+                    android:background="@drawable/recommend_alert_button_background"
+                    android:text="    "
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 <View
                     android:id="@+id/view142"
