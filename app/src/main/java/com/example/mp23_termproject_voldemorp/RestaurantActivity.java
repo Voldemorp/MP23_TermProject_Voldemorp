@@ -371,12 +371,6 @@ public void onMapReady(@NonNull NaverMap naverMap) {
         naverMap.moveCamera(cameraUpdate);
         }
 
-
-
-
-
-
-
 @Override
 public void onStart() {
         super.onStart();
