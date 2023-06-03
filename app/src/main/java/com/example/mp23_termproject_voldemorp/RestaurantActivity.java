@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
@@ -22,8 +23,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-        import com.naver.maps.geometry.LatLng;
+import com.google.firebase.database.ValueEventListener;
+import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.MapView;
@@ -222,7 +227,56 @@ import com.naver.maps.map.overlay.Marker;
         });
     }
 
-@Override
+//        //   *---뱃지 팝업창 ---*
+//        private AlertDialog dialog2;
+//        private void showBadgePopup() {
+//            AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+//            View popupView = getLayoutInflater().inflate(R.layout.dialog_badge_alert, null);
+//
+//            TextView nameOfNewBadge = popupView.findViewById(R.id.nameOfNewBadge);
+//            ImageView badgeImage = popupView.findViewById(R.id.badgeImage);
+//            Button closeButton = popupView.findViewById(R.id.closeButton);
+//
+//            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+//            DatabaseReference userTotalLikeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("userTotalLike");
+//            DatabaseReference maxPortNumRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("max_portNum");
+//            DatabaseReference badgeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("badge");
+//
+//            // [서버] 추천수의 변경감지
+//           userTotalLikeRef.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    int newRecommendationCount = dataSnapshot.getValue(int.class);
+//
+//                    // 뱃지4: 추천수가 1로 변경되면
+//                    if (newRecommendationCount == 1) {
+//                        // [서버] 뱃지4 T로 변경
+//                        nameOfNewBadge.setText("소심한 햄즥이");
+//                        Drawable newDrawable = getResources().getDrawable(R.drawable.badge_recommend1); // 드로어블 가져오기
+//                        badgeImage.setImageDrawable(newDrawable);
+//
+//                        // 팝업 레이아웃을 AlertDialog에 설정
+//                        builder2.setView(popupView);
+//                        dialog2 = builder2.create();
+//                        dialog2.show();
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {}
+//            });
+//
+//
+//
+//        }
+
+
+
+
+
+
+        @Override
 public void onMapReady(@NonNull NaverMap naverMap) {
         this.naverMap = naverMap;
 
@@ -294,5 +348,5 @@ private void setupViewPager() {
         }
 
 
-        // 포트 버튼 눌렀을 때 유저 데베 업데이트
-        }
+
+    }
