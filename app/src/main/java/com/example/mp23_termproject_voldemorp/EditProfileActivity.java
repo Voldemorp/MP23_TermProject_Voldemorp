@@ -31,8 +31,8 @@ public class EditProfileActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         // 취소 버튼
-        Button cancleBtn = (Button) findViewById(R.id.cancleBtn);
-        cancleBtn.setOnClickListener(new View.OnClickListener() {
+        Button cancelBtn = (Button) findViewById(R.id.cancelBtn);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EditProfileActivity.this, MyPageActivity.class);
