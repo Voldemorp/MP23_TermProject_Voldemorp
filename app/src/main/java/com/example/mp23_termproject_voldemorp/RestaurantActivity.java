@@ -19,11 +19,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
-
+import androidx.viewpager2.widget.ViewPager2
+        ;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-        import com.naver.maps.geometry.LatLng;
+import com.google.firebase.database.*;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
+
+import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.MapView;
@@ -51,6 +58,19 @@ import com.naver.maps.map.overlay.Marker;
         private FirebaseAuth firebaseAuth;
 
         private FirebaseDatabase mDatabase;
+
+        private int portNum = 0;
+
+        private boolean likeCheck = false;
+
+        private int postPortNum;
+
+        public class restaurantModel{
+
+            public int portNum = 0;
+
+            public boolean likeCheck = false;
+        }
 
 
         @SuppressLint("MissingInflatedId")
@@ -93,17 +113,86 @@ import com.naver.maps.map.overlay.Marker;
             resNameText.setText(restaurantName);
             foodTypeText.setText(restaurantType);
 
+            firebaseAuth = FirebaseAuth.getInstance();
+            mDatabase = FirebaseDatabase.getInstance();
             portButton = findViewById(R.id.portButton);
 
             portButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // [서버] 포트버튼 클릭시 방문수 +1 해서 DB저장
+
+                    //유저 DB 업데이트
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    String userId = firebaseAuth.getCurrentUser().getUid();
+                    DatabaseReference reference = database.getReference("users").child(userId).child("restaurant").child(restaurantName);
+
+                    // 데이터 존재 여부 확인
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // 식당이 이미 유저DB에 있는 경우
+                            if (dataSnapshot.exists()) {
+                                updateRestaurant();
+                            }
+                            // 식당이 유저DB에 없는 경우
+                            else {
+                                addRestaurant();
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            // 에러 처리
+                            Toast.makeText(getApplicationContext(), "데이터베이스 읽기 취소됨: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                     // 추천 팝업창 띄우기
                     showPopup();
 //                    Toast.makeText(getApplicationContext(), "port success", Toast.LENGTH_SHORT).show();
                 }
+
+                // 유저 DB에 새로운 레스토랑 child 추가
+                public void addRestaurant(){
+                    String userId = firebaseAuth.getCurrentUser().getUid();
+
+                    restaurantModel restaurantModel = new restaurantModel();
+
+                    restaurantModel.portNum = 1;
+                    restaurantModel.likeCheck = false;
+
+                    mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
+                }
+
+                //유저DB에서 해당 레스토랑 찾아서 portNum +1로 업데이트
+                public void updateRestaurant() {
+
+                    String userId = firebaseAuth.getCurrentUser().getUid();
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName).child("portNum");
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            postPortNum = dataSnapshot.getValue(Integer.class);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    restaurantModel restaurantModel = new restaurantModel();
+
+                    //초기 portNum ;
+                    restaurantModel.portNum = postPortNum + 1;
+
+                    // user/userId/restaurant/restaurantName에 restaurantModel 저장
+                    mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
+
+                }
             });
+
 
             // 현재 사용자 위치와 식당 위치 간의 거리 계산
             Location userLocation = new Location("user");

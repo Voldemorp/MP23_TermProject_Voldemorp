@@ -73,14 +73,14 @@ public class SignUpDialog extends Dialog {
         public int userTotalLike;
 
     }
-        public class UserModel_badge{
+    public class UserModel_badge{
         public String mainBadge = "badge1";
         public boolean badge1 = true;
         public boolean badge2 = false;
         public boolean badge3 = false;
         public boolean badge4 = false;
         public boolean badge5 = false;
-        public boolean badge6 =false;
+        public boolean badge6 = false;
         public boolean badge7 = false;
         public boolean badge8 = false;
         public boolean badge9 = false;
@@ -420,8 +420,6 @@ public class SignUpDialog extends Dialog {
                                         UserModel userModel = new UserModel();
                                         //user badge 데이터 베이스룰 생성
                                         UserModel_badge userModel_badge = new UserModel_badge();
-                                        //user badge 데이터 베이스를 생성
-                                        UserModel_restaurant userModel_restaurant = new UserModel_restaurant();
 
                                         userModel.nickName = nickname;
                                         userModel.max_portNum = max_portNum;
@@ -439,7 +437,6 @@ public class SignUpDialog extends Dialog {
                                         userModel_badge.badge10 = badge10;
                                         userModel_badge.badge11 = badge11;
                                         userModel_badge.badge12 = badge12;
-                                        userModel_restaurant.restaurantName = "";
 
                                         // 사용자의 닉네임을 "users" 경로에 저장
                                         mDatabase.getReference().child("users").child(userId).setValue(userModel);
