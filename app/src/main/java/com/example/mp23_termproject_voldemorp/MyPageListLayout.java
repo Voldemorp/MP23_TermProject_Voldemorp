@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 // port list 레이아웃에 추가할 데이터 세팅
 public class MyPageListLayout extends LinearLayout {
+
+
     public MyPageListLayout(Context context, AttributeSet attrs, MyPagePortItem myPagePortItem) {
         super(context, attrs);
         init(context, myPagePortItem);
@@ -22,10 +24,11 @@ public class MyPageListLayout extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_mypage_resturant, this, true);
 
-        TextView restaurantName = (TextView)findViewById(R.id.restaurantName);
-        TextView numOfPort = (TextView)findViewById(R.id.numOfVisit);
+        TextView mypagePort = (TextView)this.findViewById(R.id.mypagePort);
+        TextView mypageRestaurantTextView = (TextView)this.findViewById(R.id.mypageRestaurantTextView);
 
-        restaurantName.setText(myPagePortItem.restaurantName);
-        numOfPort.setText(myPagePortItem.numOfPort);
+
+        mypagePort.setText(Integer.toString(myPagePortItem.mypagePort));
+        mypageRestaurantTextView.setText(myPagePortItem.mypageRestaurantTextView);
     }
 }

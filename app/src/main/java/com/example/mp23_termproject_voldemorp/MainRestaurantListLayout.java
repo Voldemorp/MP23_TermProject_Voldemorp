@@ -9,6 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.naver.maps.map.overlay.Overlay;
+
 public class MainRestaurantListLayout extends LinearLayout {
 
 //    public MainRestaurantListLayout(Context context, AttributeSet attrs, MainRestaurantInfo mainRestaurantInfo) {
@@ -51,6 +55,7 @@ public class MainRestaurantListLayout extends LinearLayout {
                 RestaurantActivity.longitude=longitude;
                 RestaurantActivity.latitude=latitude;
 //                Toast.makeText(context, String.valueOf(longitude), Toast.LENGTH_SHORT).show();
+
                 ResutaurantRecommendFragment.restaurantName=mainRestaurantInfo.name;
                 context.startActivity(intent);
             }
