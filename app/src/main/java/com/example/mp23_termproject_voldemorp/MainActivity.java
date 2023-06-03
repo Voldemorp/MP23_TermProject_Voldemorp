@@ -235,8 +235,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     intent.putExtra("type", restaurant.foodType);
                     intent.putExtra("res_lat",restaurant.x);
                     intent.putExtra("res_long",restaurant.y);
-                    intent.putExtra("latitude",latitude);
-                    intent.putExtra("longitude",longitude);
+//                    intent.putExtra("latitude",latitude);
+//                    intent.putExtra("longitude",longitude);
+                    RestaurantActivity.latitude=latitude;
+                    RestaurantActivity.longitude=longitude;
                     ResutaurantRecommendFragment.restaurantName=restaurant.name;
                     startActivity(intent);
                     return true;
@@ -316,6 +318,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // 값을 받는 액티비티로 데이터 전달
                 RestaurantActivity.latitude = latitude;
                 RestaurantActivity.longitude = longitude;
+                MainRestaurantListLayout.latitude=latitude;
+                MainRestaurantListLayout.longitude=longitude;
 
     }
 
