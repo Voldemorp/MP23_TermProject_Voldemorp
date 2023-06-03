@@ -101,7 +101,7 @@ import com.naver.maps.map.overlay.Marker;
                     // [서버] 포트버튼 클릭시 방문수 +1 해서 DB저장
                     // 추천 팝업창 띄우기
                     showPopup();
-                    Toast.makeText(getApplicationContext(), "port success", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "port success", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -115,14 +115,13 @@ import com.naver.maps.map.overlay.Marker;
             restaurantLocation.setLongitude(res_long);
 
             float distance = userLocation.distanceTo(restaurantLocation); // 거리 계산
-            Toast.makeText(getApplicationContext(), String.valueOf(distance), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), String.valueOf(distance), Toast.LENGTH_SHORT).show();
             // 거리가 300m 이내인 경우 버튼 활성화, 그렇지 않으면 비활성화
-            if (distance <= 1000) {
+            if (distance <= 500) {
                 portButton.setEnabled(true);
                 //팝업창 띄워
             } else {
                 portButton.setEnabled(false);
-                Toast.makeText(getApplicationContext(), "port not possible", Toast.LENGTH_SHORT).show();
             }
 
 
