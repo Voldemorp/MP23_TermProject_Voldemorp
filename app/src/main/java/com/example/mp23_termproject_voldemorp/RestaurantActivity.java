@@ -199,6 +199,7 @@ import com.naver.maps.map.overlay.Marker;
                 @Override
                 public void onClick(View v) {
                     // [서버] 추천함 누를 시 추천 T로 변경
+                    Toast.makeText(getApplicationContext(), "Recommend Successful!", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 }
             });
@@ -206,6 +207,7 @@ import com.naver.maps.map.overlay.Marker;
                 @Override
                 public void onClick(View v) {
                     // [서버] 추천안함 누를 시 추천 F로 변경
+                    Toast.makeText(getApplicationContext(), "No Recommend", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 }
             });
