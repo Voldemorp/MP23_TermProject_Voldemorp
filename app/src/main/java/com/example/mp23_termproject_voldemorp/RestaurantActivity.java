@@ -279,7 +279,6 @@ import com.naver.maps.map.overlay.Marker;
         // "몇" 번째 방문의 '방문수' 표시
 
         //사용자의 userId 받아와서 데베에서 portNum 받아오기
-        // 사용자의 userId 받아와서 데베에서 portNum 받아오기
         String userId = firebaseAuth.getCurrentUser().getUid();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName).child("portNum");
         reference.addValueEventListener(new ValueEventListener() {
