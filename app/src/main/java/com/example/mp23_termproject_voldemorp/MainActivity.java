@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnMoveToMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moveMapToCurrentLocation();
+                    moveMapToCurrentLocation();
             }
         });
 
@@ -235,6 +235,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     intent.putExtra("type", restaurant.foodType);
                     intent.putExtra("res_lat",restaurant.x);
                     intent.putExtra("res_long",restaurant.y);
+                    intent.putExtra("latitude",latitude);
+                    intent.putExtra("longitude",longitude);
                     startActivity(intent);
                     return true;
                 }
