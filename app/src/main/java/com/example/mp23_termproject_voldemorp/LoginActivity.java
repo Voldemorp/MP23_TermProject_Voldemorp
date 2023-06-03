@@ -1,22 +1,20 @@
 package com.example.mp23_termproject_voldemorp;
 
-import androidx.annotation.NonNull;
-
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-import android.widget.Button;
-import android.widget.EditText;
-
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-// 파이어베이스 연동
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -120,9 +118,9 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             checkIfAddressExists();
 
-            // 화면 전환 시 왼쪽에서 오른쪽으로 밀듯이 나타나는 애니메이션 적용
+//             화면 전환 시 왼쪽에서 오른쪽으로 밀듯이 나타나는 애니메이션 적용
             overridePendingTransition(R.anim.slide_right_enter, R.anim.none);
-            finish();
+//            finish();
         }
     }
 

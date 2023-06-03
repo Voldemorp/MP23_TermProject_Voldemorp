@@ -1,7 +1,11 @@
 package com.example.mp23_termproject_voldemorp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -20,12 +24,25 @@ public class RankingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
 
+        // 상태 바 투명하게 하고 사진 보이게 하는 코드
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
         rankingContainer = findViewById(R.id.rankingContainer);
         viewPager = new ViewPager2(this);
         viewPager.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
         rankingContainer.addView(viewPager);
         setupViewPager();
+
+        // 메인으로 가는 버튼 이벤트
+        Button backToMainBtn = (Button) findViewById(R.id.backToMainBtn);
+        backToMainBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RankingActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupViewPager() {

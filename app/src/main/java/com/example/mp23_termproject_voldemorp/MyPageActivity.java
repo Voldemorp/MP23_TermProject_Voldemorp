@@ -31,6 +31,9 @@ public class MyPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
 
+        // 상태 바 투명하게 하고 사진 보이게 하는 코드
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
         // 서버에서 사용자 정보 불러옴
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users");
@@ -48,6 +51,7 @@ public class MyPageActivity extends AppCompatActivity {
                     nicknameTextViewBadge.setText(dataSnapshot.getValue(String.class));
                     nicknameTextViewPort.setText(dataSnapshot.getValue(String.class));
                 }
+                else { System.out.println("none"); }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
@@ -77,6 +81,16 @@ public class MyPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MyPageActivity.this, EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // 메인으로 가는 버튼 이벤트
+        Button backToMainBtn = (Button) findViewById(R.id.backToMainBtn);
+        backToMainBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MyPageActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });

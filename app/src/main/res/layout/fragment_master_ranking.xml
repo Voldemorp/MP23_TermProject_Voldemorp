@@ -21,7 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="12"
-            android:background="@drawable/ranking_list_background"
+            android:background="@drawable/rank_background"
             android:orientation="vertical">
 
             <View
@@ -121,7 +121,7 @@
                 android:id="@+id/view120"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_weight="0.5" />
         </LinearLayout>
 
         <View

@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sign_up_popup_background"
+    android:background="@drawable/signup_field_background"
     android:orientation="vertical"
+    android:paddingTop="1dp"
+    android:paddingBottom="1dp"
     tools:context=".SignUpDialog">
 
     <View
@@ -62,19 +64,19 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="20"
-            android:background="@drawable/sign_up_field_background"
+            android:background="@drawable/sign_up_popup_background"
             android:orientation="vertical">
 
             <View
                 android:id="@+id/signUpEmpty1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.5"/>
+                android:layout_weight="1.5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:orientation="horizontal">
 
                 <View
@@ -88,12 +90,12 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
                     android:gravity="center"
-                    android:text="회원가입"
+                    android:text="SIGN UP"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
 
                 <View
                     android:id="@+id/signUpRightOfLabel"
@@ -101,12 +103,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
             </LinearLayout>
-
-            <View
-                android:id="@+id/signUpEmpty2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -125,10 +121,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="9"
+                    android:fontFamily="sans-serif-thin"
                     android:gravity="center"
-                    android:text="이메일"
+                    android:text="E-mail"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textStyle="bold"
                     tools:ignore="RtlCompat" />
 
@@ -156,14 +153,15 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="9"
+                    android:backgroundTint="#90FFFFFF"
                     android:ems="10"
-                    android:gravity="center"
+                    android:fontFamily="sans-serif-light"
                     android:hint="사용할 이메일을 입력해주세요."
                     android:inputType="textEmailAddress"
-                    android:textAlignment="viewStart"
-                    android:textColorHint="#B4B4B4"
-                    android:textSize="12sp"
-                    tools:ignore="RtlCompat,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                    android:textAlignment="textStart"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#FFFFFF"
+                    android:textSize="12sp" />
 
                 <View
                     android:id="@+id/signUpRightOfEmailField"
@@ -182,18 +180,18 @@
                     android:id="@+id/signUpLeftOfAvailableEmail"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1.2" />
 
                 <TextView
                     android:id="@+id/signUpIsAvailableEmail"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="7"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="top"
                     android:textAlignment="textStart"
-                    android:textColor="#FFC93D"
+                    android:textColor="#FFFFFF"
                     android:textSize="10sp"
-                    android:textStyle="bold"
                     tools:ignore="RtlCompat" />
 
                 <Button
@@ -201,7 +199,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:background="@drawable/sign_up_btn_background"
+                    android:background="@drawable/login_btn_background"
+                    android:backgroundTint="#FFFFFF"
                     android:gravity="center"
                     android:text="중복확인"
                     android:textColor="@color/white"
@@ -239,10 +238,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="9"
+                    android:fontFamily="sans-serif-thin"
                     android:gravity="center"
                     android:text="닉네임"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textStyle="bold"
                     tools:ignore="RtlCompat" />
 
@@ -270,11 +270,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="9"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
+                    android:fontFamily="sans-serif-light"
                     android:hint="사용할 닉네임을 입력해주세요. (최대 10글자)"
                     android:inputType="textPersonName"
                     android:text=""
-                    android:textColorHint="#B4B4B4"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#FFFFFF"
                     android:textSize="12sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -295,18 +298,18 @@
                     android:id="@+id/signUpLeftOfAvailableName"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1.2" />
 
                 <TextView
                     android:id="@+id/signUpIsAvailableName"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="7"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="top"
                     android:textAlignment="textStart"
-                    android:textColor="#FFC93D"
+                    android:textColor="#FFFFFF"
                     android:textSize="10sp"
-                    android:textStyle="bold"
                     tools:ignore="RtlCompat" />
 
                 <Button
@@ -314,7 +317,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:background="@drawable/sign_up_btn_background"
+                    android:background="@drawable/login_btn_background"
+                    android:backgroundTint="#FFFFFF"
                     android:gravity="center"
                     android:text="중복확인"
                     android:textColor="@color/white"
@@ -352,10 +356,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="9"
+                    android:fontFamily="sans-serif-thin"
                     android:gravity="center"
                     android:text="비밀번호"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textStyle="bold"
                     tools:ignore="RtlCompat" />
 
@@ -383,12 +388,15 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="9"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:hint="사용할 비밀번호를 입력해주세요. (8-12자)"
                     android:inputType="textPassword"
                     android:textAlignment="viewStart"
-                    android:textColorHint="#B4B4B4"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#FFFFFF"
                     android:textSize="12sp"
                     tools:ignore="RtlCompat,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
@@ -409,18 +417,18 @@
                     android:id="@+id/signUpLeftOfAvailablePw"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1.2" />
 
                 <TextView
                     android:id="@+id/signUpIsAvailablePw"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="9"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="top"
                     android:textAlignment="textStart"
-                    android:textColor="#970D4D"
+                    android:textColor="#FFFFFF"
                     android:textSize="10sp"
-                    android:textStyle="bold"
                     tools:ignore="RtlCompat" />
 
 
@@ -454,10 +462,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="9"
+                    android:fontFamily="sans-serif-thin"
                     android:gravity="center"
                     android:text="비밀번호 확인"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textStyle="bold"
                     tools:ignore="RtlCompat" />
 
@@ -485,12 +494,15 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="9"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:hint="비밀번호를 다시 한번 입력해주세요."
                     android:inputType="textPassword"
                     android:textAlignment="viewStart"
-                    android:textColorHint="#B4B4B4"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#FFFFFF"
                     android:textSize="12sp"
                     tools:ignore="RtlCompat,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
@@ -511,19 +523,19 @@
                     android:id="@+id/signUpLeftOfAvailablePwConfirm"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1.2" />
 
                 <TextView
                     android:id="@+id/signUpIsAvailablePwConfirm"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="9"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="top"
                     android:textAlignment="textStart"
-                    android:textColor="#FFC93D"
+                    android:textColor="#FFFFFF"
                     android:textSize="10sp"
-                    tools:ignore="RtlCompat"
-                    android:textStyle="bold" />
+                    tools:ignore="RtlCompat" />
 
 
                 <View
@@ -560,9 +572,8 @@
                     android:gravity="center"
                     android:text="[필수] PortUS!의 이용약관에 동의합니다."
                     android:textAlignment="textStart"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="11dp"
-                    android:textStyle="bold"
                     tools:ignore="RtlCompat,TextSizeCheck" />
 
                 <CheckBox
@@ -581,6 +592,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
             </LinearLayout>
+
+            <View
+                android:id="@+id/signUpEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -602,9 +619,8 @@
                     android:gravity="center"
                     android:text="[필수] PortUS!에 위치정보를 제공함에 동의합니다."
                     android:textAlignment="textStart"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="11dp"
-                    android:textStyle="bold"
                     tools:ignore="RtlCompat,TextSizeCheck" />
 
                 <CheckBox
@@ -628,12 +644,12 @@
                 android:id="@+id/signUpEmpty7"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_weight="0.5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.3"
                 android:orientation="horizontal">
 
                 <View
@@ -647,7 +663,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="6"
-                    android:background="@drawable/sign_up_btn_background"
+                    android:background="@drawable/login_btn_background"
                     android:text="가입하기"
                     android:textColor="@color/white"
                     android:textStyle="bold"
@@ -664,7 +680,7 @@
                 android:id="@+id/signUpEmpty8"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_weight="1.5" />
         </LinearLayout>
 
 

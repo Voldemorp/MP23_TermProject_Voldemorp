@@ -25,16 +25,15 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RestaurantActivity extends AppCompatActivity {
 
-    //현재사용자위치
+    // 현재사용자위치
     static double latitude;
     static double longitude;
 
-    //식당위치
+    // 식당위치
     private double res_lat;
     private double res_long;
     private ViewPager2 viewPager;
     private FrameLayout restaurantContainer;
-
     private Button portButton;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase mDatabase;
@@ -47,17 +46,17 @@ public class RestaurantActivity extends AppCompatActivity {
         // 상태 바 투명하게 하고 사진 보이게 하는 코드
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        // MainActivity에서 전달된 인텐트 가져오기
+        // MainActivity에서 전달된 인텐트 가져오기y
         Intent intent = getIntent();
         String restaurantName = intent.getStringExtra("name");
         String restaurantType = intent.getStringExtra("type");
         res_lat = intent.getDoubleExtra("res_lat", 0.0);
         res_long = intent.getDoubleExtra("res_long", 0.0);
 
-        //식당 이름
-        TextView resNameText = (TextView) findViewById(R.id.textView2);
-        //음식 타입
-        TextView foodTypeText = (TextView) findViewById(R.id.textView3);
+        // 식당 이름
+        TextView resNameText = findViewById(R.id.textView2);
+        // 음식 타입
+        TextView foodTypeText = findViewById(R.id.textView3);
 
         resNameText.setText(restaurantName);
         foodTypeText.setText(restaurantType);
@@ -67,13 +66,12 @@ public class RestaurantActivity extends AppCompatActivity {
         longitude = intent.getDoubleExtra("longitude", 0.0);
 
         portButton = findViewById(R.id.portButton);
-
         portButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // [서버] 포트버튼 클릭시 방문수 +1 해서 DB저장
+                // [서버] 포트 버튼 클릭시 방문수 +1 해서 DB저장
                 // 추천 팝업창 띄우기
-                showPopup();
+                //showPopup();
                 Toast.makeText(getApplicationContext(), "port success", Toast.LENGTH_SHORT).show();
             }
         });
@@ -87,16 +85,18 @@ public class RestaurantActivity extends AppCompatActivity {
         restaurantLocation.setLatitude(res_lat);
         restaurantLocation.setLongitude(res_long);
 
-        float distance = userLocation.distanceTo(restaurantLocation); // 거리 계산
+        float distance = userLocation.distanceTo(restaurantLocation);
         Toast.makeText(getApplicationContext(), String.valueOf(distance), Toast.LENGTH_SHORT).show();
-        // 거리가 300m 이내인 경우 버튼 활성화, 그렇지 않으면 비활성화
+
         if (distance <= 100) {
             portButton.setEnabled(true);
-            //팝업창 띄워
         } else {
             portButton.setEnabled(false);
             Toast.makeText(getApplicationContext(), "port not possible", Toast.LENGTH_SHORT).show();
         }
+
+        System.out.println("latitude: " + latitude);
+        System.out.println("longtitude: " + longitude);
 
         restaurantContainer = findViewById(R.id.restaurantContainer);
         viewPager = new ViewPager2(this);
@@ -118,7 +118,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 3;
+            return 2;
         }
 
         @NonNull
@@ -126,16 +126,15 @@ public class RestaurantActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return new RestaurantPhotoFragment();
-                case 1:
                     return new ResutaurantRecommendFragment();
-                case 2:
+                case 1:
                     return new RestaurantRankFragment();
                 default:
                     return null;
             }
         }
     }
+
 
     //   *---추천 팝업창 ---*
     private AlertDialog dialog;
@@ -195,4 +194,74 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         });
     }
+
+
+//    @Override
+//    public void onMapReady(@NonNull NaverMap naverMap) {
+//        this.naverMap = naverMap;
+//
+//        // Add a marker for the restaurant location
+//        LatLng restaurantLatLng = new LatLng(res_lat, res_long);
+//        Marker marker = new Marker();
+//        marker.setPosition(restaurantLatLng);
+//        marker.setMap(naverMap);
+//
+//        // Move the camera to the restaurant location with an offset
+//        double offset = -0.008; // Adjust this value to change the marker offset
+//        LatLng cameraLatLng = new LatLng(res_lat + offset, res_long);
+//        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(cameraLatLng)
+//                .animate(CameraAnimation.Easing);
+//        naverMap.moveCamera(cameraUpdate);
+//    }
+//
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        mapView.onStart();
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        mapView.onResume();
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        mapView.onPause();
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        mapView.onStop();
+//    }
+//
+//    @Override
+//    public void onSaveInstanceState(@NonNull Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        mapView.onSaveInstanceState(outState);
+//    }
+//
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        mapView.onDestroy();
+//    }
+//
+//    @Override
+//    public void onLowMemory() {
+//        super.onLowMemory();
+//        mapView.onLowMemory();
+//    }
+//
+//    private void setupViewPager() {
+//        MyPagerAdapter adapter = new MyPagerAdapter(this);
+//        viewPager.setAdapter(adapter);
+//    }
+
+
+    // 포트 버튼 눌렀을 때 유저 데베 업데이트
 }
+

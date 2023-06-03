@@ -3,29 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/set_location_textfield_backgorund"
+    android:layout_height="100dp"
+    android:gravity="center"
     android:orientation="vertical">
 
     <View
         android:id="@+id/view19"
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="0dp"
+        android:layout_weight="0.1" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/main_component_background"
         android:orientation="horizontal">
 
         <View
             android:id="@+id/view20"
-            android:layout_width="10dp"
+            android:layout_width="20dp"
             android:layout_height="match_parent" />
 
         <LinearLayout
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
             android:orientation="vertical">
+
+            <View
+                android:id="@+id/view139"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5" />
 
             <TextView
                 android:id="@+id/restaurantName"
@@ -37,28 +47,39 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <View
-                android:id="@+id/view21"
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-
             <TextView
                 android:id="@+id/restaurantType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="종류"
                 android:textSize="12sp" />
+
+            <View
+                android:id="@+id/view131"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5" />
+
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="30dp"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"/>
+
+        <View
+            android:id="@+id/view125"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="#00000000"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/main_heart_blanked"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            android:layout_weight="0.2" />
 
     </LinearLayout>
+
+    <View
+        android:id="@+id/view138"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1" />
 
 </LinearLayout>

@@ -26,5 +26,49 @@
         android:id="@+id/view114"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5" />
+        android:layout_weight="0.25" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/view144"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" />
+
+        <Button
+            android:id="@+id/backToMainBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:background="@drawable/login_btn_background"
+            android:backgroundTint="#FFFFFF"
+            android:text="메인으로 돌아가기"
+            android:textColor="#FFFFFF"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <View
+            android:id="@+id/view145"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
+
+        <View
+            android:id="@+id/view146"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view15"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.25" />
+
+    <!--    하단 탭바 포함-->
 </LinearLayout>

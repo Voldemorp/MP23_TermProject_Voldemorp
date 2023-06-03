@@ -39,12 +39,12 @@
                 android:id="@+id/empty1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"/>
+                android:layout_weight="3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="6"
+                android:layout_weight="4"
                 android:orientation="horizontal">
 
                 <View
@@ -57,7 +57,7 @@
                     android:id="@+id/loginLogo"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.5"
+                    android:layout_weight="2"
                     app:srcCompat="@drawable/login_portus_logo" />
 
                 <View
@@ -68,48 +68,10 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/empty2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.5"
-                android:orientation="horizontal">
-
-                <View
-                    android:id="@+id/leftOfLogin"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/loginLabel"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:gravity="center"
-                    android:text="로그인"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    tools:ignore="RtlCompat" />
-
-                <View
-                    android:id="@+id/rightOfLogin"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="7" />
-            </LinearLayout>
-
-            <View
                 android:id="@+id/empty3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight=".6" />
+                android:layout_weight="1.5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -128,11 +90,12 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
-                    android:text="이메일"
+                    android:text="E-mail"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
                     tools:ignore="RtlCompat" />
 
                 <View
@@ -159,14 +122,15 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="10"
-                    android:backgroundTint="#B4B4B4"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
+                    android:fontFamily="sans-serif-light"
                     android:hint="이메일을 입력해주세요."
                     android:inputType="textEmailAddress"
-                    android:lineSpacingExtra="30dp"
-                    android:textColor="#B4B4B4"
-                    android:textColorHint="#B4B4B4"
-                    android:textSize="12sp"
+                    android:lineSpacingExtra="24sp"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#FFFFFF"
+                    android:textSize="13sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <View
@@ -193,11 +157,12 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
+                    android:fontFamily="sans-serif-light"
                     android:gravity="center"
-                    android:text="비밀번호"
+                    android:text="Password"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
                     tools:ignore="RtlCompat" />
 
                 <View
@@ -224,13 +189,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="10"
-                    android:backgroundTint="#B4B4B4"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
+                    android:fontFamily="sans-serif-light"
                     android:hint="비밀번호를 입력해주세요."
                     android:inputType="textPassword"
-                    android:textColor="#B4B4B4"
-                    android:textColorHint="#B4B4B4"
-                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#FFFFFF"
+                    android:textSize="13sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <View
@@ -260,12 +226,15 @@
 
                 <Button
                     android:id="@+id/loginButton"
-                    android:layout_width="0dp"
+                    android:layout_width="300dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="8"
+                    android:layout_gravity="center"
                     android:background="@drawable/login_btn_background"
+                    android:elevation="10dp"
+                    android:gravity="center"
                     android:text="로그인"
                     android:textColor="#FFFFFF"
+                    android:textSize="16sp"
                     tools:ignore="TouchTargetSizeCheck,TextSizeCheck" />
 
                 <View
@@ -333,7 +302,7 @@
         android:id="@+id/footer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
 
 </LinearLayout>

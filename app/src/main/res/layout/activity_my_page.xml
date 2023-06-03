@@ -12,7 +12,7 @@
         android:id="@+id/view23"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="3" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,13 +62,13 @@
                         android:id="@+id/view39"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1" />
+                        android:layout_weight="0.5" />
 
                     <ImageView
                         android:id="@+id/imageView2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="3.5"
+                        android:layout_weight="3"
                         android:padding="5dp"
                         android:src="@drawable/badge_default" />
 
@@ -76,7 +76,7 @@
                         android:id="@+id/view41"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="0.5" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -88,54 +88,27 @@
                             android:id="@+id/view50"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="0.3" />
-
-                        <TextView
-                            android:id="@+id/nicknameTextview"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center|start"
-                            android:text="사용자이름"
-                            android:textColor="@color/black"
-                            android:textSize="12dp"
-                            android:textStyle="bold"
-                            tools:ignore="TextSizeCheck" />
-
-                        <Button
-                            android:id="@+id/editProfileBtn"
-                            style="?android:attr/borderlessButtonStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="35dp"
-                            android:backgroundTint="#00FFFFFF"
-                            android:gravity="center_vertical"
-                            android:text="프로필 편집 >"
-                            android:textColor="#6C6C6C"
-                            android:textSize="9dp"
-                            tools:ignore="RtlCompat,TouchTargetSizeCheck,TextSizeCheck" />
+                            android:layout_weight="0.5" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/addressTextview"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="주소"
-                                android:textColor="@color/black"
-                                android:textSize="11dp"
-                                android:textStyle="bold"
-                                tools:ignore="TextSizeCheck" />
+                            <View
+                                android:id="@+id/view147"
+                                android:layout_width="10dp"
+                                android:layout_height="match_parent" />
 
                             <TextView
-                                android:id="@+id/textView13"
+                                android:id="@+id/nicknameTextview"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="의"
+                                android:fontFamily="sans-serif-black"
+                                android:gravity="center|start"
+                                android:text="유진"
                                 android:textColor="@color/black"
-                                android:textSize="11dp"
+                                android:textSize="18sp"
                                 tools:ignore="TextSizeCheck" />
                         </LinearLayout>
 
@@ -144,12 +117,48 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
+                            <View
+                                android:id="@+id/view148"
+                                android:layout_width="10dp"
+                                android:layout_height="match_parent" />
+
+                            <TextView
+                                android:id="@+id/addressTextview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="성남시 수정구 복정동"
+                                android:textColor="#980D4D"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                tools:ignore="TextSizeCheck" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:id="@+id/view149"
+                                android:layout_width="10dp"
+                                android:layout_height="match_parent" />
+
+                            <TextView
+                                android:id="@+id/textView13"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="의 "
+                                android:textColor="@color/black"
+                                android:textSize="11dp"
+                                tools:ignore="TextSizeCheck" />
+
                             <TextView
                                 android:id="@+id/textView5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center|start"
-                                android:text="대표뱃지이름"
+                                android:text="뉴비 햄쥑이"
                                 android:textColor="#980D4D"
                                 android:textSize="11dp"
                                 android:textStyle="bold"
@@ -166,11 +175,24 @@
 
                         </LinearLayout>
 
+                        <Button
+                            android:id="@+id/editProfileBtn"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#00FFFFFF"
+                            android:text="프로필 편집"
+                            android:textAlignment="viewStart"
+                            android:textColor="#6C6C6C"
+                            android:textSize="10sp"
+                            tools:ignore="TouchTargetSizeCheck" />
+
                         <View
                             android:id="@+id/view51"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="0.3" />
+                            android:layout_weight="0.5" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -178,7 +200,7 @@
                     android:id="@+id/view38"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="0.5" />
             </LinearLayout>
 
             <View
@@ -191,7 +213,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_weight="4"
             android:orientation="horizontal">
 
             <View
@@ -230,9 +252,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="사용자이름"
-                        android:textColor="#980D4D"
-                        android:textStyle="bold" />
+                        android:text="유진"
+                        android:textColor="#FFC93C" />
 
                     <TextView
                         android:id="@+id/textView6"
@@ -241,9 +262,8 @@
                         android:layout_weight="5"
                         android:gravity="center|start"
                         android:text="님의 뱃지 목록"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
 
                     <View
                         android:id="@+id/view67"
@@ -291,18 +311,17 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="100dp"
                                         android:padding="10dp"
-                                        android:src="@drawable/badge_default" />
+                                        android:src="@drawable/badge_first_signup" />
 
                                     <TextView
                                         android:id="@+id/labelForFirstSignUp"
                                         android:layout_width="match_parent"
                                         android:layout_height="30dp"
                                         android:gravity="center"
-                                        android:text="아주쟈근햄쥑이"
+                                        android:text="뉴비 햄쥑이"
                                         android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="10sp"
-                                        android:textStyle="bold" />
+                                        android:textColor="@color/white"
+                                        android:textSize="10sp" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -312,22 +331,21 @@
                                     android:orientation="vertical">
 
                                     <ImageView
-                                        android:id="@+id/badgeForFirstRecommend"
+                                        android:id="@+id/badgeForMania"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="100dp"
+                                        android:layout_height="99dp"
                                         android:padding="10dp"
-                                        android:src="@drawable/badge_default" />
+                                        android:src="@drawable/badge_mania" />
 
                                     <TextView
-                                        android:id="@+id/labelForFirstRecommend"
+                                        android:id="@+id/labelForMania"
                                         android:layout_width="match_parent"
                                         android:layout_height="30dp"
                                         android:gravity="center"
-                                        android:text="추천 고마워!"
+                                        android:text="이 구역 박사"
                                         android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="10sp"
-                                        android:textStyle="bold" />
+                                        android:textColor="@color/white"
+                                        android:textSize="10sp" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -341,18 +359,17 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="100dp"
                                         android:padding="10dp"
-                                        android:src="@drawable/badge_default" />
+                                        android:src="@drawable/badge_master" />
 
                                     <TextView
                                         android:id="@+id/labelForMaster"
                                         android:layout_width="match_parent"
                                         android:layout_height="30dp"
                                         android:gravity="center"
-                                        android:text="너 좀 짱인듯"
+                                        android:text="햄쥑이의 왕"
                                         android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="10sp"
-                                        android:textStyle="bold" />
+                                        android:textColor="@color/white"
+                                        android:textSize="10sp" />
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -369,22 +386,21 @@
                                     android:orientation="vertical">
 
                                     <ImageView
-                                        android:id="@+id/badgeForMania"
+                                        android:id="@+id/badgeForFirstRecommend"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="99dp"
+                                        android:layout_height="100dp"
                                         android:padding="10dp"
-                                        android:src="@drawable/badge_default" />
+                                        android:src="@drawable/badge_recommend1" />
 
                                     <TextView
-                                        android:id="@+id/labelForMania"
+                                        android:id="@+id/labelForFirstRecommend"
                                         android:layout_width="match_parent"
                                         android:layout_height="30dp"
                                         android:gravity="center"
-                                        android:text="너 완전 박사구나?"
+                                        android:text="소심한 햄쥑이"
                                         android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="10sp"
-                                        android:textStyle="bold" />
+                                        android:textColor="@color/white"
+                                        android:textSize="10sp" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -398,18 +414,17 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="100dp"
                                         android:padding="10dp"
-                                        android:src="@drawable/badge_default" />
+                                        android:src="@drawable/badge_recommend10" />
 
                                     <TextView
                                         android:id="@+id/labelForTenRecommend"
                                         android:layout_width="match_parent"
                                         android:layout_height="30dp"
                                         android:gravity="center"
-                                        android:text="벌써 10번째 추천이야!"
+                                        android:text="꾸준한 햄쥑이"
                                         android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="10sp"
-                                        android:textStyle="bold" />
+                                        android:textColor="@color/white"
+                                        android:textSize="10sp" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -423,18 +438,17 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="100dp"
                                         android:padding="10dp"
-                                        android:src="@drawable/badge_default" />
+                                        android:src="@drawable/badge_recommend100" />
 
                                     <TextView
                                         android:id="@+id/labelForHundredRecommend"
                                         android:layout_width="match_parent"
                                         android:layout_height="30dp"
                                         android:gravity="center"
-                                        android:text="TextView"
+                                        android:text="프로먹방햄쥑이"
                                         android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="10sp"
-                                        android:textStyle="bold" />
+                                        android:textColor="@color/white"
+                                        android:textSize="10sp" />
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -455,18 +469,17 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="100dp"
                                         android:padding="10dp"
-                                        android:src="@drawable/badge_default" />
+                                        android:src="@drawable/badge_visit1" />
 
                                     <TextView
                                         android:id="@+id/labelForFirstVisit"
                                         android:layout_width="match_parent"
                                         android:layout_height="30dp"
                                         android:gravity="center"
-                                        android:text="firstVisit"
+                                        android:text="아주 작은 발걸음"
                                         android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="10sp"
-                                        android:textStyle="bold" />
+                                        android:textColor="@color/white"
+                                        android:textSize="10sp" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -480,18 +493,17 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="100dp"
                                         android:padding="10dp"
-                                        android:src="@drawable/badge_default" />
+                                        android:src="@drawable/badge_visit10" />
 
                                     <TextView
                                         android:id="@+id/labelForTenVisit"
                                         android:layout_width="match_parent"
                                         android:layout_height="30dp"
                                         android:gravity="center"
-                                        android:text="TenVisit"
+                                        android:text="당당한 햄쥑이"
                                         android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="10sp"
-                                        android:textStyle="bold" />
+                                        android:textColor="@color/white"
+                                        android:textSize="10sp" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -505,18 +517,17 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="100dp"
                                         android:padding="10dp"
-                                        android:src="@drawable/badge_default" />
+                                        android:src="@drawable/badge_visit100" />
 
                                     <TextView
                                         android:id="@+id/labelForHundredVisit"
                                         android:layout_width="match_parent"
                                         android:layout_height="30dp"
                                         android:gravity="center"
-                                        android:text="HundredVisit"
+                                        android:text="이 구역 마당발"
                                         android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="10sp"
-                                        android:textStyle="bold" />
+                                        android:textColor="@color/white"
+                                        android:textSize="10sp" />
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -537,18 +548,17 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="100dp"
                                         android:padding="10dp"
-                                        android:src="@drawable/badge_default" />
+                                        android:src="@drawable/badge_photo1" />
 
                                     <TextView
                                         android:id="@+id/labelForFirstPhoto"
                                         android:layout_width="match_parent"
                                         android:layout_height="30dp"
                                         android:gravity="center"
-                                        android:text="FirstPhoto"
+                                        android:text="시작의 햄쥑이"
                                         android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="10sp"
-                                        android:textStyle="bold" />
+                                        android:textColor="@color/white"
+                                        android:textSize="10sp" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -562,18 +572,17 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="100dp"
                                         android:padding="10dp"
-                                        android:src="@drawable/badge_default" />
+                                        android:src="@drawable/badge_photo10" />
 
                                     <TextView
                                         android:id="@+id/labelForTenPhoto"
                                         android:layout_width="match_parent"
                                         android:layout_height="30dp"
                                         android:gravity="center"
-                                        android:text="Tenphoto"
+                                        android:text="뿌듯한 햄쥑이"
                                         android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="10sp"
-                                        android:textStyle="bold" />
+                                        android:textColor="@color/white"
+                                        android:textSize="10sp" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -587,18 +596,17 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="100dp"
                                         android:padding="10dp"
-                                        android:src="@drawable/badge_default" />
+                                        android:src="@drawable/badge_photo100" />
 
                                     <TextView
                                         android:id="@+id/labelForHundredPhoto"
                                         android:layout_width="match_parent"
                                         android:layout_height="30dp"
                                         android:gravity="center"
-                                        android:text="hundredPhoto"
+                                        android:text="아주 뿌듯한 햄쥑이"
                                         android:textAlignment="center"
-                                        android:textColor="@color/black"
-                                        android:textSize="10sp"
-                                        android:textStyle="bold" />
+                                        android:textColor="@color/white"
+                                        android:textSize="10sp" />
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -663,12 +671,12 @@
                         android:id="@+id/view53"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1" />
+                        android:layout_weight="0.5" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.5"
                         android:orientation="horizontal">
 
                         <View
@@ -682,9 +690,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="start|center_vertical"
-                            android:text="사용자이름"
-                            android:textColor="#980D4D"
-                            android:textStyle="bold" />
+                            android:text="유진"
+                            android:textColor="#FFC93C" />
 
                         <TextView
                             android:id="@+id/textView7"
@@ -693,9 +700,8 @@
                             android:layout_weight="5"
                             android:gravity="center|start"
                             android:text="님이 Port!한 식당 리스트"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
 
                         <View
                             android:id="@+id/view77"
@@ -714,12 +720,13 @@
                             android:id="@+id/view56"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1" />
+                            android:layout_weight="0.5" />
 
                         <ScrollView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="5"
+                            android:background="@drawable/my_page_main_button_background"
                             tools:ignore="SpeakableTextPresentCheck">
 
                             <!--(뱃지 수 / 3개)만큼 만들기-->
@@ -734,7 +741,7 @@
                             android:id="@+id/view57"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                            android:layout_weight="0.5" />
                     </LinearLayout>
 
                     <View
@@ -756,14 +763,50 @@
             android:id="@+id/view29"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3" />
+            android:layout_weight="0.3" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/view144"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5" />
+
+            <Button
+                android:id="@+id/backToMainBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:background="@drawable/login_btn_background"
+                android:backgroundTint="#FFFFFF"
+                android:text="메인으로 돌아가기"
+                android:textColor="#FFFFFF"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <View
+                android:id="@+id/view145"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1" />
+
+            <View
+                android:id="@+id/view146"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view143"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3" />
     </LinearLayout>
 
 <!--    하단 탭바 포함-->
-    <include
-        layout="@layout/element_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        />
 </LinearLayout>
