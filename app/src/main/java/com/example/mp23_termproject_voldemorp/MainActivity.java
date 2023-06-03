@@ -144,6 +144,40 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void loadRestaurantData() {
+        firestore.collection("bokjeong_restaurant")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                                // Retrieve restaurant data
+                                Object xObject = document.get("좌표정보(x)");
+                                if (xObject instanceof Number) {
+                                    double x = ((Number) xObject).doubleValue();
+                                    double y = document.getDouble("좌표정보(y)");
+                                    String name = document.getString("사업장명");
+                                    String foodType = document.getString("위생업태명");
+                                    MainRestaurantInfo restaurantInfo = new MainRestaurantInfo(x, y, name, foodType);
+                                    restaurantInfoList.add(restaurantInfo);
+                                } else {
+                                    // Handle the case when the value is not a number
+                                    Log.e("RestaurantData", "'좌표정보(x)' field is not a number");
+                                }
+                            }
+//                            addMarkers();
+//                            moveMapToCurrentLocation(); // Move map after loading restaurant data
+                        } else {
+                            Toast.makeText(MainActivity.this, "No restaurant data available.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this, "Failed to load restaurant data.", Toast.LENGTH_SHORT).show();
+                    }
+                });
         firestore.collection("taepyeong_restaurant")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
