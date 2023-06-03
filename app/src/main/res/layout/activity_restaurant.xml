@@ -6,14 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".RestaurantActivity">
 
-    <View
-        android:id="@+id/resturantMap"
+<!--    <View-->
+<!--        android:id="@+id/resturantMap"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="400dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <com.naver.maps.map.MapView
+        android:id="@+id/restaurantMap"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:name="com.naver.maps.map.MapFragment">
+
+    </com.naver.maps.map.MapView>
 
     <LinearLayout
         android:layout_width="match_parent"
