@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
+import com.naver.maps.map.overlay.Overlay;
+
 public class MainRestaurantListLayout extends LinearLayout {
 
 //    public MainRestaurantListLayout(Context context, AttributeSet attrs, MainRestaurantInfo mainRestaurantInfo) {
@@ -41,8 +45,9 @@ public class MainRestaurantListLayout extends LinearLayout {
                 Intent intent = new Intent(context, RestaurantActivity.class);
                 intent.putExtra("name", mainRestaurantInfo.name);
                 intent.putExtra("type", mainRestaurantInfo.foodType);
-                intent.putExtra("res_lat", mainRestaurantInfo.x);
-                intent.putExtra("res_long", mainRestaurantInfo.y);
+                intent.putExtra("res_lat",mainRestaurantInfo.x);
+                intent.putExtra("res_long",mainRestaurantInfo.y);
+                ResutaurantRecommendFragment.restaurantName=mainRestaurantInfo.name;
                 context.startActivity(intent);
             }
         });
