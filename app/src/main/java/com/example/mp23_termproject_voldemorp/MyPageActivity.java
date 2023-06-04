@@ -97,6 +97,67 @@ public class MyPageActivity extends AppCompatActivity {
 
         // *-- 메인 뱃지 표시 --*
 
+        ImageView badgeForMania = findViewById(R.id.badgeForMania);
+        ImageView badgeForMaster = findViewById(R.id.badgeForMaster);
+        ImageView badgeForFirstRecommend = findViewById(R.id.badgeForFirstRecommend);
+        ImageView badgeForTenRecommend = findViewById(R.id.badgeForTenRecommend);
+        ImageView badgeForHundredRecommend = findViewById(R.id.badgeForHundredRecommend);
+        ImageView badgeForFirstVisit = findViewById(R.id.badgeForFirstVisit);
+        ImageView badgeForTenVisit = findViewById(R.id.badgeForTenVisit);
+        ImageView badgeForHundredVisit = findViewById(R.id.badgeForHundredVisit);
+        ImageView badgeForFirstPhoto = findViewById(R.id.badgeForFirstPhoto);
+        ImageView badgeForTenPhoto = findViewById(R.id.badgeForTenPhoto);
+        ImageView badgeForHundredPhoto = findViewById(R.id.badgeForHundredPhoto);
+
+        badgeForMania.setVisibility(View.VISIBLE);
+        badgeForMaster.setVisibility(View.VISIBLE);
+        badgeForFirstRecommend.setVisibility(View.VISIBLE);
+        badgeForTenRecommend.setVisibility(View.VISIBLE);
+
+        badgeForHundredRecommend.setVisibility(View.VISIBLE);
+        badgeForHundredRecommend.setImageResource(R.drawable.badge_none);
+
+        badgeForFirstVisit.setVisibility(View.VISIBLE);
+        badgeForTenVisit.setVisibility(View.VISIBLE);
+
+        badgeForHundredVisit.setVisibility(View.VISIBLE);
+        badgeForHundredVisit.setImageResource(R.drawable.badge_none);
+
+        badgeForFirstPhoto.setVisibility(View.VISIBLE);
+        badgeForFirstPhoto.setImageResource(R.drawable.badge_none);
+
+        badgeForTenPhoto.setVisibility(View.VISIBLE);
+        badgeForTenPhoto.setImageResource(R.drawable.badge_none);
+
+        badgeForHundredPhoto.setVisibility(View.VISIBLE);
+        badgeForHundredPhoto.setImageResource(R.drawable.badge_none);
+
+
+
+// 파이어베이스에서 현재 사용자의 배지 값을 가져와서 적절한 가시성을 설정합니다.
+//        DatabaseReference badgeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("badge").child("badgeForMania");
+//        badgeRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    boolean isBadgeVisible = dataSnapshot.getValue(Boolean.class);
+//
+//                    if (isBadgeVisible) {
+//                        // 배지가 보여야 하는 경우
+//                        badgeForMania.setVisibility(View.VISIBLE);
+//                    } else {
+//                        // 배지가 숨겨야 하는 경우
+//                        badgeForMania.setVisibility(View.GONE);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                // 오류 처리
+//            }
+//        });
+
         // *-- 프로필 사진 표시 --*
 
         // 프로필편집 화면 전환
@@ -194,4 +255,5 @@ public class MyPageActivity extends AppCompatActivity {
         }
     }
 }
+
 
