@@ -31,12 +31,12 @@ public class MasterRankingFragment extends Fragment {
         //[기능] 무작위로 정렬되어있을 usersInfo 배열을 방문수(numOfVisitPlace)대로 정렬
 
         // 테스트를 위한 더미데이터 (나중에 구현 성공하면 지우시면 됩니당)
-        RankingInfo dummyInfo1 = new RankingInfo("유짐이와농담곰", "53");
-        RankingInfo dummyInfo2 = new RankingInfo("포켓몬마스터지우", "25");
-        RankingInfo dummyInfo3 = new RankingInfo("수미칩은맛이있을까", "15");
-        RankingInfo dummyInfo4 = new RankingInfo("지연은서결혼합니다", "5");
-        RankingInfo dummyInfo5 = new RankingInfo("교수님살려주세요", "2");
-        RankingInfo dummyInfo6 = new RankingInfo("으아아악이건아니야", "1");
+        RankingInfo dummyInfo1 = new RankingInfo(1, "유짐이와농담곰", "53");
+        RankingInfo dummyInfo2 = new RankingInfo(2, "포켓몬마스터지우", "25");
+        RankingInfo dummyInfo3 = new RankingInfo(3, "수미칩은맛이있을까", "15");
+        RankingInfo dummyInfo4 = new RankingInfo(4, "지연은서결혼합니다", "5");
+        RankingInfo dummyInfo5 = new RankingInfo(5, "교수님살려주세요", "2");
+        RankingInfo dummyInfo6 = new RankingInfo(6, "으아아악이건아니야", "1");
         usersInfo.add(dummyInfo1);
         usersInfo.add(dummyInfo2);
         usersInfo.add(dummyInfo3);
