@@ -78,6 +78,10 @@ import com.naver.maps.map.overlay.Marker;
             public boolean likeCheck = false;
         }
 
+        public class userModel{
+            public int userTotalLike;
+        }
+
 
         @SuppressLint("MissingInflatedId")
         @Override
@@ -277,9 +281,8 @@ import com.naver.maps.map.overlay.Marker;
         Button closeBtn = popupView.findViewById(R.id.closeBtn);
 
 
+        //사용자의 userId 받아와서 데베에서 portNum 받아오기
 
-
-        // 사용자의 userId 받아와서 DB에서 portNum(방문수) 받아오기
         String userId = firebaseAuth.getCurrentUser().getUid();
         DatabaseReference portNumRef = FirebaseDatabase.getInstance().getReference("users")
                 .child(userId).child("restaurant").child(restaurantName).child("portNum");
@@ -313,6 +316,26 @@ import com.naver.maps.map.overlay.Marker;
                                 // user/userId/restaurant/restaurantName에 restaurantModel 저장
                                 mDatabase.getReference().child("users").child(userId)
                                         .child("restaurant").child(restaurantName).setValue(restaurantModel);
+
+                                DatabaseReference totalLikeRef = FirebaseDatabase.getInstance().getReference("users")
+                                        .child(userId).child("userTotalLike");
+                                totalLikeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.exists()) {
+                                            int userTotalLike = dataSnapshot.getValue(Integer.class);
+                                            userTotalLike++; // userTotalLike 값 +1 증가
+
+                                            // userTotalLike 값을 다시 Firebase에 저장
+                                            totalLikeRef.setValue(userTotalLike);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        // 취소 처리
+                                    }
+                                });
 
                                 dialog.dismiss();
                             }
@@ -358,7 +381,6 @@ import com.naver.maps.map.overlay.Marker;
         });
     }
 
-
 //        //   *---뱃지 팝업창 ---*
 //        private AlertDialog dialog2;
 //        private void showBadgePopup() {
@@ -402,10 +424,6 @@ import com.naver.maps.map.overlay.Marker;
 //
 //
 //        }
-
-
-
-
 
 
 

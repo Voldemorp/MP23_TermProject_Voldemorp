@@ -39,7 +39,7 @@ public class ResutaurantRecommendFragment extends Fragment {
 
         // 랜덤한 값을 생성하여 peoplePortNum에 할당
         Random random = new Random();
-        int randomValue = random.nextInt(100); // 0부터 99까지의 랜덤한 정수
+        int randomValue = 12; // 0부터 99까지의 랜덤한 정수
         peoplePortNum.setText(String.valueOf(randomValue));
 
         //[서버] 데이터에서 나의 방문 횟수 불러오기
