@@ -156,8 +156,8 @@ import com.naver.maps.map.overlay.Marker;
 
                     // 추천 팝업창 띄우기
                       showPopup();
+                   // showBadgePopup();
 //                    Toast.makeText(getApplicationContext(), "port success", Toast.LENGTH_SHORT).show();
-                    showBadgePopup();
                 }
 
                 // [서버] 유저 DB에 새로운 레스토랑 child 추가
@@ -381,93 +381,49 @@ import com.naver.maps.map.overlay.Marker;
         });
     }
 
-
-        //   *---뱃지 팝업창 ---*
-        private AlertDialog dialog2;
-        private void showBadgePopup() {
-            AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
-            View popupView = getLayoutInflater().inflate(R.layout.dialog_badge_alert, null);
-
-            TextView nameOfNewBadge = popupView.findViewById(R.id.nameOfNewBadge);
-            ImageView badgeImage = popupView.findViewById(R.id.badgeImage);
-            Button closeButton = popupView.findViewById(R.id.closeButton);
-
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
-            DatabaseReference userTotalLikeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("userTotalLike");
-            DatabaseReference maxPortNumRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("max_portNum");
-            DatabaseReference badgeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("badge").child("badge4");
-
-            // [서버] 추천수의 변경감지
-            userTotalLikeRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        int userTotalLike = dataSnapshot.getValue(Integer.class);
-
-                        if (userTotalLike >= 1) {
-                            // userTotalLike가 1 이상일 때의 처리
-                            userTotalLikeRef.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    int newRecommendationCount = dataSnapshot.getValue(int.class);
-
-                                    //뱃지4를 true 로 변경
-                                    badgeRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            if (dataSnapshot.exists()) {
-                                                boolean badge4 = dataSnapshot.getValue(boolean.class);
-                                                badge4 = true; // userTotalLike 값 +1 증가
-
-                                                // userTotalLike 값을 다시 Firebase에 저장
-                                                badgeRef.setValue(badge4);
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-                                            // 취소 처리
-                                        }
-                                    });
-                                    if (newRecommendationCount == 1) {
-
-                                        nameOfNewBadge.setText("소심한 햄즥이");
-                                        Drawable newDrawable = getResources().getDrawable(R.drawable.badge_recommend1); // 드로어블 가져오기
-                                        badgeImage.setImageDrawable(newDrawable);
-
-                                        // 팝업 레이아웃을 AlertDialog에 설정
-                                        builder2.setView(popupView);
-                                        dialog2 = builder2.create();
-                                        dialog2.show();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {}
-                            });
-
-                        } else {
-                            // userTotalLike가 1 미만일 때의 처리
-                            // 여기에 원하는 코드 작성
-                        }
-
-                        // userTotalLike 값 +1 증가
-                        userTotalLike++;
-                        userTotalLikeRef.setValue(userTotalLike); // 증가된 userTotalLike 값을 다시 Firebase에 저장
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // 취소 처리
-                }
-            });
-
-
-
-        }
-
+//        //   *---뱃지 팝업창 ---*
+//        private AlertDialog dialog2;
+//        private void showBadgePopup() {
+//            AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+//            View popupView = getLayoutInflater().inflate(R.layout.dialog_badge_alert, null);
+//
+//            TextView nameOfNewBadge = popupView.findViewById(R.id.nameOfNewBadge);
+//            ImageView badgeImage = popupView.findViewById(R.id.badgeImage);
+//            Button closeButton = popupView.findViewById(R.id.closeButton);
+//
+//            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+//            DatabaseReference userTotalLikeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("userTotalLike");
+//            DatabaseReference maxPortNumRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("max_portNum");
+//            DatabaseReference badgeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("badge");
+//
+//            // [서버] 추천수의 변경감지
+//           userTotalLikeRef.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    int newRecommendationCount = dataSnapshot.getValue(int.class);
+//
+//                    // 뱃지4: 추천수가 1로 변경되면
+//                    if (newRecommendationCount == 1) {
+//                        // [서버] 뱃지4 T로 변경
+//                        nameOfNewBadge.setText("소심한 햄즥이");
+//                        Drawable newDrawable = getResources().getDrawable(R.drawable.badge_recommend1); // 드로어블 가져오기
+//                        badgeImage.setImageDrawable(newDrawable);
+//
+//                        // 팝업 레이아웃을 AlertDialog에 설정
+//                        builder2.setView(popupView);
+//                        dialog2 = builder2.create();
+//                        dialog2.show();
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {}
+//            });
+//
+//
+//
+//        }
 
 
 
