@@ -1,5 +1,7 @@
 package com.example.mp23_termproject_voldemorp;
 
+import static com.example.mp23_termproject_voldemorp.MyPageActivity.addressTextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +14,10 @@ import android.widget.EditText;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +36,9 @@ import java.io.ByteArrayOutputStream;
 
 public class EditProfileActivity extends AppCompatActivity {
 
+    private Button address1;
+    private String addressData;
+    private Button address2;
     private Drawable selectedDrawable;  // 선택한 drawable 이미지를 저장하는 변수
     CircleImageView editProfileImageView; // 상단 프로필 뱃지 ImageView
 
@@ -200,12 +209,17 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
 
+
         //  *---- 확인 버튼 ----*
+
         Button setBtn = (Button) findViewById(R.id.setBtn);
         setBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                     Intent intent = new Intent(EditProfileActivity.this, MyPageActivity.class);
+                    intent.putExtra("address",addressData);
+//                MyPageActivity.address=addressData;
+                System.out.println(addressData);
                     startActivity(intent);
             }
         });
@@ -219,8 +233,55 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        //------------주소 변경------------
+        address1= findViewById(R.id.button9);
+        address2= findViewById(R.id.button10);
+        address1.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
 
+                //주소 검색 웹뷰 화면으로 이동
+                Intent intent=new Intent(EditProfileActivity.this,SetLocationNextActivity.class);
+                intent.putExtra("order","3");
+                getLocationResult.launch(intent);
+            }
+        });
+        address2.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+
+                //주소 검색 웹뷰 화면으로 이동
+                Intent intent=new Intent(EditProfileActivity.this,SetLocationNextActivity.class);
+                intent.putExtra("order","4");
+                getLocationResult.launch(intent);
+            }
+        });
     }
+
+    private final ActivityResultLauncher<Intent> getLocationResult=registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result ->{
+                //SetLocationNextActivity 로부터의 결과 값이 이곳으로 전달 된다(setResult에 의해)
+                if(result.getResultCode()==RESULT_OK){
+
+                    //data 비어있지 않다면
+                    if(result.getData()!=null){
+                        String data=result.getData().getStringExtra("data");
+                        String order=result.getData().getStringExtra("order");
+                        if(order!=null){
+                            if(order.equals("3")) {
+                                addressData=data;
+//                                address1.setText(data);
+
+                            }
+                            else if(order.equals("4")) {
+//                                address2.setText(data);
+                            }
+                        }
+
+                    }
+                }
+
+            }
+    );
 
 
 
