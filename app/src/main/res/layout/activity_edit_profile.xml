@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="30"
-        android:background="@drawable/my_page_bottomsheet_background"
+        android:background="@drawable/edit_profile_background"
         android:orientation="vertical">
 
         <LinearLayout
@@ -29,7 +29,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/cancelBtn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -45,12 +45,13 @@
                 android:layout_weight="5" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/setBtn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#00FFFFFF"
                 android:text="확인"
+                android:textColor="#FFC93C"
                 android:textStyle="bold"
                 tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
@@ -59,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="ExtraText">
 
             <View
                 android:id="@+id/view54"
@@ -74,9 +76,9 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:src="@drawable/badge_default"
                 android:clickable="true"
-                android:onClick="onImageClick" />/>
+                android:onClick="onImageClick"
+                android:src="@drawable/badge_default" />/>
 
             <View
                 android:id="@+id/view58"
@@ -121,7 +123,7 @@
                 android:layout_weight="0.3" />
 
             <EditText
-                android:id="@+id/editTextText2"
+                android:id="@+id/EditNicknameText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3.8"
@@ -145,14 +147,14 @@
                     android:layout_weight="0.5" />
 
                 <Button
-                    android:id="@+id/button7"
+                    android:id="@+id/setNicknameBtn"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1.5"
                     android:background="@drawable/edit_profile_change_btn_background"
                     android:hint="현재 닉네임"
                     android:text="중복확인"
-                    android:textColor="@color/white"
+                    android:textColor="#980D4D"
                     android:textSize="10dp"
                     android:textStyle="bold"
                     tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
@@ -240,7 +242,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/edit_profile_change_btn_background"
                 android:text="변경"
-                android:textColor="@color/white"
+                android:textColor="#980D4D"
                 android:textSize="10dp"
                 android:textStyle="bold"
                 tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
@@ -275,6 +277,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
+                android:background="@drawable/edit_profile_location_button_background"
                 android:text="주소1"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -289,6 +292,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
+                android:background="@drawable/edit_profile_location_button_background"
                 android:text="주소2"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -366,7 +370,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/edit_profile_change_btn_background"
                 android:text="변경"
-                android:textColor="@color/white"
+                android:textColor="#980D4D"
                 android:textSize="10dp"
                 android:textStyle="bold"
                 tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />

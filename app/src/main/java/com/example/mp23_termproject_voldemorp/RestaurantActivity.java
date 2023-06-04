@@ -45,8 +45,8 @@ import com.naver.maps.map.overlay.Marker;
     public class RestaurantActivity extends AppCompatActivity implements OnMapReadyCallback {
 
         //현재 사용자 위치
-        static double latitude;
-        static double longitude;
+        static public double latitude;
+        static public double longitude;
 
         //식당 위치
         private double res_lat;
@@ -107,8 +107,8 @@ import com.naver.maps.map.overlay.Marker;
             res_long = intent.getDoubleExtra("res_long",0.0);
 
             // 현재 내 위도(latitude)와 경도(longitude) 값 추출
-            latitude = intent.getDoubleExtra("latitude", 0.0);
-            longitude = intent.getDoubleExtra("longitude", 0.0);
+//            latitude = intent.getDoubleExtra("latitude", 0.0);
+//            longitude = intent.getDoubleExtra("longitude", 0.0);
 
             System.out.println(res_lat);
             System.out.println(res_long);
