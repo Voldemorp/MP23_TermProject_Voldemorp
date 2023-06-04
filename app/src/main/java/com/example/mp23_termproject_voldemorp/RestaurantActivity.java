@@ -3,29 +3,33 @@ package com.example.mp23_termproject_voldemorp;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.annotation.SuppressLint;
+import androidx.annotation.NonNull;
 import android.content.Intent;
-import android.location.Location;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.WindowManager;
+import android.location.Location;
+import android.widget.Toast;
+import android.widget.Button;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.FrameLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2
-        ;
+import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.*;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
@@ -72,6 +76,10 @@ import com.naver.maps.map.overlay.Marker;
             public int portNum;
 
             public boolean likeCheck = false;
+        }
+
+        public class userModel{
+            public int userTotalLike;
         }
 
 
@@ -122,10 +130,6 @@ import com.naver.maps.map.overlay.Marker;
             portButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // [서버] 포트버튼 클릭시 방문수 +1 해서 DB저장
-
-                    //유저 DB 업데이트
-
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     String userId = firebaseAuth.getCurrentUser().getUid();
                     DatabaseReference reference = database.getReference("users").child(userId).child("restaurant").child(restaurantName);
@@ -153,9 +157,10 @@ import com.naver.maps.map.overlay.Marker;
                     // 추천 팝업창 띄우기
                       showPopup();
 //                    Toast.makeText(getApplicationContext(), "port success", Toast.LENGTH_SHORT).show();
+                    showBadgePopup();
                 }
 
-                // 유저 DB에 새로운 레스토랑 child 추가
+                // [서버] 유저 DB에 새로운 레스토랑 child 추가
                 public void addRestaurant(){
                     String userId = firebaseAuth.getCurrentUser().getUid();
 
@@ -167,7 +172,7 @@ import com.naver.maps.map.overlay.Marker;
                     mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
                 }
 
-                //유저DB에서 해당 레스토랑 찾아서 portNum +1로 업데이트
+                // [서버] 유저 DB에서 해당 레스토랑 찾아서 portNum +1로 업데이트
                 public void updateRestaurant() {
 
                     String userId = firebaseAuth.getCurrentUser().getUid();
@@ -275,19 +280,21 @@ import com.naver.maps.map.overlay.Marker;
         Button recommendBtn = popupView.findViewById(R.id.recommendBtn);
         Button closeBtn = popupView.findViewById(R.id.closeBtn);
 
-        // [서버] 유저의 방문수 불러와서 visitNum에 저장, 임의로 넣은 int visitnum은 빼주세용
-        // "몇" 번째 방문의 '방문수' 표시
 
         //사용자의 userId 받아와서 데베에서 portNum 받아오기
+
         String userId = firebaseAuth.getCurrentUser().getUid();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName).child("portNum");
-        reference.addValueEventListener(new ValueEventListener() {
+        DatabaseReference portNumRef = FirebaseDatabase.getInstance().getReference("users")
+                .child(userId).child("restaurant").child(restaurantName).child("portNum");
+        portNumRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     portNum = dataSnapshot.getValue(Integer.class);
-                    String strportnum = String.valueOf(portNum);
-                    visitTextView.setText(strportnum);
+                    // "몇" 번째 방문의 '방문수' 표시
+                    String strportNum = String.valueOf(portNum);
+                    visitTextView.setText(strportNum);
+
 
                     if (portNum == 1) {
                         recommendBtn.setVisibility(View.GONE); // 버튼을 숨김 처리
@@ -301,13 +308,34 @@ import com.naver.maps.map.overlay.Marker;
                         recommendBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                // 추천 버튼 클릭 처리
+                                // 추천 버튼 클릭 처리 -> 추천 T로 변경
                                 restaurantModel restaurantModel = new restaurantModel();
                                 restaurantModel.likeCheck = true;
                                 restaurantModel.portNum = portNum;
 
                                 // user/userId/restaurant/restaurantName에 restaurantModel 저장
-                                mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
+                                mDatabase.getReference().child("users").child(userId)
+                                        .child("restaurant").child(restaurantName).setValue(restaurantModel);
+
+                                DatabaseReference totalLikeRef = FirebaseDatabase.getInstance().getReference("users")
+                                        .child(userId).child("userTotalLike");
+                                totalLikeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.exists()) {
+                                            int userTotalLike = dataSnapshot.getValue(Integer.class);
+                                            userTotalLike++; // userTotalLike 값 +1 증가
+
+                                            // userTotalLike 값을 다시 Firebase에 저장
+                                            totalLikeRef.setValue(userTotalLike);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        // 취소 처리
+                                    }
+                                });
 
                                 dialog.dismiss();
                             }
@@ -316,15 +344,17 @@ import com.naver.maps.map.overlay.Marker;
                         notRecommendBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                // 비추천 버튼 클릭 처리
-                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName).child("likeCheck");
+                                // 비추천 버튼 클릭 처리 -> 추천 F로 변경
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users")
+                                        .child(userId).child("restaurant").child(restaurantName).child("likeCheck");
 
                                 restaurantModel restaurantModel = new restaurantModel();
                                 restaurantModel.likeCheck = false;
                                 restaurantModel.portNum = portNum;
 
                                 // user/userId/restaurant/restaurantName에 restaurantModel 저장
-                                mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
+                                mDatabase.getReference().child("users").child(userId)
+                                        .child("restaurant").child(restaurantName).setValue(restaurantModel);
 
                                 dialog.dismiss();
                             }
@@ -341,6 +371,7 @@ import com.naver.maps.map.overlay.Marker;
             }
         });
 
+
         // 닫힘 버튼 'X'
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -349,6 +380,95 @@ import com.naver.maps.map.overlay.Marker;
             }
         });
     }
+
+
+        //   *---뱃지 팝업창 ---*
+        private AlertDialog dialog2;
+        private void showBadgePopup() {
+            AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+            View popupView = getLayoutInflater().inflate(R.layout.dialog_badge_alert, null);
+
+            TextView nameOfNewBadge = popupView.findViewById(R.id.nameOfNewBadge);
+            ImageView badgeImage = popupView.findViewById(R.id.badgeImage);
+            Button closeButton = popupView.findViewById(R.id.closeButton);
+
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+            DatabaseReference userTotalLikeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("userTotalLike");
+            DatabaseReference maxPortNumRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("max_portNum");
+            DatabaseReference badgeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("badge").child("badge4");
+
+            // [서버] 추천수의 변경감지
+            userTotalLikeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        int userTotalLike = dataSnapshot.getValue(Integer.class);
+
+                        if (userTotalLike >= 1) {
+                            // userTotalLike가 1 이상일 때의 처리
+                            userTotalLikeRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    int newRecommendationCount = dataSnapshot.getValue(int.class);
+
+                                    //뱃지4를 true 로 변경
+                                    badgeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            if (dataSnapshot.exists()) {
+                                                boolean badge4 = dataSnapshot.getValue(boolean.class);
+                                                badge4 = true; // userTotalLike 값 +1 증가
+
+                                                // userTotalLike 값을 다시 Firebase에 저장
+                                                badgeRef.setValue(badge4);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            // 취소 처리
+                                        }
+                                    });
+                                    if (newRecommendationCount == 1) {
+
+                                        nameOfNewBadge.setText("소심한 햄즥이");
+                                        Drawable newDrawable = getResources().getDrawable(R.drawable.badge_recommend1); // 드로어블 가져오기
+                                        badgeImage.setImageDrawable(newDrawable);
+
+                                        // 팝업 레이아웃을 AlertDialog에 설정
+                                        builder2.setView(popupView);
+                                        dialog2 = builder2.create();
+                                        dialog2.show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {}
+                            });
+
+                        } else {
+                            // userTotalLike가 1 미만일 때의 처리
+                            // 여기에 원하는 코드 작성
+                        }
+
+                        // userTotalLike 값 +1 증가
+                        userTotalLike++;
+                        userTotalLikeRef.setValue(userTotalLike); // 증가된 userTotalLike 값을 다시 Firebase에 저장
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // 취소 처리
+                }
+            });
+
+
+
+        }
+
+
 
 
 @Override
@@ -417,5 +537,6 @@ private void setupViewPager() {
         }
 
 
-        // 포트 버튼 눌렀을 때 유저 데베 업데이트
-        }
+
+    }
+
