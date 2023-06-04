@@ -30,7 +30,7 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/mypageRestaurantTextView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
@@ -54,7 +54,7 @@
             tools:ignore="RtlCompat" />
 
         <TextView
-            android:id="@+id/numOfVisit"
+            android:id="@+id/mypagePort"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
