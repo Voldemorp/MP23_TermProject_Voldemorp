@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +32,8 @@ import android.graphics.drawable.Drawable;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-
+    private Button address1;
+    private Button address2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,7 +209,6 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
 
-
         //  ---- 확인 버튼 ----
         Button setBtn = (Button) findViewById(R.id.setBtn);
         setBtn.setOnClickListener(new View.OnClickListener() {
@@ -229,10 +232,51 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        //------------주소 변경------------
+        address1= findViewById(R.id.button9);
+        address2= findViewById(R.id.button10);
+        address1.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
 
+                //주소 검색 웹뷰 화면으로 이동
+                Intent intent=new Intent(EditProfileActivity.this,SetLocationNextActivity.class);
+                intent.putExtra("order","3");
+                getLocationResult.launch(intent);
+            }
+        });
+        address2.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
 
-
+                //주소 검색 웹뷰 화면으로 이동
+                Intent intent=new Intent(EditProfileActivity.this,SetLocationNextActivity.class);
+                intent.putExtra("order","4");
+                getLocationResult.launch(intent);
+            }
+        });
     }
+
+    private final ActivityResultLauncher<Intent> getLocationResult=registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result ->{
+                //SetLocationNextActivity 로부터의 결과 값이 이곳으로 전달 된다(setResult에 의해)
+                if(result.getResultCode()==RESULT_OK){
+
+                    //data 비어있지 않다면
+                    if(result.getData()!=null){
+                        String data=result.getData().getStringExtra("data");
+                        String order=result.getData().getStringExtra("order");
+                        if(order!=null){
+                            if(order.equals("3"))
+                                address1.setText(data);
+                            else if(order.equals("4"))
+                                address2.setText(data);
+                        }
+
+                    }
+                }
+
+            }
+    );
     private Bitmap drawableToBitmap(Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable) drawable).getBitmap();
