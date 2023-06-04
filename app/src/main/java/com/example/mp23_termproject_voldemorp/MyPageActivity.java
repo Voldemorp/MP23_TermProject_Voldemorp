@@ -34,6 +34,7 @@ public class MyPageActivity extends AppCompatActivity {
     static public TextView addressTextView;
     static public String address;
     private ImageView profileImageView;
+    private TextView mainBadgeTextView;
     private String userId;
     private DatabaseReference userPortRef;
     private List<MyPagePortItem> portList = new ArrayList<>();
@@ -64,10 +65,26 @@ public class MyPageActivity extends AppCompatActivity {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users");
 
 
-
         // *-- 프로필 대표뱃지 사진 표시 --*
         profileImageView = findViewById(R.id.profileImageView);
         loadSelectedImageFromSharedPreferences();   // SharedPreferences에서 저장된 대표뱃지 가져와서 설정
+
+
+        // *-- 프로필 대표뱃지 Text 표시 --*
+        mainBadgeTextView = findViewById(R.id.mainBadgeTextView);
+        userRef.child(userId).child("badge").child("mainBadge").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot){
+                if (dataSnapshot.exists()) {
+                    // 불러온 대표뱃지를 텍스트뷰에 설정
+                    String mainBadge = dataSnapshot.getValue(String.class);
+                    mainBadgeTextView.setText(mainBadge);
+                }
+                else { System.out.println("none"); }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
 
         // *-- 닉네임 표시 --*
         nicknameTextView = findViewById(R.id.nicknameTextview);
@@ -113,11 +130,6 @@ public class MyPageActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-
-
-        // *-- 프로필 대표뱃지 Text 표시 --*
-
-
 
 
         // *-- 뱃지 목록 표시 --*

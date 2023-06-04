@@ -60,7 +60,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
         // 서버로부터 유저의 uid, 닉네임 받아옴
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference nickNameRef = FirebaseDatabase.getInstance().getReference("users").child(uid).child("nickName");
+        DatabaseReference nickNameRef = FirebaseDatabase.getInstance().getReference("users")
+                .child(uid).child("nickName");
+        DatabaseReference mainBadgeRef = FirebaseDatabase.getInstance().getReference("users")
+                .child(uid).child("badge").child("mainBadge");
 
 
         //  *---- 사용자 닉네임 변경 ----*
@@ -111,6 +114,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 // 대표 뱃지로 변경할 뱃지 선택
                 selectedDrawable = badgeForFirstSignUp.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
+               // 대표 뱃지명 DB에 저장
+                mainBadgeRef.setValue("뉴비 햄쥑이");
             }
         });
         badgeForMania.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +123,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedDrawable = badgeForMania.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
+                mainBadgeRef.setValue("이 구역 박사");
             }
         });
         badgeForMaster.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +131,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedDrawable = badgeForMaster.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
+                mainBadgeRef.setValue("햄쥑이의 왕");
             }
         });
         badgeForFirstRecommend.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +139,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedDrawable = badgeForFirstRecommend.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
+                mainBadgeRef.setValue("소심한 햄쥑이");
             }
         });
         badgeForTenRecommend.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +147,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedDrawable = badgeForTenRecommend.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
+                mainBadgeRef.setValue("꾸준한 햄쥑이");
             }
         });
         badgeForHundredRecommend.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +155,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedDrawable = badgeForHundredRecommend.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
+                mainBadgeRef.setValue("프로먹방 햄쥑이");
             }
         });
         badgeForFirstVisit.setOnClickListener(new View.OnClickListener() {
@@ -153,6 +163,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedDrawable = badgeForFirstVisit.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
+                mainBadgeRef.setValue("아주 작은 발걸음");
             }
         });
         badgeForTenVisit.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +171,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedDrawable = badgeForTenVisit.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
+                mainBadgeRef.setValue("당당한 햄쥑이");
             }
         });
         badgeForHundredVisit.setOnClickListener(new View.OnClickListener() {
@@ -167,6 +179,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedDrawable = badgeForHundredVisit.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
+                mainBadgeRef.setValue("이 구역 마당발");
             }
         });
         badgeForFirstPhoto.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +187,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedDrawable = badgeForFirstPhoto.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
+                mainBadgeRef.setValue("시작의 햄쥑이");
             }
         });
         badgeForTenPhoto.setOnClickListener(new View.OnClickListener() {
@@ -181,6 +195,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedDrawable = badgeForTenPhoto.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
+                mainBadgeRef.setValue("뿌듯한 햄쥑이");
             }
         });
         badgeForHundredPhoto.setOnClickListener(new View.OnClickListener() {
@@ -188,6 +203,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedDrawable = badgeForHundredPhoto.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
+                mainBadgeRef.setValue("아주 뿌듯한 햄쥑이");
             }
         });
 
@@ -201,7 +217,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     editProfileImageView.setImageDrawable(selectedDrawable);
                     saveSelectedImageToSharedPreferences();
                     Toast.makeText(EditProfileActivity.this, "대표 뱃지 변경 완료 쥑", Toast.LENGTH_SHORT).show();
-
                 } else {
                     Toast.makeText(EditProfileActivity.this, "뱃지를 선택하시즥", Toast.LENGTH_SHORT).show();
                 }
