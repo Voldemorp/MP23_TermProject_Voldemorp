@@ -22,10 +22,12 @@ public class RankingManiaListLayout extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_mania_ranking, this, true);
 
+        TextView rank = (TextView)findViewById(R.id.rank);
         TextView userName = (TextView)findViewById(R.id.name);
         TextView numOfVisit = (TextView)findViewById(R.id.numOfVisit);
         TextView userVisited = (TextView)findViewById(R.id.userVisited);
 
+        rank.setText(Integer.toString(rankingInfo.rank));
         userName.setText(rankingInfo.userName);
         numOfVisit.setText(rankingInfo.numOfVisit);
         userVisited.setText(rankingInfo.place);

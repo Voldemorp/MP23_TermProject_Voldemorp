@@ -31,7 +31,9 @@
             android:layout_weight="1.5"
             android:gravity="center"
             android:text="순위"
-            android:textSize="13sp" />
+            android:textColor="#980D4D"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <View
             android:id="@+id/view112"
