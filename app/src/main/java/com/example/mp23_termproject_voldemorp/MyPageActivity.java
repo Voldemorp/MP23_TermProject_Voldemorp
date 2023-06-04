@@ -31,7 +31,8 @@ public class MyPageActivity extends AppCompatActivity {
     private TextView nicknameTextView;
     private TextView nicknameTextViewBadge;
     private TextView nicknameTextViewPort;
-    private TextView addressTextView;
+    static public TextView addressTextView;
+    static public String address;
     private ImageView profileImageView;
     private TextView mainBadgeTextView;
     private String userId;
@@ -113,7 +114,17 @@ public class MyPageActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot){
                 if (dataSnapshot.exists()) {
                     // 불러온 주소를 텍스트뷰에 설정
-                    addressTextView.setText(dataSnapshot.getValue(String.class));
+                    address=dataSnapshot.getValue(String.class);
+
+                    // onCreate 메서드 내부에서 아래 코드 추가
+                    Intent intent = getIntent();
+                    String address2 = intent.getStringExtra("address");
+                    if (address2 != null) {
+                        addressTextView.setText(address2);  // 주소 값을 텍스트뷰에 설정
+                    }
+                    else
+                    addressTextView.setText(address);
+
                 }
             }
             @Override

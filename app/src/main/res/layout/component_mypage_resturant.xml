@@ -9,7 +9,7 @@
         android:id="@+id/view44"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#989898" />
+        android:background="#FFFFFF" />
 
     <View
         android:id="@+id/view27"
@@ -88,5 +88,5 @@
         android:id="@+id/view48"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#989898" />
+        android:background="#FFFFFF" />
 </LinearLayout>

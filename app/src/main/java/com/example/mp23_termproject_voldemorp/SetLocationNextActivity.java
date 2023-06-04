@@ -48,6 +48,10 @@ public class SetLocationNextActivity extends AppCompatActivity {
                     intent.putExtra("order","1");
                 else if(order.equals("2"))
                     intent.putExtra("order","2");
+                else if(order.equals("3"))
+                    intent.putExtra("order","3");
+                else if(order.equals("4"))
+                    intent.putExtra("order","4");
             }
             setResult(RESULT_OK,intent);
             finish();
