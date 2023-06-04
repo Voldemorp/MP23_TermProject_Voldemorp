@@ -1,9 +1,11 @@
 package com.example.mp23_termproject_voldemorp;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,7 +13,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +26,9 @@ import androidx.core.content.ContextCompat;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -83,6 +90,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     LOCATION_PERMISSION_REQUEST_CODE);
         }
 
+        // 첫 회원가입 뱃지 팝업 띄우기
+        showBadgePopup();
+
+
         // Button to move to current location
         btnMoveToMyLocation = findViewById(R.id.btnMoveToMyLocation);
         btnMoveToMyLocation.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -323,6 +335,42 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    //   *---첫 회원가입 팝업창 ---*
+    private AlertDialog dialog2;
+    private void showBadgePopup() {
+        AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+        View popupView = getLayoutInflater().inflate(R.layout.dialog_badge_alert, null);
+
+        TextView nameOfNewBadge = popupView.findViewById(R.id.nameOfNewBadge);
+        ImageView badgeImage = popupView.findViewById(R.id.badgeImage);
+        Button closeButton = popupView.findViewById(R.id.closeButton);
+
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+        DatabaseReference userTotalLikeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("userTotalLike");
+        DatabaseReference maxPortNumRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("max_portNum");
+        DatabaseReference badgeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("badge");
+
+        // 뱃지1
+        nameOfNewBadge.setText("뉴비 햄즥이");
+        Drawable newDrawable = getResources().getDrawable(R.drawable.badge_first_signup); // 드로어블 가져오기
+        badgeImage.setImageDrawable(newDrawable);
+
+        // 닫힘 버튼 'X'
+        Button close = popupView.findViewById(R.id.closeButton);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog2.dismiss();
+            }
+        });
+
+        // 팝업 레이아웃을 AlertDialog에 설정
+        builder2.setView(popupView);
+        dialog2 = builder2.create();
+        dialog2.show();
+    }
+
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
@@ -372,3 +420,5 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapView.onLowMemory();
     }
 }
+
+
