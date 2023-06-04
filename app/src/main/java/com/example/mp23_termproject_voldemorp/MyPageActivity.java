@@ -43,7 +43,6 @@ public class MyPageActivity extends AppCompatActivity {
             // 데이터 변경 시 호출되는 로직을 작성합니다.
             // 예: 데이터 스냅샷에서 필요한 데이터를 가져와 처리합니다.
         }
-
         @Override
         public void onCancelled(DatabaseError databaseError) {
             // 취소되었을 때 호출되는 로직을 작성합니다.
@@ -67,8 +66,7 @@ public class MyPageActivity extends AppCompatActivity {
 
         // *-- 프로필 대표뱃지 사진 표시 --*
         profileImageView = findViewById(R.id.profileImageView);
-          // SharedPreferences에서 이미지를 가져와서 설정
-        loadSelectedImageFromSharedPreferences();
+        loadSelectedImageFromSharedPreferences();   // SharedPreferences에서 저장된 대표뱃지 가져와서 설정
 
         // *-- 닉네임 표시 --*
         nicknameTextView = findViewById(R.id.nicknameTextview);
@@ -104,9 +102,6 @@ public class MyPageActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-
-
-
 
 
         // *-- 프로필 대표뱃지 Text 표시 --*
@@ -207,10 +202,10 @@ public class MyPageActivity extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+
 
 
         // '프로필 편집' 버튼 화면전환
@@ -235,10 +230,14 @@ public class MyPageActivity extends AppCompatActivity {
 
         // 상태 바 투명하게 하고 사진 보이게 하는 코드
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+
     }
 
 
-    // SharedPreferences에서 이미지를 가져와서 설정하는 메서드
+
+
+    // SharedPreferences에서 이미지를 불러오고 설정하는 메서드
     private void loadSelectedImageFromSharedPreferences() {
         SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
         String selectedImageString = preferences.getString("selectedImage", null);

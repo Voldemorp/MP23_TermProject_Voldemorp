@@ -1,20 +1,17 @@
 package com.example.mp23_termproject_voldemorp;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.WindowManager;
+import de.hdodenhof.circleimageview.CircleImageView;
+import android.graphics.drawable.Drawable;
 import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,16 +22,16 @@ import androidx.annotation.NonNull;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-
+import android.util.Base64;
 import java.io.ByteArrayOutputStream;
 
 
 public class EditProfileActivity extends AppCompatActivity {
 
     private Drawable selectedDrawable;  // 선택한 drawable 이미지를 저장하는 변수
-    CircleImageView editProfileImageView;
+    CircleImageView editProfileImageView; // 상단 프로필 뱃지 ImageView
 
 
 
@@ -43,8 +40,8 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
+        // 상단 프로필 뱃지 ImageView
         editProfileImageView = findViewById(R.id.editProfileImageView);
-
 
         // 이미지를 SharedPreferences에서 가져와서 설정
         loadSelectedImageFromSharedPreferences();
@@ -57,9 +54,9 @@ public class EditProfileActivity extends AppCompatActivity {
         DatabaseReference nickNameRef = FirebaseDatabase.getInstance().getReference("users").child(uid).child("nickName");
 
 
-        //  ---- 사용자 닉네임 변경 ----
-        EditText EditNicknameText = (EditText)findViewById(R.id.EditNicknameText);
-        Button setNicknameBtn = (Button) findViewById(R.id.setNicknameBtn);
+        //  *---- 사용자 닉네임 변경 ----*
+        EditText EditNicknameText = (EditText)findViewById(R.id.EditNicknameText); // 닉네임 입력창
+        Button setNicknameBtn = (Button) findViewById(R.id.setNicknameBtn); // 닉네임 변경 버튼
 
 
         setNicknameBtn.setOnClickListener(new View.OnClickListener() {
@@ -81,11 +78,8 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
 
-        //  ---- 사용자 프로필 대표 뱃지 변경 ----
-            // MypageActivity에서 profileImageView의 ID를 전달받음
-
-
-        Button changeMainBadgeBtn = findViewById(R.id.changeMainBadgeBtn);
+        // *---- 사용자 프로필 대표 뱃지 변경 ----*
+        Button changeMainBadgeBtn = findViewById(R.id.changeMainBadgeBtn); // 대표 뱃지 변경 버튼
 
         ImageView badgeForFirstSignUp = findViewById(R.id.badgeForFirstSignUp);
         ImageView badgeForMania = findViewById(R.id.badgeForMania);
@@ -101,126 +95,90 @@ public class EditProfileActivity extends AppCompatActivity {
         ImageView badgeForHundredPhoto = findViewById(R.id.badgeForHundredPhoto);
 
 
-
         // 각 뱃지 이미지뷰 클릭 이벤트
         badgeForFirstSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 메인 뱃지로 변경할 drawable 이미지 선택
+                // 대표 뱃지로 변경할 뱃지 선택
                 selectedDrawable = badgeForFirstSignUp.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
-                // 선택한 이미지를 SharedPreferences에 저장
-                saveSelectedImageToSharedPreferences();
             }
         });
         badgeForMania.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 메인 뱃지로 변경할 drawable 이미지 선택
                 selectedDrawable = badgeForMania.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
-                // 선택한 이미지를 SharedPreferences에 저장
-                saveSelectedImageToSharedPreferences();
             }
         });
         badgeForMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 메인 뱃지로 변경할 drawable 이미지 선택
                 selectedDrawable = badgeForMaster.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
-                // 선택한 이미지를 SharedPreferences에 저장
-                saveSelectedImageToSharedPreferences();
             }
         });
         badgeForFirstRecommend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 메인 뱃지로 변경할 drawable 이미지 선택
                 selectedDrawable = badgeForFirstRecommend.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
-                // 선택한 이미지를 SharedPreferences에 저장
-                saveSelectedImageToSharedPreferences();
             }
         });
         badgeForTenRecommend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 메인 뱃지로 변경할 drawable 이미지 선택
                 selectedDrawable = badgeForTenRecommend.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
-                // 선택한 이미지를 SharedPreferences에 저장
-                saveSelectedImageToSharedPreferences();
             }
         });
         badgeForHundredRecommend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 메인 뱃지로 변경할 drawable 이미지 선택
                 selectedDrawable = badgeForHundredRecommend.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
-                // 선택한 이미지를 SharedPreferences에 저장
-                saveSelectedImageToSharedPreferences();
             }
         });
         badgeForFirstVisit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 메인 뱃지로 변경할 drawable 이미지 선택
                 selectedDrawable = badgeForFirstVisit.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
-                // 선택한 이미지를 SharedPreferences에 저장
-                saveSelectedImageToSharedPreferences();
             }
         });
         badgeForTenVisit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 메인 뱃지로 변경할 drawable 이미지 선택
                 selectedDrawable = badgeForTenVisit.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
-                // 선택한 이미지를 SharedPreferences에 저장
-                saveSelectedImageToSharedPreferences();
             }
         });
         badgeForHundredVisit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 메인 뱃지로 변경할 drawable 이미지 선택
                 selectedDrawable = badgeForHundredVisit.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
-                // 선택한 이미지를 SharedPreferences에 저장
-                saveSelectedImageToSharedPreferences();
             }
         });
         badgeForFirstPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 메인 뱃지로 변경할 drawable 이미지 선택
                 selectedDrawable = badgeForFirstPhoto.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
-                // 선택한 이미지를 SharedPreferences에 저장
-                saveSelectedImageToSharedPreferences();
             }
         });
         badgeForTenPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 메인 뱃지로 변경할 drawable 이미지 선택
                 selectedDrawable = badgeForTenPhoto.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
-                // 선택한 이미지를 SharedPreferences에 저장
-                saveSelectedImageToSharedPreferences();
             }
         });
         badgeForHundredPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 메인 뱃지로 변경할 drawable 이미지 선택
                 selectedDrawable = badgeForHundredPhoto.getDrawable();
                 editProfileImageView.setImageDrawable(selectedDrawable);
-                // 선택한 이미지를 SharedPreferences에 저장
-                saveSelectedImageToSharedPreferences();
             }
         });
 
@@ -229,9 +187,10 @@ public class EditProfileActivity extends AppCompatActivity {
         changeMainBadgeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 상단 ImageView가 선택한 뱃지의 drawable로 변경
+                // 프로필 뱃지 ImageView가 선택한 뱃지로 변경
                 if (selectedDrawable != null) {
                     editProfileImageView.setImageDrawable(selectedDrawable);
+                    saveSelectedImageToSharedPreferences();
                     Toast.makeText(EditProfileActivity.this, "대표 뱃지 변경 완료 쥑", Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -241,7 +200,7 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
 
-        //  ---- 확인 버튼 ----
+        //  *---- 확인 버튼 ----*
         Button setBtn = (Button) findViewById(R.id.setBtn);
         setBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,8 +209,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     startActivity(intent);
             }
         });
-
-        //  ---- 취소 버튼 ----
+        //  *---- 취소 버튼 ----*
         Button cancelBtn = (Button) findViewById(R.id.cancelBtn);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,17 +220,18 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
 
-
-
     }
 
-    // 선택한 이미지를 SharedPreferences에 저장하는 메서드
+
+
+    // ----------------------SharedPreferences 저장하기 위한 Methods-----------------------
+
+    // 선택한 뱃지를 SharedPreferences에 저장하는 메서드
     private void saveSelectedImageToSharedPreferences() {
         SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        // 여기에서 "selectedImage"는 저장할 이미지를 식별하기 위한 키입니다.
-        // 이미지를 Drawable 형태로 저장하기 위해 drawableToBitmap() 메서드를 사용하고,
-        // Bitmap을 문자열로 변환하여 저장합니다.
+        // "selectedImage"는 저장할 이미지를 식별하기 위한 키
+        // 이미지를 Drawable 형태로 저장하기 위해 drawableToBitmap() 메서드를 사용하고, Bitmap을 문자열로 변환하여 저장
         editor.putString("selectedImage", bitmapToString(drawableToBitmap(selectedDrawable)));
         editor.apply();
     }
@@ -297,6 +256,8 @@ public class EditProfileActivity extends AppCompatActivity {
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
+    // ----------------------SharedPreferences 불러오기 위한 Methods-----------------------
+
     // SharedPreferences에서 이미지를 가져와서 설정하는 메서드
     private void loadSelectedImageFromSharedPreferences() {
         SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
@@ -314,22 +275,5 @@ public class EditProfileActivity extends AppCompatActivity {
         byte[] byteArray = Base64.decode(imageString, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
     }
-
-
-//    private Bitmap drawableToBitmap(Drawable drawable) {
-//        if (drawable instanceof BitmapDrawable) {
-//            return ((BitmapDrawable) drawable).getBitmap();
-//        }
-//
-//        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-//        Canvas canvas = new Canvas(bitmap);
-//        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-//        drawable.draw(canvas);
-//        return bitmap;
-//    }
-
-
-
-
 
 }
