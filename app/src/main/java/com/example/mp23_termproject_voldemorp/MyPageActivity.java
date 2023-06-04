@@ -1,10 +1,14 @@
 package com.example.mp23_termproject_voldemorp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -37,6 +41,8 @@ public class MyPageActivity extends AppCompatActivity {
         // 서버에서 사용자 정보 불러옴
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users");
+
+
 
         // *-- 닉네임 표시 --*
         nicknameTextView = findViewById(R.id.nicknameTextview);
@@ -84,6 +90,12 @@ public class MyPageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        // *-- 프로필 메인뱃지 표시 --*
+        ImageView profileImageView = findViewById(R.id.profileImageView);
+
+
 
         // 메인으로 가는 버튼 이벤트
         Button backToMainBtn = (Button) findViewById(R.id.backToMainBtn);

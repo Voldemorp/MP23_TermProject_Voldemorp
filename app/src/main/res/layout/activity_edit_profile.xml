@@ -70,7 +70,7 @@
                 android:layout_weight="1" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageView"
+                android:id="@+id/editProfileImageView"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -78,7 +78,7 @@
                 android:background="@android:color/transparent"
                 android:clickable="true"
                 android:onClick="onImageClick"
-                android:src="@drawable/badge_default" />/>
+                android:src="@drawable/badge_default" />
 
             <View
                 android:id="@+id/view58"
@@ -364,7 +364,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/button11"
+                android:id="@+id/changeMainBadgeBtn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
