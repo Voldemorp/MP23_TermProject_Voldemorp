@@ -1,5 +1,7 @@
 package com.example.mp23_termproject_voldemorp;
 
+import static com.example.mp23_termproject_voldemorp.MyPageActivity.addressTextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -35,6 +37,7 @@ import java.io.ByteArrayOutputStream;
 public class EditProfileActivity extends AppCompatActivity {
 
     private Button address1;
+    private String addressData;
     private Button address2;
     private Drawable selectedDrawable;  // 선택한 drawable 이미지를 저장하는 변수
     CircleImageView editProfileImageView; // 상단 프로필 뱃지 ImageView
@@ -214,6 +217,9 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                     Intent intent = new Intent(EditProfileActivity.this, MyPageActivity.class);
+                    intent.putExtra("address",addressData);
+//                MyPageActivity.address=addressData;
+                System.out.println(addressData);
                     startActivity(intent);
             }
         });
@@ -261,10 +267,14 @@ public class EditProfileActivity extends AppCompatActivity {
                         String data=result.getData().getStringExtra("data");
                         String order=result.getData().getStringExtra("order");
                         if(order!=null){
-                            if(order.equals("3"))
-                                address1.setText(data);
-                            else if(order.equals("4"))
-                                address2.setText(data);
+                            if(order.equals("3")) {
+                                addressData=data;
+//                                address1.setText(data);
+
+                            }
+                            else if(order.equals("4")) {
+//                                address2.setText(data);
+                            }
                         }
 
                     }
@@ -272,7 +282,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
             }
     );
-    }
 
 
 
