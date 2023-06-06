@@ -1,5 +1,4 @@
 <h1 align="center">PortUS!</h1>
-로고를 클릭하시면 앱 설명 노션 페이지로 이동합니다.
 <br><br>
 <p align="center">
     <a href="https://youz2me.notion.site/PortUS-f4da930d1fb349ed81386b46fe24285a?pvs=4"><img alt="PortUS" src="https://github.com/Voldemorp/MP23_TermProject_Voldemorp/assets/80394340/fb6cd226-e6ec-4e43-afc3-10f0d68cb2b4" width="400px"></a>
@@ -10,6 +9,10 @@
     Enjoy a happy meal by sharing the restaurants that locals go to!
 </h3>
 <br>
+
+## PortUS! Notion
+[PortUS! 노션 바로가기](https://youz2me.notion.site/PortUS-f4da930d1fb349ed81386b46fe24285a?pvs=4)
+<br><br>
 
 ## Demonstration Videos
 영상을 클릭하시면 유튜브 페이지로 이동합니다.
