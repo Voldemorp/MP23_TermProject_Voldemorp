@@ -1,20 +1,20 @@
 package com.example.mp23_termproject_voldemorp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.content.Intent;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.*;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
@@ -24,9 +24,6 @@ public class ResutaurantRecommendFragment extends Fragment {
     static public String restaurantName;
 
     private int portNum;
-    public ResutaurantRecommendFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,57 +34,54 @@ public class ResutaurantRecommendFragment extends Fragment {
         TextView peoplePortNum = view.findViewById(R.id.textView241);
         TextView myPortNum = view.findViewById(R.id.textView24);
 
-        // 랜덤한 값을 생성하여 peoplePortNum에 할당
+        // Generate a random value for peoplePortNum
         Random random = new Random();
-        int randomValue = 12; // 0부터 99까지의 랜덤한 정수
+        int randomValue = random.nextInt(100); // Generate a random integer between 0 and 99
         peoplePortNum.setText(String.valueOf(randomValue));
 
-        //[서버] 데이터에서 나의 방문 횟수 불러오기
+        // [Server] Retrieve my visit count from the data
 
         firebaseAuth = FirebaseAuth.getInstance();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        //사용자의 userId 받아와서 데베에서 portNum 받아오기
+        // Get the user's userId and retrieve the portNum from the database
         String userId = firebaseAuth.getCurrentUser().getUid();
         DatabaseReference reference = database.getReference("users").child(userId).child("restaurant").child(restaurantName);
 
-        // 데이터 존재 여부 확인
+        // Check if the data exists
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // 식당이 이미 유저DB에 있는 경우
+                // If the restaurant exists in the userDB
                 if (dataSnapshot.exists()) {
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName).child("portNum");
                     ref.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             portNum = dataSnapshot.getValue(Integer.class);
-                            String strportnum = String.valueOf(portNum);
-                            myPortNum.setText(strportnum);
+                            String strPortNum = String.valueOf(portNum);
+                            myPortNum.setText(strPortNum);
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
-                            myPortNum.setText(0);
-
+                            // Handle the cancellation
+                            myPortNum.setText("0");
                         }
                     });
-
                 }
-                // 식당이 유저DB에 없는 경우
+                // If the restaurant doesn't exist in the userDB
                 else {
 
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // 에러 처리
+                // Handle the error
             }
         });
-
-
 
         return view;
     }

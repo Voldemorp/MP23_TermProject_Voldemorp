@@ -14,9 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,7 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyPageActivity extends AppCompatActivity {
     private TextView nicknameTextView;
@@ -42,13 +42,13 @@ public class MyPageActivity extends AppCompatActivity {
     private ValueEventListener portValueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            // 데이터 변경 시 호출되는 로직을 작성합니다.
-            // 예: 데이터 스냅샷에서 필요한 데이터를 가져와 처리합니다.
+            // Logic to be executed when the data is changed
+            // For example, retrieve necessary data from the data snapshot and process it
         }
         @Override
         public void onCancelled(DatabaseError databaseError) {
-            // 취소되었을 때 호출되는 로직을 작성합니다.
-            // 예: 오류 처리 로직을 수행합니다.
+            // Logic to be executed when the operation is cancelled
+            // For example, perform error handling
         }
     };
 
@@ -57,26 +57,24 @@ public class MyPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
 
-        // 상태 바 투명하게 하고 사진 보이게 하는 코드
+        // Make status bar transparent and display image
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        // 서버에서 사용자 정보 불러옴
+        // Retrieve user information from the server
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users");
 
-
-        // *-- 프로필 대표뱃지 사진 표시 --*
+        // *-- Display Profile Badge Image --*
         profileImageView = findViewById(R.id.profileImageView);
-        loadSelectedImageFromSharedPreferences();   // SharedPreferences에서 저장된 대표뱃지 가져와서 설정
+        loadSelectedImageFromSharedPreferences();   // Retrieve and set the selected badge image from SharedPreferences
 
-
-        // *-- 프로필 대표뱃지 Text 표시 --*
+        // *-- Display Profile Badge Text --*
         mainBadgeTextView = findViewById(R.id.mainBadgeTextView);
         userRef.child(userId).child("badge").child("mainBadge").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot){
                 if (dataSnapshot.exists()) {
-                    // 불러온 대표뱃지를 텍스트뷰에 설정
+                    // Set the retrieved main badge to the text view
                     String mainBadge = dataSnapshot.getValue(String.class);
                     mainBadgeTextView.setText(mainBadge);
                 }
@@ -86,7 +84,7 @@ public class MyPageActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-        // *-- 닉네임 표시 --*
+        // *-- Display Nickname --*
         nicknameTextView = findViewById(R.id.nicknameTextview);
         nicknameTextViewBadge = findViewById(R.id.nicknameTextviewBadge);
         nicknameTextViewPort = findViewById(R.id.nicknameTextviewPort);
@@ -94,7 +92,7 @@ public class MyPageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot){
                 if (dataSnapshot.exists()) {
-                    // 불러온 닉네임을 텍스트뷰에 설정
+                    // Set the retrieved nickname to the text view
                     String nickname = dataSnapshot.getValue(String.class);
                     nicknameTextView.setText(nickname);
                     nicknameTextViewBadge.setText(nickname);
@@ -106,33 +104,30 @@ public class MyPageActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-
-        // *-- 주소 표시 --*
+        // *-- Display Address --*
         addressTextView = findViewById(R.id.addressTextview);
         userRef.child(userId).child("address1").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot){
                 if (dataSnapshot.exists()) {
-                    // 불러온 주소를 텍스트뷰에 설정
+                    // Set the retrieved address to the text view
                     address=dataSnapshot.getValue(String.class);
 
-                    // onCreate 메서드 내부에서 아래 코드 추가
+                    // Add the following code inside the onCreate method
                     Intent intent = getIntent();
                     String address2 = intent.getStringExtra("address");
                     if (address2 != null) {
-                        addressTextView.setText(address2);  // 주소 값을 텍스트뷰에 설정
+                        addressTextView.setText(address2);  // Set the address value to the text view
                     }
                     else
-                    addressTextView.setText(address);
-
+                        addressTextView.setText(address);
                 }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-
-        // *-- 뱃지 목록 표시 --*
+        // *-- Display Badge List --*
         ImageView badgeForMania = findViewById(R.id.badgeForMania);
         ImageView badgeForMaster = findViewById(R.id.badgeForMaster);
         ImageView badgeForFirstRecommend = findViewById(R.id.badgeForFirstRecommend);
@@ -149,26 +144,20 @@ public class MyPageActivity extends AppCompatActivity {
         badgeForMaster.setVisibility(View.VISIBLE);
         badgeForFirstRecommend.setVisibility(View.VISIBLE);
         badgeForTenRecommend.setVisibility(View.VISIBLE);
-
         badgeForHundredRecommend.setVisibility(View.VISIBLE);
         badgeForHundredRecommend.setImageResource(R.drawable.badge_none);
-
         badgeForFirstVisit.setVisibility(View.VISIBLE);
         badgeForTenVisit.setVisibility(View.VISIBLE);
-
         badgeForHundredVisit.setVisibility(View.VISIBLE);
         badgeForHundredVisit.setImageResource(R.drawable.badge_none);
-
         badgeForFirstPhoto.setVisibility(View.VISIBLE);
         badgeForFirstPhoto.setImageResource(R.drawable.badge_none);
-
         badgeForTenPhoto.setVisibility(View.VISIBLE);
         badgeForTenPhoto.setImageResource(R.drawable.badge_none);
-
         badgeForHundredPhoto.setVisibility(View.VISIBLE);
         badgeForHundredPhoto.setImageResource(R.drawable.badge_none);
 
-// 파이어베이스에서 현재 사용자의 배지 값을 가져와서 적절한 가시성을 설정합니다.
+        // Retrieve the badge values for the current user from Firebase and set the appropriate visibility
 //        DatabaseReference badgeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("badge").child("badgeForMania");
 //        badgeRef.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -177,10 +166,10 @@ public class MyPageActivity extends AppCompatActivity {
 //                    boolean isBadgeVisible = dataSnapshot.getValue(Boolean.class);
 //
 //                    if (isBadgeVisible) {
-//                        // 배지가 보여야 하는 경우
+//                        // Show the badge if it should be visible
 //                        badgeForMania.setVisibility(View.VISIBLE);
 //                    } else {
-//                        // 배지가 숨겨야 하는 경우
+//                        // Hide the badge if it should be hidden
 //                        badgeForMania.setVisibility(View.GONE);
 //                    }
 //                }
@@ -188,34 +177,34 @@ public class MyPageActivity extends AppCompatActivity {
 //
 //            @Override
 //            public void onCancelled(DatabaseError databaseError) {
-//                // 오류 처리
+//                // Handle the error
 //            }
 //        });
 
-
-        // *-- Port list 표시 --*
-            //[서버] DB에서 사용자가 port한 식당 이름/몇 번 port했는지 가져와서 portList에 append
+        // *-- Display Port List --*
+        // [Server] Retrieve the names of restaurants that the user has ported and the number of times they have ported,
+        // and append the information to the portList
         DatabaseReference userPortRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant");
         userPortRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot document : dataSnapshot.getChildren()) {
-                        String restaurantName = document.getKey(); // 식당 이름 가져오기
+                        String restaurantName = document.getKey(); // Retrieve the restaurant name
 
-                        // 가게 이름과 portNum을 가져와서 portList에 추가
+                        // Retrieve the restaurant name and portNum, and add them to the portList
                         DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName);
                         restaurantRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
-                                    int portNum = dataSnapshot.child("portNum").getValue(Integer.class); // 가게의 portNum 가져오기
+                                    int portNum = dataSnapshot.child("portNum").getValue(Integer.class); // Retrieve the portNum of the restaurant
 
-                                    // portList에 추가
+                                    // Add the restaurant information to the portList
                                     MyPagePortItem portItem = new MyPagePortItem(restaurantName, portNum);
                                     portList.add(portItem);
 
-                                    // 추가한 식당 정보를 레이아웃에 추가
+                                    // Add the added restaurant information to the layout
                                     addPortListToLayout();
                                 }
                             }
@@ -229,9 +218,7 @@ public class MyPageActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-
-
-        // '프로필 편집' 버튼 화면전환
+        // 'Edit Profile' button click event to switch screens
         Button editProfileBtn = findViewById(R.id.editProfileBtn);
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -241,7 +228,7 @@ public class MyPageActivity extends AppCompatActivity {
             }
         });
 
-        // '메인으로 돌아가기' 버튼 화면전환
+        // 'Go Back to Main' button click event to switch screens
         Button backToMainBtn = findViewById(R.id.backToMainBtn);
         backToMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,42 +238,36 @@ public class MyPageActivity extends AppCompatActivity {
             }
         });
 
-        // 상태 바 투명하게 하고 사진 보이게 하는 코드
+        // Make status bar transparent and display image
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
-
     }
 
-
-
-
-    // SharedPreferences에서 이미지를 불러오고 설정하는 메서드
+    // Load and set the image from SharedPreferences
     private void loadSelectedImageFromSharedPreferences() {
         SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
         String selectedImageString = preferences.getString("selectedImage", null);
         if (selectedImageString != null) {
-            // 문자열로 저장된 이미지를 Bitmap으로 변환하여 Drawable로 설정
+            // Convert the image string stored as a string to a Bitmap and set it as a Drawable
             Bitmap bitmap = stringToBitmap(selectedImageString);
             Drawable drawable = new BitmapDrawable(getResources(), bitmap);
             profileImageView.setImageDrawable(drawable);
         }
     }
 
-    // 문자열을 Bitmap으로 변환하는 메서드
+    // Convert a string to a Bitmap
     private Bitmap stringToBitmap(String imageString) {
         byte[] byteArray = Base64.decode(imageString, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
     }
 
-
     private void addPortListToLayout() {
         LinearLayout layout = findViewById(R.id.portListContainer);
 
         for (int i = 0; i < portList.size(); i++) {
-            // 추가할 레이아웃
+            // Layout to be added
             MyPageListLayout myPageListLayout = new MyPageListLayout(getApplicationContext(), null, portList.get(i));
 
-            // 추가 코드
+            // Add the layout
             layout.addView(myPageListLayout);
         }
     }
@@ -294,11 +275,9 @@ public class MyPageActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // 이벤트 리스너 제거
+        // Remove the event listener
         if (userPortRef != null) {
             userPortRef.removeEventListener(portValueEventListener);
         }
     }
 }
-
-

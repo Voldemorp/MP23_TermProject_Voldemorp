@@ -1,18 +1,22 @@
 package com.example.mp23_termproject_voldemorp;
 
-// 랭크 리스트에 유저 정보를 넣기 위한 배열의 커스텀 타입 선언
+// Custom data type for storing user information in the rank list
 public class RestaurantRankUserInfo {
-    String userName;
-    String numOfVisit;
+    String userName; // User name
+    String numOfVisit; // Number of visits
 
-    RestaurantRankUserInfo(String restaurantName, String numOfPort) {
-        this.userName = restaurantName;
-        this.numOfVisit = numOfPort;
+    // Constructor for initializing the user information
+    RestaurantRankUserInfo(String userName, String numOfVisit) {
+        this.userName = userName;
+        this.numOfVisit = numOfVisit;
     }
 
+    // Getter method for retrieving the user name
     public String getUserName() {
         return userName;
     }
+
+    // Getter method for retrieving the number of visits
     public String getNumOfVisit() {
         return numOfVisit;
     }

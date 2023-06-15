@@ -19,12 +19,15 @@ public class RestaurantRankListLayout extends LinearLayout {
     }
 
     private void init(Context context, RestaurantRankUserInfo restaurantRankUserInfo) {
+        // Inflate the layout for the custom list item
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_restaurant_rank, this, true);
 
-        TextView userName = (TextView)findViewById(R.id.name);
-        TextView numOfVisit = (TextView)findViewById(R.id.numOfVisit);
+        // Get references to the TextViews in the custom layout
+        TextView userName = findViewById(R.id.name);
+        TextView numOfVisit = findViewById(R.id.numOfVisit);
 
+        // Set the user name and number of visits in the TextViews
         userName.setText(restaurantRankUserInfo.userName);
         numOfVisit.setText(restaurantRankUserInfo.numOfVisit);
     }

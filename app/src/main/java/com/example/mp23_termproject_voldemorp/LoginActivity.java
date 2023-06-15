@@ -35,19 +35,18 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     FirebaseUser user;
 
-    // 화면 터치시 키보드 내리기
+    // Hide the keyboard when the screen is touched
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View view = getCurrentFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         if (view != null) {
-
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         return super.dispatchTouchEvent(ev);
     }
 
-     //  *--자동 로그인--*  || 로그아웃 하지 않을시, 회원가입시 바로 로그인
+    // *-- Auto Login --* || If not logged out, automatically log in after signing up
     @Override
     public void onStart() {
         super.onStart();
@@ -59,17 +58,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // 파이어 베이스 인증 객체 선언 및 버튼 등록
+        // Initialize Firebase authentication and register buttons
         firebaseAuth = FirebaseAuth.getInstance();
         loginBtn = (Button) findViewById(R.id.loginButton);
         loginEmailEditText = findViewById(R.id.editTextEmailAddress);
         loginPasswordEditText = findViewById(R.id.editTextPassword);
 
-
-        // 상태 바 투명하게 하고 사진 보이게 하는 코드
+        // Make the status bar transparent and show the image
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        // 회원 가입 버튼 화면 전환
+        // Switch to sign-up screen when the sign-up button is clicked
         Button signUpBtn = (Button) findViewById(R.id.signUpBtn);
         signUpBtn.setOnClickListener(view -> {
             signUpDialog = new SignUpDialog(this);
@@ -77,32 +75,32 @@ public class LoginActivity extends AppCompatActivity {
             signUpDialog.show();
         });
 
-        // 로그인 버튼 클릭 이벤트 -> 화면 전환
+        // Click event for login button
         Button loginBtn = (Button) findViewById(R.id.loginButton);
 
-        //                       --- 로그인  ---
+        //                   --- Log in ---
         loginBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                // 화면 전환 시 왼쪽에서 오른쪽으로 밀듯이 나타나는 애니메이션 적용
+                // Apply animation when switching screens (from left to right)
 //                overridePendingTransition(R.anim.slide_right_enter, R.anim.none);
                 String email = loginEmailEditText.getText().toString().trim();
                 String pwd = loginPasswordEditText.getText().toString().trim();
 
-                //로그인 정보 다 입력하지 않았을 경우 예외처리
-                if(email.isEmpty()||pwd.isEmpty())
-                    Toast.makeText(getApplicationContext(),"로그인 정보를 확인해주세요",Toast.LENGTH_SHORT).show();
-                else {
+                // Exception handling for incomplete login information
+                if(email.isEmpty()||pwd.isEmpty()) {
+                    Toast.makeText(getApplicationContext(),"Please check your login information",Toast.LENGTH_SHORT).show();
+                } else {
                     firebaseAuth.signInWithEmailAndPassword(email, pwd)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    // 로그인 성공시 화면 전환
+                                    // If login is successful, switch to the main screen
                                     if (task.isSuccessful()) {
                                         movePage(FirebaseAuth.getInstance().getCurrentUser());
-                                    } else { // 로그인 실패시 토스트 메시지 출력
-                                        Toast.makeText(LoginActivity.this, "이메일 또는 비밀번호를 잘못 입력했습니다.", Toast.LENGTH_SHORT).show();
+                                    } else { // If login fails, display a toast message
+                                        Toast.makeText(LoginActivity.this, "Incorrect email or password.", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -111,22 +109,19 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
-
-    // *-- 로그인 성공 -> 유저정보 넘겨주고 화면 이동하는 함수 --*
+    // *-- Move to the next page after successful login by passing user information --*
     public void movePage(FirebaseUser user) {
         if (user != null) {
             checkIfAddressExists();
 
-//             화면 전환 시 왼쪽에서 오른쪽으로 밀듯이 나타나는 애니메이션 적용
+            // Apply animation when switching screens (from left to right)
             overridePendingTransition(R.anim.slide_right_enter, R.anim.none);
-//            finish();
         }
     }
 
-    // *-- 로그인한 사용자의 주소 정보가 저장돼있는지 확인하는 함수 --*
+    // *-- Check if the logged-in user's address information exists --*
     private void checkIfAddressExists() {
-        // [서버] 현재 로그인한 사용자의 Userid를 사용하여 DB에서 해당 사용자의 주소 정보 가져옴
+        // [Server] Retrieve the address information of the current logged-in user from the database using the user's Userid
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
         DatabaseReference addressRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("address1");
@@ -134,23 +129,22 @@ public class LoginActivity extends AppCompatActivity {
         addressRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // 주소 정보 "address1"(필수 주소)가 존재할 시
+                // If the address information "address1" (required address) exists
                 if (dataSnapshot.exists()) {
-                    // 주소 저장 되어 있으면 메인 화면으로 이동
+                    // If the address is saved, move to the main screen
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
-                    // 주소 저장이 되어있지 않으면 지역설정 화면으로 이동
+                    // If the address is not saved, move to the location setting screen
                     Intent intent = new Intent(getApplicationContext(), SetLocationActivity.class);
                     startActivity(intent);
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // 에러 처리 로직을 여기에 작성
+                // Error handling logic goes here
             }
         });
-
     }
-
 }

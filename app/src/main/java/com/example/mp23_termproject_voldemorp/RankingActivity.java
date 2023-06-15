@@ -24,7 +24,7 @@ public class RankingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
 
-        // 상태 바 투명하게 하고 사진 보이게 하는 코드
+        // Make the status bar transparent and the image visible
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         rankingContainer = findViewById(R.id.rankingContainer);
@@ -34,8 +34,8 @@ public class RankingActivity extends AppCompatActivity {
         rankingContainer.addView(viewPager);
         setupViewPager();
 
-        // 메인으로 가는 버튼 이벤트
-        Button backToMainBtn = (Button) findViewById(R.id.backToMainBtn);
+        // Event for the button to go back to the main page
+        Button backToMainBtn = findViewById(R.id.backToMainBtn);
         backToMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,11 +45,17 @@ public class RankingActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Set up the ViewPager with the adapter and the fragments for each ranking type.
+     */
     private void setupViewPager() {
         RankingActivity.MyPagerAdapter adapter = new RankingActivity.MyPagerAdapter(this);
         viewPager.setAdapter(adapter);
     }
 
+    /**
+     * Custom FragmentStateAdapter for managing the fragments in the ViewPager.
+     */
     private class MyPagerAdapter extends FragmentStateAdapter {
         public MyPagerAdapter(AppCompatActivity activity) {
             super(activity);
@@ -57,7 +63,7 @@ public class RankingActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 2;
+            return 2; // Total number of ranking fragments
         }
 
         @NonNull
@@ -65,9 +71,9 @@ public class RankingActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return new MasterRankingFragment();
+                    return new MasterRankingFragment(); // Fragment for master ranking
                 case 1:
-                    return new ManiaRankingFragment();
+                    return new ManiaRankingFragment(); // Fragment for mania ranking
                 default:
                     return null;
             }
