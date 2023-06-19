@@ -22,15 +22,14 @@ public class RankingManiaListLayout extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_mania_ranking, this, true);
 
-        TextView rank = findViewById(R.id.rank);
-        TextView userName = findViewById(R.id.name);
-        TextView numOfVisit = findViewById(R.id.numOfVisit);
-        TextView userVisited = findViewById(R.id.userVisited);
+        TextView rank = (TextView)findViewById(R.id.rank);
+        TextView userName = (TextView)findViewById(R.id.name);
+        TextView numOfVisit = (TextView)findViewById(R.id.numOfVisit);
+        TextView userVisited = (TextView)findViewById(R.id.userVisited);
 
-        // Set the ranking information to the respective views
-        rank.setText(Integer.toString(rankingInfo.rank)); // Set the rank position
-        userName.setText(rankingInfo.userName); // Set the user name
-        numOfVisit.setText(rankingInfo.numOfVisit); // Set the number of visits
-        userVisited.setText(rankingInfo.place); // Set the place visited by the user
+        rank.setText(Integer.toString(rankingInfo.rank));
+        userName.setText(rankingInfo.userName);
+        numOfVisit.setText(rankingInfo.numOfVisit);
+        userVisited.setText(rankingInfo.place);
     }
 }

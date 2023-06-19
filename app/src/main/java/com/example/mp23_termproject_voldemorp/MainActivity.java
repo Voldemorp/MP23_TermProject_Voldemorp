@@ -5,12 +5,14 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Make the status bar transparent and show the image
+        // 상태 바 투명하게 하고 사진 보이게 하는 코드
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         // Initialize MapView
@@ -90,15 +92,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     LOCATION_PERMISSION_REQUEST_CODE);
         }
 
-        // Show the initial sign-up badge popup
+        // 첫 회원가입 뱃지 팝업 띄우기
         showBadgePopup();
+
 
         // Button to move to current location
         btnMoveToMyLocation = findViewById(R.id.btnMoveToMyLocation);
         btnMoveToMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moveMapToCurrentLocation();
+                    moveMapToCurrentLocation();
             }
         });
 
@@ -119,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -175,6 +179,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                     Log.e("RestaurantData", "'좌표정보(x)' field is not a number");
                                 }
                             }
+//                            addMarkers();
+//                            moveMapToCurrentLocation(); // Move map after loading restaurant data
                         } else {
                             Toast.makeText(MainActivity.this, "No restaurant data available.", Toast.LENGTH_SHORT).show();
                         }
@@ -186,7 +192,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         Toast.makeText(MainActivity.this, "Failed to load restaurant data.", Toast.LENGTH_SHORT).show();
                     }
                 });
-
         firestore.collection("taepyeong_restaurant")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -222,8 +227,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
     }
-
     private void addMarkers() {
+//                LinearLayout layout = findViewById(R.id.restaurantLinearView);
+
         for (MainRestaurantInfo restaurant : nearbyRestaurants) {
             LatLng latLng = new LatLng(restaurant.x, restaurant.y);
             Marker marker = new Marker();
@@ -241,11 +247,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Intent intent = new Intent(MainActivity.this, RestaurantActivity.class);
                     intent.putExtra("name", restaurant.name);
                     intent.putExtra("type", restaurant.foodType);
-                    intent.putExtra("res_lat", restaurant.x);
-                    intent.putExtra("res_long", restaurant.y);
-                    RestaurantActivity.latitude = latitude;
-                    RestaurantActivity.longitude = longitude;
-                    ResutaurantRecommendFragment.restaurantName = restaurant.name;
+                    intent.putExtra("res_lat",restaurant.x);
+                    intent.putExtra("res_long",restaurant.y);
+//                    intent.putExtra("latitude",latitude);
+//                    intent.putExtra("longitude",longitude);
+                    RestaurantActivity.latitude=latitude;
+                    RestaurantActivity.longitude=longitude;
+                    ResutaurantRecommendFragment.restaurantName=restaurant.name;
                     startActivity(intent);
                     return true;
                 }
@@ -270,8 +278,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                     // Add circle overlay only if it hasn't been added yet
                                     CircleOverlay circleOverlay = new CircleOverlay();
                                     circleOverlay.setCenter(latLng);
-                                    circleOverlay.setRadius(1000); // 1km radius
-                                    circleOverlay.setColor(Color.argb(70, 0, 0, 255)); // Blue, semi-transparent
+                                    circleOverlay.setRadius(1000); // 반경 1km
+                                    circleOverlay.setColor(Color.argb(70, 0, 0, 255)); // 파란색 반투명
                                     circleOverlay.setMap(naverMap);
                                     isCircleOverlayAdded = true;
                                 }
@@ -291,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 }, 3000); // Adjust the delay time as needed
             } else {
-                // Toast.makeText(this, "Failed to get current location.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Failed to get current location.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -301,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         for (MainRestaurantInfo restaurant : restaurantInfoList) {
             LatLng restaurantLocation = new LatLng(restaurant.x, restaurant.y);
             double distance = center.distanceTo(restaurantLocation);
-            if (distance <= 1000) { // Only extract restaurants within 1km
+            if (distance <= 1000) { // 1km 이내의 식당만 추출
                 nearbyRestaurants.add(restaurant);
             }
         }
@@ -319,17 +327,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             layout.addView(restaurantLayout);
         }
 
-        // Pass the values to the receiving activity
-        RestaurantActivity.latitude = latitude;
-        RestaurantActivity.longitude = longitude;
-        MainRestaurantListLayout.latitude = latitude;
-        MainRestaurantListLayout.longitude = longitude;
+//                Toast.makeText(getApplicationContext(),"Current Location: " + center.latitude + ", " + center.longitude,Toast.LENGTH_SHORT).show();
+
+        // 값을 받는 액티비티로 데이터 전달
+                RestaurantActivity.latitude = latitude;
+                RestaurantActivity.longitude = longitude;
+                MainRestaurantListLayout.latitude=latitude;
+                MainRestaurantListLayout.longitude=longitude;
+
     }
 
-    // Show the initial sign-up badge popup
+    //   *---첫 회원가입 팝업창 ---*
     private AlertDialog dialog2;
     private void showBadgePopup() {
         AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+
         View popupView = getLayoutInflater().inflate(R.layout.dialog_badge_alert, null);
 
         TextView nameOfNewBadge = popupView.findViewById(R.id.nameOfNewBadge);
@@ -342,12 +354,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         DatabaseReference maxPortNumRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("max_portNum");
         DatabaseReference badgeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("badge");
 
-        // Badge 1
-        nameOfNewBadge.setText("Newbie Hamjjang");
-        Drawable newDrawable = getResources().getDrawable(R.drawable.badge_first_signup); // Get the drawable
+        // 뱃지1
+        nameOfNewBadge.setText("뉴비 햄쥑이");
+        Drawable newDrawable = getResources().getDrawable(R.drawable.badge_first_signup); // 드로어블 가져오기
         badgeImage.setImageDrawable(newDrawable);
 
-        // Close button 'X'
+        // 닫힘 버튼 'X'
         Button close = popupView.findViewById(R.id.closeButton);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -356,11 +368,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        // Set the popup layout to the AlertDialog
+        // 팝업 레이아웃을 AlertDialog에 설정
         builder2.setView(popupView);
         dialog2 = builder2.create();
+
+        // AlertDialog의 Window 속성 변경
+        Window window = dialog2.getWindow();
+        if (window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
         dialog2.show();
     }
+
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
@@ -410,3 +430,5 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapView.onLowMemory();
     }
 }
+
+

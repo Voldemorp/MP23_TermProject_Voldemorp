@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
+    android:background="@android:color/transparent"
     android:gravity="center"
     android:orientation="vertical">
 
     <View
         android:id="@+id/view19"
         android:layout_width="match_parent"
+        android:background="@android:color/transparent"
         android:layout_height="0dp"
         android:layout_weight="0.1" />
 
@@ -44,15 +46,21 @@
                 android:text="식당 이름"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 android:textStyle="bold" />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5" />
 
             <TextView
                 android:id="@+id/restaurantType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="종류"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <View
                 android:id="@+id/view131"
@@ -79,6 +87,7 @@
     <View
         android:id="@+id/view138"
         android:layout_width="match_parent"
+        android:background="@android:color/transparent"
         android:layout_height="0dp"
         android:layout_weight="0.1" />
 

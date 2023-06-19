@@ -2,6 +2,7 @@ package com.example.mp23_termproject_voldemorp;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -22,53 +23,57 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class SignUpDialog extends Dialog {
-    // Regular expression for email format validation
-    private static final String EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
 
+public class SignUpDialog extends Dialog {
+    //이메일 형식 확인
+    private static final String EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
     public static boolean isValidEmail(String email) {
         return !TextUtils.isEmpty(email) && email.matches(EMAIL_REGEX);
     }
 
-    // User's email
+
+    //사용자의 이메일
     private String email;
-    // User's nickname
+    //사용자의 닉네임
     private String nickname;
-    // User's password
+    //사용자의 password
     private String password;
 
-    // User's badge status
+    //사용자의 뱃지 상태
     private boolean badge1 = true;
     private boolean badge2 = false;
     private boolean badge3 = false;
     private boolean badge4 = false;
     private boolean badge5 = false;
-    private boolean badge6 = false;
+    private boolean badge6 =false;
     private boolean badge7 = false;
     private boolean badge8 = false;
     private boolean badge9 = false;
     private boolean badge10 = false;
-    private boolean badge11 = false;
+    private boolean badge11 =false;
     private boolean badge12 = false;
 
     private int max_portNum = 0;
+
     private int userTotalLike = 0;
 
-    // Indicates whether the email check button is clicked
+
+    //이메일 중복확인 버튼을 눌렀는지 유무
     private boolean emailCheckButtonClicked = false;
-    // Indicates whether the nickname check button is clicked
-    private boolean nicknameCheckButtonClicked = false;
+    //닉네임 중복확인 버튼 눌렀는지 유무
+    private boolean nicknameCheckButtonClicked=false;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase mDatabase;
 
-    public class UserModel {
+    public class UserModel{
         public String nickName;
         public int max_portNum;
-        public int userTotalLike;
-    }
 
-    public class UserModel_badge {
+        public int userTotalLike;
+
+    }
+    public class UserModel_badge{
         public String mainBadge = "badge1";
         public boolean badge1 = true;
         public boolean badge2 = false;
@@ -80,15 +85,15 @@ public class SignUpDialog extends Dialog {
         public boolean badge8 = false;
         public boolean badge9 = false;
         public boolean badge10 = false;
-        public boolean badge11 = false;
+        public boolean badge11 =false;
         public boolean badge12 = false;
     }
 
-    public class UserModel_restaurant {
+
+    public class UserModel_restaurant{
         public String restaurantName;
     }
-
-    // Hide the keyboard when the screen is touched
+    //화면 터치시 키보드 내리기
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View view = getCurrentFocus();
@@ -99,11 +104,12 @@ public class SignUpDialog extends Dialog {
         return super.dispatchTouchEvent(ev);
     }
 
+
     public SignUpDialog(@NonNull Context context) {
         super(context);
         setContentView(R.layout.activity_sign_up);
 
-        // Button to go back to the login screen without applying any changes
+        // 변경사항 적용 없이 로그인 창으로 돌아가는 버튼
         Button backToLoginBtn = (Button) findViewById(R.id.backToLoginBtn);
         backToLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,234 +118,297 @@ public class SignUpDialog extends Dialog {
             }
         });
 
-        // Initialize Firebase
+        //파이어베이스 설정
         firebaseAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
 
-        //-------------Email-------------
+        //-------------이메일-------------
 
-        // Text to display the availability result of the entered email
-        TextView emailCheckedResult = (TextView) findViewById(R.id.signUpIsAvailableEmail);
-        // Button to check email duplication
-        Button emailCheckButton = (Button) findViewById(R.id.signUpCheckDuplicationEmailBtn);
-        // EditText to input email
+        //입력한 이메일의 사용가능 여부 결과 text
+        TextView emailCheckedResult=(TextView) findViewById(R.id.signUpIsAvailableEmail);
+        //이메일 중복확인 버튼
+        Button emailCheckButton=(Button)findViewById(R.id.signUpCheckDuplicationEmailBtn);
+        //이메일 입력하는 공간
         EditText emailEditText = findViewById(R.id.SignUpEmailField);
 
-        // Real-time email format validation
+
+        //이메일 형식 실시간으로 검사
         emailEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // This method is called before the text is changed.
+                // 이 메소드는 텍스트 입력 변경 전에 호출됩니다.
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Temporary storage for the entered email
+
+                //입력한 이메일을 임시 저장
                 String insEmail = emailEditText.getText().toString().trim();
                 if (!isValidEmail(insEmail)) {
-                    emailCheckedResult.setText("Invalid email format.");
-                } else {
+                    emailCheckedResult.setText("올바른 이메일 형식이 아닙니다.");
+//                    // 흰색
+//                    emailCheckedResult.setTextColor(Color.parseColor("#FFFFFF"));
+                }
+                else{
                     emailCheckedResult.setText("");
                 }
-            }
 
+            }
             @Override
             public void afterTextChanged(Editable s) {
-                // This method is called after the text is changed.
+                // 이 메소드는 텍스트 입력 변경 후에 호출됩니다.
             }
         });
 
-        // Check email duplication button click event
+        //이메일 중복확인 버튼 눌렀을때 유효성 검사
         emailCheckButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // EditText to input email
+                //이메일 입력하는 공간
                 EditText emailEditText = findViewById(R.id.SignUpEmailField);
-                // Temporary storage for the entered email
+                //입력한 이메일을 임시 저장
                 String insEmail = emailEditText.getText().toString().trim();
 
-                // Mark as clicked
-                emailCheckButtonClicked = true;
+                //클릭됨
+                emailCheckButtonClicked=true;
 
                 if (!isValidEmail(insEmail)) {
-                    emailCheckedResult.setText("Invalid email format.");
-                } else {
+                    emailCheckedResult.setText("올바른 이메일 형식이 아닙니다");
+//                    //setTextColor 써서 고구마색으로 바꾸기
+//                    emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+                }
+                //[서버] '입력한 이메일과 같은 메일이 이미 데이터에 존재한다면'을 조건에 추가. 임의로 예시 넣어둠
+                else{
                     firebaseAuth.fetchSignInMethodsForEmail(insEmail)
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     boolean emailExists = !task.getResult().getSignInMethods().isEmpty();
                                     if (emailExists) {
-                                        emailCheckedResult.setText("Email already exists.");
+                                        emailCheckedResult.setText("이미 존재하는 이메일입니다");
+//                                        // 고구마색으로 바꾸기
+//                                        emailCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                                     } else {
-                                        emailCheckedResult.setText("Email is available.");
-                                        email = insEmail; // Store the email for later use
+                                        emailCheckedResult.setText("사용 가능한 이메일입니다");
+//                                        // 노란색으로 바꾸기
+//                                        emailCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
+                                        // 데이터에 넣을 이메일
+                                        email = insEmail;
                                     }
                                 } else {
-                                    // Error occurred
-                                    // TODO: Handle the error
+                                    // 오류 발생
+                                    // TODO: 처리할 작업 수행
                                 }
                             });
                 }
+
             }
         });
 
-        //-------------Nickname-------------
+        //-------------닉네임-------------
 
-        // Text to display the availability result of the entered nickname
-        TextView nicknameCheckedResult = (TextView) findViewById(R.id.signUpIsAvailableName);
-        // Button to check nickname duplication
-        Button nicknameCheckButton = (Button) findViewById(R.id.signUpCheckNameDuplicationBtn);
-        // EditText to input nickname
-        EditText nicknameEditText = (EditText) findViewById(R.id.signUpEditTextNameField);
+        //입력한 닉네임의 사용가능 여부 결과 text
+        TextView nicknameCheckedResult=(TextView) findViewById(R.id.signUpIsAvailableName);
+        //닉네임 중복확인 버튼
+        Button nicknameCheckButton=(Button) findViewById(R.id.signUpCheckNameDuplicationBtn);
+        //닉네임 입력하는 공간
+        EditText nicknameEditText=(EditText)findViewById(R.id.signUpEditTextNameField);
 
-        // Real-time nickname length validation
+        //닉네임 글자 수 실시간으로 검사
         nicknameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // This method is called before the text is changed.
+                // 이 메소드는 텍스트 입력 변경 전에 호출됩니다.
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Temporary storage for the entered nickname
-                String insNickname = nicknameEditText.getText().toString().trim();
 
-                if (insNickname.length() > 10) {
-                    nicknameCheckedResult.setText("Nickname should be within 10 characters.");
-                } else {
+                //입력한 닉네임 임시 저장
+                String insNickname=nicknameEditText.getText().toString().trim();
+
+                if(insNickname.length()>10){
+                    nicknameCheckedResult.setText("10자 이내의 닉네임을 입력해주세요");
+                    //고구마색으로 바꾸기
+                    nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+                }
+                else{
                     nicknameCheckedResult.setText("");
                 }
-            }
 
+            }
             @Override
             public void afterTextChanged(Editable s) {
-                // This method is called after the text is changed.
+                // 이 메소드는 텍스트 입력 변경 후에 호출됩니다.
             }
         });
 
-        // Check nickname duplication button click event
+        //닉네임 중복확인 버튼 눌렀을때 유효성 검사
         nicknameCheckButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // EditText to input nickname
-                EditText nicknameEditText = (EditText) findViewById(R.id.signUpEditTextNameField);
-                // Temporary storage for the entered nickname
-                String insNickname = nicknameEditText.getText().toString().trim();
+                //닉네임 입력하는 공간
+                EditText nicknameEditText=(EditText)findViewById(R.id.signUpEditTextNameField);
+                //입력한 닉네임 임시 저장
+                String insNickname=nicknameEditText.getText().toString().trim();
 
-                // Mark as clicked
-                nicknameCheckButtonClicked = true;
+                //클릭됨
+                nicknameCheckButtonClicked=true;
 
-                if (insNickname.length() > 10) {
-                    nicknameCheckedResult.setText("Nickname should be within 10 characters.");
-                } else {
-                    nicknameCheckedResult.setText("Nickname is available.");
-                    nickname = insNickname; // Store the nickname for later use
+                if(insNickname.length()>10){
+                    nicknameCheckedResult.setText("10자 이내의 닉네임을 입력해주세요");
+//                     디자인 때문에 색 다 주석처리 해둠
+//                    //고구마색으로 바꾸기
+//                    nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+                }
+                //[서버] '입력한 닉네임과 같은 닉네임이 이미 데이터에 존재한다면'을 조건에 추가. 임의로 예시 넣어둠
+                else {
+                    //Firebase Realtime Database의 "users" 레퍼런스를 가져옵니다.
+//                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+//
+//                    usersRef.orderByChild("nickName").equalTo(insNickname).addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            if (dataSnapshot.exists()) {
+//                                // 닉네임이 이미 존재함
+//                                nicknameCheckedResult.setText("이미 존재하는 닉네임입니다");
+//                                // 고구마색으로 바꾸기
+//                                nicknameCheckedResult.setTextColor(Color.parseColor("#980D4D"));
+//                            } else {
+                                nicknameCheckedResult.setText("사용 가능한 닉네임입니다");
+//                                // 노란색으로 바꾸기
+//                                nicknameCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
+//                                // 데이터에 넣을 닉네임
+//                                nickname = insNickname;
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//                            // 에러 처리 코드 추가
+//                        }
+//                    });
+                    nickname = insNickname;
                 }
             }
         });
 
-        //-------------Password-----------------
+        //-------------비밀번호-----------------
 
-        // Text to display the password availability result
-        TextView passwordCheckedResult = (TextView) findViewById(R.id.signUpIsAvailablePw);
-        // EditText to input password
-        EditText passwordEditText = (EditText) findViewById(R.id.signUpPwField);
+        //입력한 닉네임의 사용가능 여부 결과 text
+        TextView passwordCheckedResult=(TextView) findViewById(R.id.signUpIsAvailablePw);
 
-        // Real-time password length validation
+        //비밀번호 입력하는 공간
+        EditText passwordEditText=(EditText) findViewById(R.id.signUpPwField);
+
+        //비밀번호 글자수 실시간으로 검사
         passwordEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // This method is called before the text is changed.
+                // 이 메소드는 텍스트 입력 변경 전에 호출됩니다.
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Temporary storage for the entered password
+                //입력한 비밀번호 임시 저장
                 String pw = passwordEditText.getText().toString().trim();
 
                 if (pw.length() < 8 || pw.length() > 12) {
-                    passwordCheckedResult.setText("Password should be between 8 and 12 characters.");
+                    passwordCheckedResult.setText("비밀번호는 8자에서 12자 사이여야 합니다");
+//                    //고구마색으로 바꾸기
+//                    passwordCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                 } else {
-                    passwordCheckedResult.setText("Password is valid.");
-                    password = pw; // Store the password for later use
+                    passwordCheckedResult.setText("사용가능한 비밀번호입니다");
+//                    //노란색으로 바꾸기
+//                    passwordCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
+                    //데이터에 넣을 password
+                    password=pw;
                 }
-            }
 
+            }
             @Override
             public void afterTextChanged(Editable s) {
-                // This method is called after the text is changed.
+                // 이 메소드는 텍스트 입력 변경 후에 호출됩니다.
+
             }
         });
 
-        //---------------Password Confirmation---------------
-        // EditText to input password again
-        EditText passwordConfirmEditText = (EditText) findViewById(R.id.signUpPwConfirmField);
-        // Text to display the password confirmation result
-        TextView passwordConfirmCheckedResult = (TextView) findViewById(R.id.signUpIsAvailablePwConfirm);
 
-        // Real-time password confirmation validation
+        //---------------비밀번호 확인---------------
+        //비밀번호 다시 입력하는 공간
+        EditText passwordConfirmEditText=(EditText) findViewById(R.id.signUpPwConfirmField);
+
+        //비밀번호 일치여부 결과 text
+        TextView passwordConfirmCheckedResult=(TextView) findViewById(R.id.signUpIsAvailablePwConfirm);
+
+        //비밀번호 일치하는지 실시간으로 검사
         passwordConfirmEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // This method is called before the text is changed.
+                // 이 메소드는 텍스트 입력 변경 전에 호출됩니다.
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Entered password confirmation
+                // 입력한 비밀번호 저장
                 String pwConfirm = passwordConfirmEditText.getText().toString().trim();
                 if (!pwConfirm.equals(password)) {
-                    passwordConfirmCheckedResult.setText("Passwords do not match.");
+                    passwordConfirmCheckedResult.setText("비밀번호가 일치하지 않습니다");
+//                    //고구마색으로 바꾸기
+//                    passwordConfirmCheckedResult.setTextColor(Color.parseColor("#980D4D"));
                 } else {
-                    passwordConfirmCheckedResult.setText("Passwords match.");
+                    passwordConfirmCheckedResult.setText("비밀번호가 일치합니다");
+//                    //노란색으로 바꾸기
+//                    passwordConfirmCheckedResult.setTextColor(Color.parseColor("#FFC93D"));
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-                // This method is called after the text is changed.
+                // 이 메소드는 텍스트 입력 변경 후에 호출됩니다.
             }
         });
 
-        //----------Agreements------------
-        // Terms of use
-        CheckBox useCheckBox = (CheckBox) findViewById(R.id.signUpAgreeUseCheckBox);
-        // Location information
-        CheckBox locationCheckBox = (CheckBox) findViewById(R.id.signUpAgreeLocationCheckBox);
+        //----------동의------------
+        //이용약관
+        CheckBox useCheckBox=(CheckBox) findViewById(R.id.signUpAgreeUseCheckBox);
+        //위치정보
+        CheckBox locationCheckBox=(CheckBox) findViewById(R.id.signUpAgreeLocationCheckBox);
 
-        //---------Sign Up-----------
+
+        //---------가입하기-----------
 
         Button signUpBtn = (Button) findViewById(R.id.signUpBtn);
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Check if the email check button is clicked and the email is available
-                if (!(emailCheckButtonClicked && emailCheckedResult.getText().toString().equals("Email is available."))) {
-                    Toast.makeText(context.getApplicationContext(), "Please check your email.", Toast.LENGTH_SHORT).show();
+                // 이메일 중복확인 버튼이 클릭되었는지 확인
+                if (!(emailCheckButtonClicked=true&&emailCheckedResult.getText().toString().equals("사용 가능한 이메일입니다"))) {
+                    Toast.makeText(context.getApplicationContext(), "이메일을 확인해주세요", Toast.LENGTH_SHORT).show();
                 }
-                // Check if the nickname check button is clicked and the nickname is available
-                else if (!(nicknameCheckButtonClicked && nicknameCheckedResult.getText().toString().equals("Nickname is available."))) {
-                    Toast.makeText(context.getApplicationContext(), "Please check your nickname.", Toast.LENGTH_SHORT).show();
+                //닉네임 중복확인 버튼이 클릭되었는지 확인
+                else if(!(nicknameCheckButtonClicked=true&&nicknameCheckedResult.getText().toString().equals("사용 가능한 닉네임입니다"))){
+                    Toast.makeText(context.getApplicationContext(), "닉네임을 확인해주세요", Toast.LENGTH_SHORT).show();
                 }
-                // Check if the password is entered correctly
-                else if (!(passwordCheckedResult.getText().toString().equals("Password is valid."))) {
-                    Toast.makeText(context.getApplicationContext(), "Please check your password.", Toast.LENGTH_SHORT).show();
+                //비밀번호 제대로 입력되었는지 확인
+                else if(!(passwordCheckedResult.getText().toString().equals("사용가능한 비밀번호입니다"))){
+                    Toast.makeText(context.getApplicationContext(), "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
                 }
-                // Check if the password confirmation matches the password
-                else if (!(passwordConfirmCheckedResult.getText().toString().equals("Passwords match."))) {
-                    Toast.makeText(context.getApplicationContext(), "Passwords do not match.", Toast.LENGTH_SHORT).show();
+                //비밀번호 일치하는지 확인
+                else if(!(passwordConfirmCheckedResult.getText().toString().equals("비밀번호가 일치합니다"))){
+                    Toast.makeText(context.getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
                 }
-                // Check if the terms of use are agreed upon
-                else if (!(useCheckBox.isChecked())) {
-                    Toast.makeText(context.getApplicationContext(), "Please agree to the terms of use.", Toast.LENGTH_SHORT).show();
+                //이용약관에 동의하는지 확인
+                else if(!(useCheckBox.isChecked())){
+                    Toast.makeText(context.getApplicationContext(), "이용약관에 동의해주세요", Toast.LENGTH_SHORT).show();
                 }
-                // Check if the location information is agreed upon
-                else if (!(locationCheckBox.isChecked())) {
-                    Toast.makeText(context.getApplicationContext(), "Please agree to provide location information.", Toast.LENGTH_SHORT).show();
+
+                //위치정보 제공에 동의하는지 확인
+                else if(!(locationCheckBox.isChecked())){
+                    Toast.makeText(context.getApplicationContext(), "위치정보 제공에 동의해주세요", Toast.LENGTH_SHORT).show();
                 }
-                // Sign up success
+                //회원가입 성공
                 else {
-                    // Store the entered information in the database (email: email, nickname: nickname, password: password)
+                    //[서버] 가입하기 버튼 누를시에 입력한 정보들 데이터에 저장(메일:email, 닉네임:nickname, 비밀번호:password)
                     firebaseAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -347,15 +416,15 @@ public class SignUpDialog extends Dialog {
                                     if (task.isSuccessful()) {
                                         String userId = firebaseAuth.getCurrentUser().getUid();
 
-                                        // Create a user database template
+                                        // user 데이터 베이스 틀 생성
                                         UserModel userModel = new UserModel();
-                                        // Create a user badge database template
+                                        //user badge 데이터 베이스룰 생성
                                         UserModel_badge userModel_badge = new UserModel_badge();
 
                                         userModel.nickName = nickname;
                                         userModel.max_portNum = max_portNum;
                                         userModel.userTotalLike = userTotalLike;
-                                        userModel_badge.mainBadge = "badge1";
+                                        userModel_badge.mainBadge="badge1";
                                         userModel_badge.badge1 = badge1;
                                         userModel_badge.badge2 = badge2;
                                         userModel_badge.badge3 = badge3;
@@ -369,15 +438,17 @@ public class SignUpDialog extends Dialog {
                                         userModel_badge.badge11 = badge11;
                                         userModel_badge.badge12 = badge12;
 
-                                        // Save the user's nickname in the "users" path
+                                        // 사용자의 닉네임을 "users" 경로에 저장
                                         mDatabase.getReference().child("users").child(userId).setValue(userModel);
                                         mDatabase.getReference().child("users").child(userId).child("badge").setValue(userModel_badge);
 
-                                        Toast.makeText(context.getApplicationContext(), "Registration is completed.", Toast.LENGTH_SHORT).show();
+
+                                        Toast.makeText(context.getApplicationContext(), "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
                                         dismiss();
-                                    } else {
-                                        // Handle registration failure
-                                        Toast.makeText(context.getApplicationContext(), "Registration failed.", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else {
+                                        // 회원가입 실패 시 처리할 내용
+                                        Toast.makeText(context.getApplicationContext(), "회원가입에 실패했습니다", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });

@@ -153,7 +153,6 @@
                         android:id="@+id/restaurantLinearView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#A13366"
                         android:orientation="vertical" />
                 </ScrollView>
 

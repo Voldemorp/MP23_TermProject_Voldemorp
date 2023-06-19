@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="@android:color/transparent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#00ffffff" />
+        android:background="@android:color/transparent" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:orientation="horizontal">
 
         <View
@@ -24,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#00ffffff" />
+            android:background="@android:color/transparent" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -32,6 +33,12 @@
             android:layout_weight="9"
             android:background="@drawable/ranking_component_background"
             android:orientation="vertical">
+
+            <View
+                android:id="@+id/view150"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,6 +61,12 @@
                     android:gravity="center"
                     android:text="X"
                     tools:ignore="TouchTargetSizeCheck" />
+
+                <View
+                    android:id="@+id/view151"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3" />
             </LinearLayout>
 
             <View
@@ -67,16 +80,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-black"
                 android:gravity="center"
                 android:text="축하드려요!"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.6"
                 android:orientation="horizontal">
 
                 <TextView
@@ -111,12 +124,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="7"
+                android:layout_weight="3"
                 android:orientation="horizontal">
 
                 <View
                     android:id="@+id/view132"
                     android:layout_width="0dp"
+
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
@@ -149,7 +163,7 @@
                 android:id="@+id/view130"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_weight="1.5" />
 
         </LinearLayout>
 
@@ -158,7 +172,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#00ffffff" />
+            android:background="@android:color/transparent" />
 
     </LinearLayout>
 
@@ -167,5 +181,5 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#00ffffff" />
+        android:background="@android:color/transparent" />
 </LinearLayout>
