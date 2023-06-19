@@ -127,12 +127,38 @@ import com.naver.maps.map.overlay.Marker;
             mDatabase = FirebaseDatabase.getInstance();
             portButton = findViewById(R.id.portButton);
 
+            // 현재 사용자 위치와 식당 위치 간의 거리 계산
+            Location userLocation = new Location("user");
+            userLocation.setLatitude(latitude);
+            userLocation.setLongitude(longitude);
+
+            Location restaurantLocation = new Location("restaurant");
+            restaurantLocation.setLatitude(res_lat);
+            restaurantLocation.setLongitude(res_long);
+
+            float distance = userLocation.distanceTo(restaurantLocation); // 거리 계산
+//            Toast.makeText(getApplicationContext(), String.valueOf(distance), Toast.LENGTH_SHORT).show();
+            // 거리가 10m 이내인 경우 버튼 활성화, 그렇지 않으면 비활성화
+//            if (distance <= 10) {
+//                portButton.setEnabled(true);
+//                //팝업창 띄워
+//            } else {
+//                portButton.setEnabled(false);
+//            }
+
             portButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     String userId = firebaseAuth.getCurrentUser().getUid();
                     DatabaseReference reference = database.getReference("users").child(userId).child("restaurant").child(restaurantName);
+
+                    //식당과 현재위치가 10m 이상일 경우
+                    if (distance> 10) {
+                        Toast.makeText(getApplicationContext(),"식당과의 거리가 멀어사 포트할 수 없습니다ㅜㅜ",Toast.LENGTH_SHORT).show();
+                        //팝업창 띄워
+                    } else {
+
 
                     // 데이터 존재 여부 확인
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -147,15 +173,18 @@ import com.naver.maps.map.overlay.Marker;
                                 addRestaurant();
                             }
                         }
+
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                             // 에러 처리
                             Toast.makeText(getApplicationContext(), "데이터베이스 읽기 취소됨: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-
                     // 추천 팝업창 띄우기
-                      showPopup();
+                        showPopup();
+                    };
+
+
                    // showBadgePopup();
 //                    Toast.makeText(getApplicationContext(), "port success", Toast.LENGTH_SHORT).show();
                 }
@@ -201,24 +230,7 @@ import com.naver.maps.map.overlay.Marker;
             });
 
 
-            // 현재 사용자 위치와 식당 위치 간의 거리 계산
-            Location userLocation = new Location("user");
-            userLocation.setLatitude(latitude);
-            userLocation.setLongitude(longitude);
 
-            Location restaurantLocation = new Location("restaurant");
-            restaurantLocation.setLatitude(res_lat);
-            restaurantLocation.setLongitude(res_long);
-
-            float distance = userLocation.distanceTo(restaurantLocation); // 거리 계산
-//            Toast.makeText(getApplicationContext(), String.valueOf(distance), Toast.LENGTH_SHORT).show();
-            // 거리가 300m 이내인 경우 버튼 활성화, 그렇지 않으면 비활성화
-            if (distance <= 500) {
-                portButton.setEnabled(true);
-                //팝업창 띄워
-            } else {
-                portButton.setEnabled(false);
-            }
 
 
 
