@@ -1,11 +1,13 @@
 package com.example.mp23_termproject_voldemorp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -26,6 +28,7 @@ public class RestaurantRankFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_restautrant_rank, container, false);
 
+
         // 랭크 띄울 정보를 저장하는 배열
         usersInfo = new ArrayList<>();
 
@@ -44,15 +47,26 @@ public class RestaurantRankFragment extends Fragment {
         usersInfo.add(dummyInfo4);
         usersInfo.add(dummyInfo5);
 
+        TextView rankingText1= rootView.findViewById(R.id.textView19);
+        TextView rankingText2= rootView.findViewById(R.id.textView21);
         ScrollView scrollView = rootView.findViewById(R.id.rankScrollView);
         LinearLayout linearLayout = rootView.findViewById(R.id.rankLinearView);
 
+
+        //실제 식당이름으로 바꾸기
+        rankingText1.setText(ResutaurantRecommendFragment.restaurantName+"의 랭킹");
+        rankingText2.setText(ResutaurantRecommendFragment.restaurantName+"의 사용자 랭킹이에요");
+
         // 식당 랭킹에 있는 사용자 수(배열 요소 수)만큼 컴포넌트를 스크롤 뷰에 추가
         for (int i = 0; i < usersInfo.size(); i++) {
+
             // 추가할 레이아웃
             RestaurantRankListLayout restaurantRankListLayout = new RestaurantRankListLayout(getContext(), usersInfo.get(i));
             // 추가 코드
             linearLayout.addView(restaurantRankListLayout);
+            TextView rankNum = restaurantRankListLayout.findViewById(R.id.rank);
+            //순위 설정
+            rankNum.setText(String.valueOf(i + 1)+"위");
         }
 
         return rootView;
