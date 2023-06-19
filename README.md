@@ -1,8 +1,7 @@
+<h1 align="center">PortUS!</h1>
+<br><br>
 <p align="center">
     <a href="https://youz2me.notion.site/PortUS-f4da930d1fb349ed81386b46fe24285a?pvs=4"><img alt="PortUS" src="https://github.com/Voldemorp/MP23_TermProject_Voldemorp/assets/80394340/fb6cd226-e6ec-4e43-afc3-10f0d68cb2b4" width="400px"></a>
-</p>
-<p align="center">
-    <a>2023-1 Term Project of Mobile Programming in Gachon Univ. Dept of Software</a>
 </p>
 <h3 align="center">
     PortUS! is a local restaurant sharing app recommended by locals.
@@ -24,6 +23,7 @@
 <br>
 
 ## Developer
+2023-1 Term Project of Mobile Programming in Gachon Univ. Dept of Software
 | <img width="200px" src="https://avatars.githubusercontent.com/u/113963153?v=4"/> | <img width="200px" src="https://avatars.githubusercontent.com/u/80394340?s=64&v=4"/> | <img width="200px" src="https://avatars.githubusercontent.com/u/79636843?v=4"/> | <img width="200px" src="https://avatars.githubusercontent.com/u/102430339?v=4"/> | <img width="200px" src="https://avatars.githubusercontent.com/u/80667141?s=64&v=4"/> |
 |:-----:|:-----:|:-----:|:-----:|:-----:|
 |[구지연 (Koo Jiyeon)](https://github.com/KOOJIYE0N)|[이유진 (Lee Youjin)](https://github.com/youz2me)|[이은서 (Lee Eunseo)](https://github.com/LES0915)|[최수미 (Choi Sumi)](https://github.com/Br2ath)|[최지우 (Choi Jeewoo)](https://github.com/cjw020607)|
