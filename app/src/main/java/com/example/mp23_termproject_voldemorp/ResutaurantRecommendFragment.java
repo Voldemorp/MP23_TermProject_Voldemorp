@@ -1,20 +1,20 @@
 package com.example.mp23_termproject_voldemorp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.content.Intent;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.*;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
@@ -22,7 +22,6 @@ public class ResutaurantRecommendFragment extends Fragment {
 
     private FirebaseAuth firebaseAuth;
     static public String restaurantName;
-
     private int portNum;
     public ResutaurantRecommendFragment() {
         // Required empty public constructor
@@ -34,12 +33,14 @@ public class ResutaurantRecommendFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_restaurant_recommend, container, false);
 
+        TextView titleMarketName = view.findViewById(R.id.marketName1);
+        TextView descriptionMarketName = view.findViewById(R.id.marketName2);
         TextView peoplePortNum = view.findViewById(R.id.textView241);
         TextView myPortNum = view.findViewById(R.id.textView24);
 
         // 랜덤한 값을 생성하여 peoplePortNum에 할당
         Random random = new Random();
-        int randomValue = 12; // 0부터 99까지의 랜덤한 정수
+        int randomValue = random.nextInt(100); // 0부터 99까지의 랜덤한 정수
         peoplePortNum.setText(String.valueOf(randomValue));
 
         //[서버] 데이터에서 나의 방문 횟수 불러오기
@@ -51,6 +52,9 @@ public class ResutaurantRecommendFragment extends Fragment {
         //사용자의 userId 받아와서 데베에서 portNum 받아오기
         String userId = firebaseAuth.getCurrentUser().getUid();
         DatabaseReference reference = database.getReference("users").child(userId).child("restaurant").child(restaurantName);
+
+        titleMarketName.setText(restaurantName);
+        descriptionMarketName.setText(restaurantName);
 
         // 데이터 존재 여부 확인
         reference.addListenerForSingleValueEvent(new ValueEventListener() {

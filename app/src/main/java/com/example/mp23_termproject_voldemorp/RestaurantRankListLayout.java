@@ -22,6 +22,7 @@ public class RestaurantRankListLayout extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_restaurant_rank, this, true);
 
+
         TextView userName = (TextView)findViewById(R.id.name);
         TextView numOfVisit = (TextView)findViewById(R.id.numOfVisit);
 

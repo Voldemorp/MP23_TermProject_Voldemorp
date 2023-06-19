@@ -5,12 +5,14 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -50,7 +52,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private boolean isCircleOverlayAdded = false;
     private List<MainRestaurantInfo> restaurantInfoList = new ArrayList<>();
     private List<MainRestaurantInfo> nearbyRestaurants = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -339,6 +341,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private AlertDialog dialog2;
     private void showBadgePopup() {
         AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+
         View popupView = getLayoutInflater().inflate(R.layout.dialog_badge_alert, null);
 
         TextView nameOfNewBadge = popupView.findViewById(R.id.nameOfNewBadge);
@@ -352,7 +355,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         DatabaseReference badgeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("badge");
 
         // 뱃지1
-        nameOfNewBadge.setText("뉴비 햄즥이");
+        nameOfNewBadge.setText("뉴비 햄쥑이");
         Drawable newDrawable = getResources().getDrawable(R.drawable.badge_first_signup); // 드로어블 가져오기
         badgeImage.setImageDrawable(newDrawable);
 
@@ -368,6 +371,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // 팝업 레이아웃을 AlertDialog에 설정
         builder2.setView(popupView);
         dialog2 = builder2.create();
+
+        // AlertDialog의 Window 속성 변경
+        Window window = dialog2.getWindow();
+        if (window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
         dialog2.show();
     }
 
