@@ -24,14 +24,14 @@ public class MasterRankingFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_master_ranking, container, false);
 
-        // Array to store ranking information
+        // 랭크 띄울 정보를 저장하는 배열
         usersInfo = new ArrayList<>();
 
-        // [Server] Retrieve user visit data for each restaurant and store it in the usersInfo array
-        // [Functionality] Sort the usersInfo array randomly
-        // usersInfo array is initially sorted randomly and does not require additional sorting
+        //[서버] 식당별로 사용자 방문 데이터를 모두 찾아서 usersInfo 배열에 저장해야 함
+        //[기능] 무작위로 정렬되어있을 usersInfo 배열을 방문수(numOfVisitPlace)대로 정렬
 
-        // Dummy data for testing purposes (You can remove this later when the implementation is successful)
+        // 테스트를 위한 더미데이터 (나중에 구현 성공하면 지우시면 됩니당)
+
         RankingInfo dummyInfo1 = new RankingInfo(1, "포켓몬마스터지우", "32");
         RankingInfo dummyInfo2 = new RankingInfo(2, "안종현교수님최고", "29");
         RankingInfo dummyInfo3 = new RankingInfo(3, "발표잘듣고계신가요", "19");
@@ -49,11 +49,12 @@ public class MasterRankingFragment extends Fragment {
         ScrollView scrollView = rootView.findViewById(R.id.rankScrollView);
         LinearLayout linearLayout = rootView.findViewById(R.id.rankLinearView);
 
-        // Add components to the scroll view for each user in the restaurant ranking
+
+        // 식당 랭킹에 있는 사용자 수(배열 요소 수)만큼 컴포넌트를 스크롤 뷰에 추가
         for (int i = 0; i < usersInfo.size(); i++) {
-            // Create a layout to be added
+            // 추가할 레이아웃
             RankingMasterListLayout rankingMasterListLayout = new RankingMasterListLayout(getContext(), usersInfo.get(i));
-            // Add the layout
+            // 추가 코드
             linearLayout.addView(rankingMasterListLayout);
         }
 

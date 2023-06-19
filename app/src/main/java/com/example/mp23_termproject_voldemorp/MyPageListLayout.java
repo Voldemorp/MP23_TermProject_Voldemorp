@@ -6,8 +6,9 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-// Data setting for adding to the port list layout
+// port list 레이아웃에 추가할 데이터 세팅
 public class MyPageListLayout extends LinearLayout {
+
 
     public MyPageListLayout(Context context, AttributeSet attrs, MyPagePortItem myPagePortItem) {
         super(context, attrs);
@@ -23,8 +24,9 @@ public class MyPageListLayout extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_mypage_resturant, this, true);
 
-        TextView mypagePort = findViewById(R.id.mypagePort);
-        TextView mypageRestaurantTextView = findViewById(R.id.mypageRestaurantTextView);
+        TextView mypagePort = (TextView)this.findViewById(R.id.mypagePort);
+        TextView mypageRestaurantTextView = (TextView)this.findViewById(R.id.mypageRestaurantTextView);
+
 
         mypagePort.setText(Integer.toString(myPagePortItem.mypagePort));
         mypageRestaurantTextView.setText(myPagePortItem.mypageRestaurantTextView);

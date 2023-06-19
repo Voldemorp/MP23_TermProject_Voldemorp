@@ -24,191 +24,208 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
+
+
+
 public class SetLocationActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private LocationListener locationListener;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
 
-    // Firebase authentication object
+    // Firebase 인증 객체 생성
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    // Get the current user
+    // 현재 사용자 가져오기
     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-    // Get the Firebase Database instance
+    // Firebase Database 인스턴스 가져오기
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    // Get the DatabaseReference for the "users" path
+    // "users" 경로의 DatabaseReference 가져오기
     DatabaseReference mDatabase = firebaseDatabase.getReference().child("users");
 
-    // Hide the keyboard when the screen is touched
+
+
+    // 화면 터치시 키보드 내리기
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View view = getCurrentFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         if (view != null) {
+
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         return super.dispatchTouchEvent(ev);
     }
-
-    // EditText for the first location input
+    //첫번째 주소 설정하는 빈칸
     private EditText firstLocation;
-    // EditText for the second location input
+    //두번째 주소 설정하는 빈칸
     private EditText secondLocation;
-    // Boolean to check if the first save button is clicked
-    private Boolean firstSaveButtonClicked = false;
-    // Boolean to check if the second save button is clicked
-    private Boolean secondSaveButtonClicked = false;
+    //첫번째 주소 저장 버튼 눌렀는지 여부
+    private Boolean firstSaveButtonClicked=false;
+    //두번째 주소 저장 버튼 눌렀는지 여부
+    private Boolean secondSaveButtonCLicked=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_location);
 
-        // Make the status bar transparent and show the picture
+        // 상태 바 투명하게 하고 사진 보이게 하는 코드
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        // EditText for the first location input
+
+        //첫번째 주소 설정하는 빈칸
         firstLocation = findViewById(R.id.editTextTextPersonName2);
+
         firstLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Move to the address search web view screen
-                Intent intent = new Intent(SetLocationActivity.this, SetLocationNextActivity.class);
-                intent.putExtra("order", "1");
+                //주소 검색 웹뷰 화면으로 이동
+                Intent intent=new Intent(SetLocationActivity.this,SetLocationNextActivity.class);
+                intent.putExtra("order","1");
                 getLocationResult.launch(intent);
             }
         });
 
-        // EditText for the second location input
+        //두번째 주소 설정하는 빈칸
         secondLocation = findViewById(R.id.editTextTextPersonName3);
         secondLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Move to the address search web view screen
-                Intent intent = new Intent(SetLocationActivity.this, SetLocationNextActivity.class);
-                intent.putExtra("order", "2");
+                //주소 검색 웹뷰 화면으로 이동
+                Intent intent=new Intent(SetLocationActivity.this,SetLocationNextActivity.class);
+                intent.putExtra("order","2");
                 getLocationResult.launch(intent);
             }
         });
 
-        // First save button
-        Button firstSaveButton = findViewById(R.id.button2);
+        //첫번째 저장하기 버튼
+        Button firstSaveButton=(Button) findViewById(R.id.button2);
         firstSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                firstSaveButtonClicked = true;
+                firstSaveButtonClicked=true;
 
-                // Check if the user is logged in before saving the address
+                // 사용자가 로그인한 경우에만 주소를 저장하도록 확인
                 if (firebaseUser != null) {
                     String userId = firebaseUser.getUid();
                     String address1 = firstLocation.getText().toString();
 
-                    // If the first address is not entered
-                    if (address1.isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Please enter the first address", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // Save the user's address under the "users" path
+                    //첫번째 주소가 입력되지 않았을때
+                    if(address1.isEmpty()){
+                        Toast.makeText(getApplicationContext(),"첫번째 주소를 입력해주세요",Toast.LENGTH_SHORT).show();
+                    }
+                    // 사용자의 주소를 "users" 경로 아래에 저장
+                    else {
                         mDatabase.child(userId).child("address1").setValue(address1)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(getApplicationContext(), "The first address has been saved", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), "첫번째 주소가 저장되었습니다.", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(getApplicationContext(), "Failed to save the first address", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), "첫번째 주소 저장에 실패했습니다.", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "You can save the address after logging in", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "로그인 후에 주소를 저장할 수 있습니다.", Toast.LENGTH_SHORT).show();
                 }
+
             }
+
+
         });
 
-        // Second save button
-        Button secondSaveButton = findViewById(R.id.button);
+
+        //두번째 저장하기 버튼
+        Button secondSaveButton=(Button) findViewById(R.id.button);
         secondSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                secondSaveButtonClicked = true;
+                secondSaveButtonCLicked=true;
 
-                // Check if the user is logged in before saving the address
+                // 사용자가 로그인한 경우에만 주소를 저장하도록 확인
                 if (firebaseUser != null) {
                     String userId = firebaseUser.getUid();
                     String address2 = secondLocation.getText().toString();
+                    if(address2.isEmpty()){
+                        Toast.makeText(getApplicationContext(),"두번째 주소를 입력해주세요",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
 
-                    // If the second address is not entered
-                    if (address2.isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Please enter the second address", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // Save the user's address under the "users" path
+                        // 사용자의 주소를 "users" 경로 아래에 저장
                         mDatabase.child(userId).child("address2").setValue(address2)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(getApplicationContext(), "The second address has been saved", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), "두번째 주소가 저장되었습니다.", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(getApplicationContext(), "Failed to save the second address", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), "두번째 주소 저장에 실패했습니다.", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "You can save the address after logging in", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "로그인 후에 주소를 저장할 수 있습니다.", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
-        // Go to Main Activity button click event for screen transition
-        Button goToMainBtn = findViewById(R.id.setLocationSetDoneBtn);
+        // 선택완료 버튼 눌렀을 때 이벤트 -> 메인 화면으로 화면 전환
+        Button goToMainBtn = (Button) findViewById(R.id.setLocationSetDoneBtn);
         goToMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Apply animation for screen transition from right to left
+
+                // 화면 전환 시 오른쪽에서 왼쪽으로 밀듯이 나타나는 애니메이션 적용
                 overridePendingTransition(R.anim.slide_left_enter, R.anim.none);
 
-                // If the first address is not saved
-                if (!firstSaveButtonClicked) {
-                    Toast.makeText(SetLocationActivity.this, "Please save the first address", Toast.LENGTH_SHORT).show();
-                }
-                // If the second address is not saved while it's entered
-                else if (!secondSaveButtonClicked && !secondLocation.getText().toString().isEmpty()) {
-                    Toast.makeText(SetLocationActivity.this, "Please save the second address", Toast.LENGTH_SHORT).show();
-                }
-                // Uncomment the following code after server implementation
-                // [Server] If the first address in the database is empty
-                // Toast.makeText(SetLocationActivity.this, "Please enter the first address", Toast.LENGTH_SHORT).show();
+                //첫번째 주소 입력후 저장하지 않았다면
+                if(firstSaveButtonClicked==false)
+                    Toast.makeText(SetLocationActivity.this,"첫번째 주소를 저장해주세요",Toast.LENGTH_SHORT).show();
 
-                // [Server] Else if the first address in the database is the same as the second address
-                // Toast.makeText(SetLocationActivity.this, "Please enter different addresses", Toast.LENGTH_SHORT).show();
+                //두번째 주소 입력 후 저장하지 않았다면
+                else if((secondSaveButtonCLicked==false)&&!secondLocation.getText().toString().isEmpty())
+                    Toast.makeText(SetLocationActivity.this,"두번째 주소를 저장해주세요",Toast.LENGTH_SHORT).show();
 
+                //서버 코딩후 주석 풀면 됨
+//                //[서버] if db안의 첫번째 주소값이 비어있다면
+//                Toast.makeText(SetLocationActivity.this,"첫번째 주소를 입력해주세요",Toast.LENGTH_SHORT).show();
+//
+//                //[서버] else if db안의 첫번째 주소값과 두번째 주소값이 같다면
+//                Toast.makeText(SetLocationActivity.this, "서로 다른 주소를 입력해주세요",Toast.LENGTH_SHORT).show();
                 else {
-                    Toast.makeText(SetLocationActivity.this, "Address setting is complete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SetLocationActivity.this, "주소 설정이 완료되었습니다", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }
+
             }
         });
     }
-
-    private final ActivityResultLauncher<Intent> getLocationResult = registerForActivityResult(
+    private final ActivityResultLauncher<Intent> getLocationResult=registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                // The result from SetLocationNextActivity is received here (via setResult)
-                if (result.getResultCode() == RESULT_OK) {
-                    if (result.getData() != null) {
-                        String data = result.getData().getStringExtra("data");
-                        String order = result.getData().getStringExtra("order");
-                        if (order != null) {
-                            if (order.equals("1")) {
-                                firstLocation.setText(data);
-                            } else if (order.equals("2")) {
-                                secondLocation.setText(data);
+            result ->{
+                //SetLocationNextActivity 로부터의 결과 값이 이곳으로 전달 된다(setResult에 의해)
+                if(result.getResultCode()==RESULT_OK){
+
+                        //data 비어있지 않다면
+                        if(result.getData()!=null){
+                            String data=result.getData().getStringExtra("data");
+                            String order=result.getData().getStringExtra("order");
+                            if(order!=null){
+                                if(order.equals("1"))
+                                    firstLocation.setText(data);
+                                else if(order.equals("2"))
+                                    secondLocation.setText(data);
                             }
+
                         }
                     }
-                }
+
             }
     );
 }

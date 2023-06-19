@@ -22,13 +22,12 @@ public class RankingMasterListLayout extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_master_ranking, this, true);
 
-        TextView rank = findViewById(R.id.rank);
-        TextView userName = findViewById(R.id.name);
-        TextView numOfVisitPlace = findViewById(R.id.numOfVisit);
+        TextView rank = (TextView)findViewById(R.id.rank);
+        TextView userName = (TextView)findViewById(R.id.name);
+        TextView numOfVisitPlace = (TextView)findViewById(R.id.numOfVisit);
 
-        // Set the ranking information to the respective views
-        rank.setText(Integer.toString(rankingInfo.rank)); // Set the rank position
-        userName.setText(rankingInfo.userName); // Set the user name
-        numOfVisitPlace.setText(rankingInfo.numOfVisit); // Set the number of visits to places
+        rank.setText(Integer.toString(rankingInfo.rank));
+        userName.setText(rankingInfo.userName);
+        numOfVisitPlace.setText(rankingInfo.numOfVisit);
     }
 }

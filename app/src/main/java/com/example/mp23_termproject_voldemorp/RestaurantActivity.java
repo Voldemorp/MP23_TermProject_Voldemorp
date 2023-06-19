@@ -1,31 +1,39 @@
 package com.example.mp23_termproject_voldemorp;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.annotation.SuppressLint;
+import androidx.annotation.NonNull;
 import android.content.Intent;
-import android.location.Location;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.WindowManager;
+import android.location.Location;
+import android.widget.Toast;
+import android.widget.Button;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.FrameLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
-
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.*;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
+
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraUpdate;
@@ -34,178 +42,189 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.Marker;
 
-public class RestaurantActivity extends AppCompatActivity implements OnMapReadyCallback {
+    public class RestaurantActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    // Current user's location
-    static public double latitude;
-    static public double longitude;
+        //현재 사용자 위치
+        static public double latitude;
+        static public double longitude;
 
-    // Restaurant location
-    private double res_lat;
-    private double res_long;
-    private ViewPager2 viewPager;
-    private FrameLayout restaurantContainer;
-    private NaverMap naverMap;
-    private MapView mapView;
+        //식당 위치
+        private double res_lat;
+        private double res_long;
+        private ViewPager2 viewPager;
+        private FrameLayout restaurantContainer;
+        private NaverMap naverMap;
+        private MapView mapView;
 
-    private Button portButton;
+        private Button portButton;
 
-    private FirebaseAuth firebaseAuth;
 
-    private FirebaseDatabase mDatabase;
+        private FirebaseAuth firebaseAuth;
 
-    private int portNum;
+        private FirebaseDatabase mDatabase;
 
-    private boolean likeCheck = false;
+        private int portNum;
 
-    private int postPortNum;
+        private boolean likeCheck = false;
 
-    private int popPortNum;
+        private int postPortNum;
 
-    public class RestaurantModel {
-        public int portNum;
-        public boolean likeCheck = false;
-    }
+        private int popPortNum;
 
-    public class UserModel {
-        public int userTotalLike;
-    }
+        public class restaurantModel{
 
-    @SuppressLint("MissingInflatedId")
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restaurant);
+            public int portNum;
 
-        // Make the status bar transparent and the image visible
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
-        // Initialize MapView
-        mapView = findViewById(R.id.restaurantMap);
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync((OnMapReadyCallback) this);
-
-        // Get the intent from MainActivity
-        Intent intent = getIntent();
-        String restaurantName = intent.getStringExtra("name");
-        String restaurantType = intent.getStringExtra("type");
-
-        // Extract latitude and longitude of the restaurant
-        res_lat = intent.getDoubleExtra("res_lat", 0.0);
-        res_long = intent.getDoubleExtra("res_long", 0.0);
-
-        // Extract current user's latitude and longitude
-//        latitude = intent.getDoubleExtra("latitude", 0.0);
-//        longitude = intent.getDoubleExtra("longitude", 0.0);
-
-        System.out.println(res_lat);
-        System.out.println(res_long);
-        System.out.println(latitude);
-        System.out.println(longitude);
-
-        // Set the restaurant name and food type
-        TextView resNameText = findViewById(R.id.textView2);
-        TextView foodTypeText = findViewById(R.id.textView3);
-
-        resNameText.setText(restaurantName);
-        foodTypeText.setText(restaurantType);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance();
-        portButton = findViewById(R.id.portButton);
-
-        portButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                String userId = firebaseAuth.getCurrentUser().getUid();
-                DatabaseReference reference = database.getReference("users").child(userId).child("restaurant").child(restaurantName);
-
-                // Check if the data exists
-                reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // If the restaurant already exists in the user's database
-                        if (dataSnapshot.exists()) {
-                            updateRestaurant();
-                        }
-                        // If the restaurant doesn't exist in the user's database
-                        else {
-                            addRestaurant();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        // Error handling
-                        Toast.makeText(getApplicationContext(), "Database read canceled: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                // Show recommendation popup
-                showPopup();
-//                showBadgePopup();
-//                Toast.makeText(getApplicationContext(), "Port success", Toast.LENGTH_SHORT).show();
-            }
-
-            // [Server] Add a new restaurant child to the user's database
-            public void addRestaurant() {
-                String userId = firebaseAuth.getCurrentUser().getUid();
-
-                RestaurantModel restaurantModel = new RestaurantModel();
-                restaurantModel.portNum = 1;
-                restaurantModel.likeCheck = false;
-
-                mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
-            }
-
-            // [Server] Find the restaurant in the user's database and update portNum to portNum + 1
-            public void updateRestaurant() {
-                String userId = firebaseAuth.getCurrentUser().getUid();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName).child("portNum");
-                ref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        portNum = dataSnapshot.getValue(Integer.class);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-                RestaurantModel restaurantModel = new RestaurantModel();
-                restaurantModel.portNum = portNum + 1;
-
-                // Save the restaurantModel to user/userId/restaurant/restaurantName
-                mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
-            }
-        });
-
-        // Calculate the distance between the current user's location and the restaurant location
-        Location userLocation = new Location("user");
-        userLocation.setLatitude(latitude);
-        userLocation.setLongitude(longitude);
-
-        Location restaurantLocation = new Location("restaurant");
-        restaurantLocation.setLatitude(res_lat);
-        restaurantLocation.setLongitude(res_long);
-
-        float distance = userLocation.distanceTo(restaurantLocation); // Calculate the distance
-//        Toast.makeText(getApplicationContext(), String.valueOf(distance), Toast.LENGTH_SHORT).show();
-        // Enable the button if the distance is within 500m, otherwise disable it
-        if (distance <= 500) {
-            portButton.setEnabled(true);
-            // Show popup
-        } else {
-            portButton.setEnabled(false);
+            public boolean likeCheck = false;
         }
 
-        System.out.println("latitude: " + latitude);
-        System.out.println("longitude: " + longitude);
+        public class userModel{
+            public int userTotalLike;
+        }
 
-        restaurantContainer = findViewById(R.id.restaurantContainer);
+
+        @SuppressLint("MissingInflatedId")
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_restaurant);
+
+            // 상태 바 투명하게 하고 사진 보이게 하는 코드
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+            // Initialize MapView
+            mapView = findViewById(R.id.restaurantMap);
+            mapView.onCreate(savedInstanceState);
+            mapView.getMapAsync((OnMapReadyCallback) this);
+
+            // MainActivity에서 전달된 인텐트 가져오기
+            Intent intent = getIntent();
+            String restaurantName = intent.getStringExtra("name");
+            String restaurantType = intent.getStringExtra("type");
+
+            // 식당의 위도(latitude)와 경도(longitude) 값 추출
+            res_lat = intent.getDoubleExtra("res_lat",0.0);
+            res_long = intent.getDoubleExtra("res_long",0.0);
+
+            // 현재 내 위도(latitude)와 경도(longitude) 값 추출
+//            latitude = intent.getDoubleExtra("latitude", 0.0);
+//            longitude = intent.getDoubleExtra("longitude", 0.0);
+
+            System.out.println(res_lat);
+            System.out.println(res_long);
+            System.out.println(latitude);
+            System.out.println(longitude);
+
+            //식당 이름
+            TextView resNameText=(TextView)findViewById(R.id.textView2);
+            //음식 타입
+            TextView foodTypeText=(TextView)findViewById(R.id.textView3);
+
+            resNameText.setText(restaurantName);
+            foodTypeText.setText(restaurantType);
+
+            firebaseAuth = FirebaseAuth.getInstance();
+            mDatabase = FirebaseDatabase.getInstance();
+            portButton = findViewById(R.id.portButton);
+
+            portButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    String userId = firebaseAuth.getCurrentUser().getUid();
+                    DatabaseReference reference = database.getReference("users").child(userId).child("restaurant").child(restaurantName);
+
+                    // 데이터 존재 여부 확인
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // 식당이 이미 유저DB에 있는 경우
+                            if (dataSnapshot.exists()) {
+                                updateRestaurant();
+                            }
+                            // 식당이 유저DB에 없는 경우
+                            else {
+                                addRestaurant();
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            // 에러 처리
+                            Toast.makeText(getApplicationContext(), "데이터베이스 읽기 취소됨: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    // 추천 팝업창 띄우기
+                      showPopup();
+                   // showBadgePopup();
+//                    Toast.makeText(getApplicationContext(), "port success", Toast.LENGTH_SHORT).show();
+                }
+
+                // [서버] 유저 DB에 새로운 레스토랑 child 추가
+                public void addRestaurant(){
+                    String userId = firebaseAuth.getCurrentUser().getUid();
+
+                    restaurantModel restaurantModel = new restaurantModel();
+
+                    restaurantModel.portNum = 1;
+                    restaurantModel.likeCheck = false;
+
+                    mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
+                }
+
+                // [서버] 유저 DB에서 해당 레스토랑 찾아서 portNum +1로 업데이트
+                public void updateRestaurant() {
+
+                    String userId = firebaseAuth.getCurrentUser().getUid();
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId).child("restaurant").child(restaurantName).child("portNum");
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            portNum = dataSnapshot.getValue(Integer.class);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    restaurantModel restaurantModel = new restaurantModel();
+
+                    //초기 portNum ;
+                    restaurantModel.portNum = portNum + 1;
+
+                    // user/userId/restaurant/restaurantName에 restaurantModel 저장
+                    mDatabase.getReference().child("users").child(userId).child("restaurant").child(restaurantName).setValue(restaurantModel);
+
+                }
+            });
+
+
+            // 현재 사용자 위치와 식당 위치 간의 거리 계산
+            Location userLocation = new Location("user");
+            userLocation.setLatitude(latitude);
+            userLocation.setLongitude(longitude);
+
+            Location restaurantLocation = new Location("restaurant");
+            restaurantLocation.setLatitude(res_lat);
+            restaurantLocation.setLongitude(res_long);
+
+            float distance = userLocation.distanceTo(restaurantLocation); // 거리 계산
+//            Toast.makeText(getApplicationContext(), String.valueOf(distance), Toast.LENGTH_SHORT).show();
+            // 거리가 300m 이내인 경우 버튼 활성화, 그렇지 않으면 비활성화
+            if (distance <= 500) {
+                portButton.setEnabled(true);
+                //팝업창 띄워
+            } else {
+                portButton.setEnabled(false);
+            }
+
+
+
+        System.out.println("latitude: "+latitude);
+        System.out.println("longtitude: "+longitude);
+                restaurantContainer = findViewById(R.id.restaurantContainer);
         viewPager = new ViewPager2(this);
         viewPager.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
@@ -237,31 +256,33 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
         }
     }
 
-    // *---Recommendation Popup---*
+    //   *---추천 팝업창 ---*
     private AlertDialog dialog;
     private void showPopup() {
 
-        // Get the restaurant name through intent
+        //intent로 식당 이름 받아오기
         Intent intent = getIntent();
         String restaurantName = intent.getStringExtra("name");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View popupView = getLayoutInflater().inflate(R.layout.dialog_recommend_alert, null);
 
-        // Set the popup layout to AlertDialog
+        // 팝업 레이아웃을 AlertDialog에 설정
         builder.setView(popupView);
         dialog = builder.create();
         dialog.show();
 
         TextView visitTextView = popupView.findViewById(R.id.numOfVisit);
         TextView visitMessage = popupView.findViewById(R.id.visitMessage);
-        TextView doYouRecommend = popupView.findViewById(R.id.doyourecommend);
+        TextView doyourecommend = popupView.findViewById(R.id.doyourecommend);
         ImageView badgeImage = popupView.findViewById(R.id.badgeImage);
         Button notRecommendBtn = popupView.findViewById(R.id.notRecommendBtn);
         Button recommendBtn = popupView.findViewById(R.id.recommendBtn);
         Button closeBtn = popupView.findViewById(R.id.closeBtn);
 
-        // Get the userId of the user and retrieve portNum from the database
+
+        //사용자의 userId 받아와서 데베에서 portNum 받아오기
+
         String userId = firebaseAuth.getCurrentUser().getUid();
         DatabaseReference portNumRef = FirebaseDatabase.getInstance().getReference("users")
                 .child(userId).child("restaurant").child(restaurantName).child("portNum");
@@ -270,28 +291,29 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     portNum = dataSnapshot.getValue(Integer.class);
-                    // Display the 'numOfVisit' for the current visit
-                    String strPortNum = String.valueOf(portNum);
-                    visitTextView.setText(strPortNum);
+                    // "몇" 번째 방문의 '방문수' 표시
+                    String strportNum = String.valueOf(portNum);
+                    visitTextView.setText(strportNum);
+
 
                     if (portNum == 1) {
-                        recommendBtn.setVisibility(View.GONE); // Hide the button
-                        notRecommendBtn.setVisibility(View.GONE); // Hide the button
-                        doYouRecommend.setVisibility(View.GONE); // Hide the text view
+                        recommendBtn.setVisibility(View.GONE); // 버튼을 숨김 처리
+                        notRecommendBtn.setVisibility(View.GONE); // 버튼을 숨김 처리
+                        doyourecommend.setVisibility(View.GONE); // 텍스트뷰를 숨김 처리
                     } else {
-                        recommendBtn.setVisibility(View.VISIBLE); // Show the button
-                        notRecommendBtn.setVisibility(View.VISIBLE); // Show the button
-                        doYouRecommend.setVisibility(View.VISIBLE); // Show the text view
+                        recommendBtn.setVisibility(View.VISIBLE); // 버튼을 보이게 처리
+                        notRecommendBtn.setVisibility(View.VISIBLE); // 버튼을 보이게 처리
+                        doyourecommend.setVisibility(View.VISIBLE); // 텍스트뷰를 보이게 처리
 
                         recommendBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                // Handle the recommend button click -> Change likeCheck to true
-                                RestaurantModel restaurantModel = new RestaurantModel();
+                                // 추천 버튼 클릭 처리 -> 추천 T로 변경
+                                restaurantModel restaurantModel = new restaurantModel();
                                 restaurantModel.likeCheck = true;
                                 restaurantModel.portNum = portNum;
 
-                                // Save the restaurantModel to user/userId/restaurant/restaurantName
+                                // user/userId/restaurant/restaurantName에 restaurantModel 저장
                                 mDatabase.getReference().child("users").child(userId)
                                         .child("restaurant").child(restaurantName).setValue(restaurantModel);
 
@@ -302,16 +324,16 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.exists()) {
                                             int userTotalLike = dataSnapshot.getValue(Integer.class);
-                                            userTotalLike++; // Increment userTotalLike by 1
+                                            userTotalLike++; // userTotalLike 값 +1 증가
 
-                                            // Save the updated userTotalLike value to Firebase
+                                            // userTotalLike 값을 다시 Firebase에 저장
                                             totalLikeRef.setValue(userTotalLike);
                                         }
                                     }
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
-                                        // Handle cancellation
+                                        // 취소 처리
                                     }
                                 });
 
@@ -322,15 +344,15 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
                         notRecommendBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                // Handle the not recommend button click -> Change likeCheck to false
+                                // 비추천 버튼 클릭 처리 -> 추천 F로 변경
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users")
                                         .child(userId).child("restaurant").child(restaurantName).child("likeCheck");
 
-                                RestaurantModel restaurantModel = new RestaurantModel();
+                                restaurantModel restaurantModel = new restaurantModel();
                                 restaurantModel.likeCheck = false;
                                 restaurantModel.portNum = portNum;
 
-                                // Save the restaurantModel to user/userId/restaurant/restaurantName
+                                // user/userId/restaurant/restaurantName에 restaurantModel 저장
                                 mDatabase.getReference().child("users").child(userId)
                                         .child("restaurant").child(restaurantName).setValue(restaurantModel);
 
@@ -339,7 +361,7 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
                         });
                     }
                 } else {
-                    // Handle the case when the restaurant doesn't exist in the user's database
+                    // 식당이 유저DB에 없는 경우 처리
                 }
             }
 
@@ -349,7 +371,8 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
             }
         });
 
-        // Close button 'X'
+
+        // 닫힘 버튼 'X'
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -358,49 +381,54 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
         });
     }
 
-//    // *---Badge Popup---*
-//    private AlertDialog dialog2;
-//    private void showBadgePopup() {
-//        AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
-//        View popupView = getLayoutInflater().inflate(R.layout.dialog_badge_alert, null);
+//        //   *---뱃지 팝업창 ---*
+//        private AlertDialog dialog2;
+//        private void showBadgePopup() {
+//            AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+//            View popupView = getLayoutInflater().inflate(R.layout.dialog_badge_alert, null);
 //
-//        TextView nameOfNewBadge = popupView.findViewById(R.id.nameOfNewBadge);
-//        ImageView badgeImage = popupView.findViewById(R.id.badgeImage);
-//        Button closeButton = popupView.findViewById(R.id.closeButton);
+//            TextView nameOfNewBadge = popupView.findViewById(R.id.nameOfNewBadge);
+//            ImageView badgeImage = popupView.findViewById(R.id.badgeImage);
+//            Button closeButton = popupView.findViewById(R.id.closeButton);
 //
-//        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
-//        DatabaseReference userTotalLikeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("userTotalLike");
-//        DatabaseReference maxPortNumRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("max_portNum");
-//        DatabaseReference badgeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("badge");
+//            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+//            DatabaseReference userTotalLikeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("userTotalLike");
+//            DatabaseReference maxPortNumRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("max_portNum");
+//            DatabaseReference badgeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("badge");
 //
-//        // [Server] Listen for changes in the recommendation count
-//        userTotalLikeRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                int newRecommendationCount = dataSnapshot.getValue(int.class);
+//            // [서버] 추천수의 변경감지
+//           userTotalLikeRef.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    int newRecommendationCount = dataSnapshot.getValue(int.class);
 //
-//                // Badge 4: When the recommendation count changes to 1
-//                if (newRecommendationCount == 1) {
-//                    // [Server] Update Badge 4 to true
-//                    nameOfNewBadge.setText("Timid Foodie");
-//                    Drawable newDrawable = getResources().getDrawable(R.drawable.badge_recommend1); // Get the drawable
-//                    badgeImage.setImageDrawable(newDrawable);
+//                    // 뱃지4: 추천수가 1로 변경되면
+//                    if (newRecommendationCount == 1) {
+//                        // [서버] 뱃지4 T로 변경
+//                        nameOfNewBadge.setText("소심한 햄즥이");
+//                        Drawable newDrawable = getResources().getDrawable(R.drawable.badge_recommend1); // 드로어블 가져오기
+//                        badgeImage.setImageDrawable(newDrawable);
 //
-//                    // Set the popup layout to AlertDialog
-//                    builder2.setView(popupView);
-//                    dialog2 = builder2.create();
-//                    dialog2.show();
+//                        // 팝업 레이아웃을 AlertDialog에 설정
+//                        builder2.setView(popupView);
+//                        dialog2 = builder2.create();
+//                        dialog2.show();
+//                    }
 //                }
-//            }
 //
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {}
-//        });
-//    }
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {}
+//            });
+//
+//
+//
+//        }
 
-    @Override
-    public void onMapReady(@NonNull NaverMap naverMap) {
+
+
+@Override
+public void onMapReady(@NonNull NaverMap naverMap) {
         this.naverMap = naverMap;
 
         // Add a marker for the restaurant location
@@ -413,54 +441,58 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
         double offset = -0.008; // Adjust this value to change the marker offset
         LatLng cameraLatLng = new LatLng(res_lat + offset, res_long);
         CameraUpdate cameraUpdate = CameraUpdate.scrollTo(cameraLatLng)
-                .animate(CameraAnimation.Easing);
+        .animate(CameraAnimation.Easing);
         naverMap.moveCamera(cameraUpdate);
-    }
+        }
 
-    @Override
-    public void onStart() {
+@Override
+public void onStart() {
         super.onStart();
         mapView.onStart();
-    }
+        }
 
-    @Override
-    public void onResume() {
+@Override
+public void onResume() {
         super.onResume();
         mapView.onResume();
-    }
+        }
 
-    @Override
-    public void onPause() {
+@Override
+public void onPause() {
         super.onPause();
         mapView.onPause();
-    }
+        }
 
-    @Override
-    public void onStop() {
+@Override
+public void onStop() {
         super.onStop();
         mapView.onStop();
-    }
+        }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
+@Override
+public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
-    }
+        }
 
-    @Override
-    public void onDestroy() {
+@Override
+public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
-    }
+        }
 
-    @Override
-    public void onLowMemory() {
+@Override
+public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
-    }
+        }
 
-    private void setupViewPager() {
+private void setupViewPager() {
         MyPagerAdapter adapter = new MyPagerAdapter(this);
         viewPager.setAdapter(adapter);
+        }
+
+
+
     }
-}
+
