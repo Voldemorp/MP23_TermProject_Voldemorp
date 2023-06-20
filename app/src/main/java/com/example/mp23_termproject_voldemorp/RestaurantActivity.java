@@ -1,39 +1,34 @@
 package com.example.mp23_termproject_voldemorp;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.annotation.SuppressLint;
-import androidx.annotation.NonNull;
+import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.view.WindowManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
-import android.widget.Toast;
-import android.widget.Button;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.*;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
-
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraUpdate;
@@ -154,8 +149,8 @@ import com.naver.maps.map.overlay.Marker;
                     DatabaseReference reference = database.getReference("users").child(userId).child("restaurant").child(restaurantName);
 
                     //식당과 현재위치가 10m 이상일 경우
-                    if (distance> 10) {
-                        Toast.makeText(getApplicationContext(),"식당과의 거리가 멀어사 포트할 수 없습니다ㅜㅜ",Toast.LENGTH_SHORT).show();
+                    if (distance< 10) {
+                        Toast.makeText(getApplicationContext(),"식당과의 거리가 멀어서 포트할 수 없습니다ㅜㅜ",Toast.LENGTH_SHORT).show();
                         //팝업창 띄워
                     } else {
 
@@ -229,11 +224,6 @@ import com.naver.maps.map.overlay.Marker;
                 }
             });
 
-
-
-
-
-
         System.out.println("latitude: "+latitude);
         System.out.println("longtitude: "+longitude);
                 restaurantContainer = findViewById(R.id.restaurantContainer);
@@ -282,6 +272,13 @@ import com.naver.maps.map.overlay.Marker;
         // 팝업 레이아웃을 AlertDialog에 설정
         builder.setView(popupView);
         dialog = builder.create();
+
+        // AlertDialog의 Window 속성 변경
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
         dialog.show();
 
         TextView visitTextView = popupView.findViewById(R.id.numOfVisit);
