@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private boolean isCircleOverlayAdded = false;
     private List<MainRestaurantInfo> restaurantInfoList = new ArrayList<>();
     private List<MainRestaurantInfo> nearbyRestaurants = new ArrayList<>();
+    Singleton singletonInstance = Singleton.getInstance();
+    boolean isFirstPopupShown = singletonInstance.isFirstPopupShown();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,9 +94,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     LOCATION_PERMISSION_REQUEST_CODE);
         }
 
-        // 첫 회원가입 뱃지 팝업 띄우기
-        showBadgePopup();
 
+        // 첫 회원가입 뱃지 팝업 띄우기
+        if (isFirstPopupShown == false) {
+            showBadgePopup();
+        }
 
         // Button to move to current location
         btnMoveToMyLocation = findViewById(R.id.btnMoveToMyLocation);
@@ -339,6 +343,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     //   *---첫 회원가입 팝업창 ---*
     private AlertDialog dialog2;
+
     private void showBadgePopup() {
         AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
 
@@ -377,8 +382,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (window != null) {
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
-
+        Singleton.setFirstPopupShown(true);// 첫 번째 팝업이 보였음을 표시
         dialog2.show();
+
     }
 
 
