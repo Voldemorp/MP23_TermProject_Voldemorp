@@ -14,9 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 public class MyPageActivity extends AppCompatActivity {
@@ -39,7 +40,7 @@ public class MyPageActivity extends AppCompatActivity {
     private TextView textView14;
     private String userId;
     private DatabaseReference userPortRef;
-    private List<MyPagePortItem> portList = new ArrayList<>();
+    private LinkedHashMap<String, MyPagePortItem> portList = new LinkedHashMap<>();
 
     private ValueEventListener portValueEventListener = new ValueEventListener() {
         @Override
@@ -226,7 +227,7 @@ public class MyPageActivity extends AppCompatActivity {
 
                                     // portList에 추가
                                     MyPagePortItem portItem = new MyPagePortItem(restaurantName, portNum);
-                                    portList.add(portItem);
+                                    portList.put(restaurantName, portItem);
 
                                     // 추가한 식당 정보를 레이아웃에 추가
                                     addPortListToLayout();
@@ -294,13 +295,25 @@ public class MyPageActivity extends AppCompatActivity {
 
     private void addPortListToLayout() {
         LinearLayout layout = findViewById(R.id.portListContainer);
+        int index = 0;
+        int size = portList.size();
 
-        for (int i = 0; i < portList.size(); i++) {
-            // 추가할 레이아웃
-            MyPageListLayout myPageListLayout = new MyPageListLayout(getApplicationContext(), null, portList.get(i));
+        for (Map.Entry<String, MyPagePortItem> entry : portList.entrySet()) {
+            index++;
 
-            // 추가 코드
-            layout.addView(myPageListLayout);
+            // 마지막 요소인 경우 추가 작업 실행
+            if (index == size) {
+                String key = entry.getKey();
+                MyPagePortItem value = entry.getValue();
+
+                System.out.println(key + " " + value);
+
+                // 추가할 레이아웃
+                MyPageListLayout myPageListLayout = new MyPageListLayout(getApplicationContext(), null, value);
+
+                // 추가 코드
+                layout.addView(myPageListLayout);
+            }
         }
     }
 
