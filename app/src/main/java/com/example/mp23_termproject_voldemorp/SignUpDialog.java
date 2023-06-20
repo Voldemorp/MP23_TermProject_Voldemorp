@@ -74,7 +74,7 @@ public class SignUpDialog extends Dialog {
 
     }
     public class UserModel_badge{
-        public String mainBadge = "badge1";
+        public String mainBadge = "";
         public boolean badge1 = true;
         public boolean badge2 = false;
         public boolean badge3 = false;
@@ -424,7 +424,7 @@ public class SignUpDialog extends Dialog {
                                         userModel.nickName = nickname;
                                         userModel.max_portNum = max_portNum;
                                         userModel.userTotalLike = userTotalLike;
-                                        userModel_badge.mainBadge="badge1";
+                                        userModel_badge.mainBadge="";
                                         userModel_badge.badge1 = badge1;
                                         userModel_badge.badge2 = badge2;
                                         userModel_badge.badge3 = badge3;
