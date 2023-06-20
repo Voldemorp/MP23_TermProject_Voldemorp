@@ -35,6 +35,8 @@ public class MyPageActivity extends AppCompatActivity {
     static public String address;
     private ImageView profileImageView;
     private TextView mainBadgeTextView;
+    private TextView textView13;
+    private TextView textView14;
     private String userId;
     private DatabaseReference userPortRef;
     private List<MyPagePortItem> portList = new ArrayList<>();
@@ -72,12 +74,23 @@ public class MyPageActivity extends AppCompatActivity {
 
         // *-- 프로필 대표뱃지 Text 표시 --*
         mainBadgeTextView = findViewById(R.id.mainBadgeTextView);
-        userRef.child(userId).child("badge").child("mainBadge").addListenerForSingleValueEvent(new ValueEventListener() {
+        textView13 = findViewById(R.id.textView13);
+        textView14 = findViewById(R.id.textView14);
+
+        userRef.child(userId).child("badge").child("mainBadge")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot){
                 if (dataSnapshot.exists()) {
-                    // 불러온 대표뱃지를 텍스트뷰에 설정
                     String mainBadge = dataSnapshot.getValue(String.class);
+                    if ("".equals(mainBadge)) {
+                        textView13.setVisibility(View.GONE);
+                        textView14.setVisibility(View.GONE);
+                    } else {
+                        textView13.setVisibility(View.VISIBLE);
+                        textView14.setVisibility(View.VISIBLE);
+                    }
+                    // 불러온 대표뱃지를 텍스트뷰에 설정
                     mainBadgeTextView.setText(mainBadge);
                 }
                 else { System.out.println("none"); }
